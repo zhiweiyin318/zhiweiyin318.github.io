@@ -83,7 +83,7 @@
 
 <meta itemprop="datePublished" content="2018-07-31T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2018-07-31T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="146">
+<meta itemprop="wordCount" content="423">
 
 
 
@@ -309,7 +309,7 @@
             <a href="https://zhiweiyin318.github.io/categories/others/"> Others </a>
             
           </div>
-        <span class="more-meta"> 146 words </span>
+        <span class="more-meta"> 423 words </span>
         <span class="more-meta"> 1 min read </span>
       </div>
     </header>
@@ -324,6 +324,8 @@
 <li>
 <ul>
 <li><a href="#为啥搞blog">为啥搞blog</a></li>
+<li><a href="#怎么用hugo-github搭建blog">怎么用hugo+github搭建blog</a></li>
+<li><a href="#参考">参考</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -341,6 +343,98 @@
 <p>最近在有道云上记笔记，开始用markdown，觉得很方便，正好看到Hugo这个go写的静态网页框架，天然对go的好感，索性就搞一把。</p>
 
 <p>以后把笔记就记这了，走哪都方便查看。</p>
+
+<h2 id="怎么用hugo-github搭建blog">怎么用hugo+github搭建blog</h2>
+
+<ul>
+<li>下载hugo可执行文件（二进制文件）
+<br /></li>
+</ul>
+
+<blockquote>
+<p>下载地址： <a href="https://github.com/gohugoio/hugo/releases">https://github.com/gohugoio/hugo/releases</a></p>
+</blockquote>
+
+<ul>
+<li>创建框架</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma"> ./hugo.exe new site blog     </pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>下载更换主题</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">cd blog
+git clone https://github.com/xianmin/hugo-theme-jane.git themes/jane</pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p>主题下载地址：<a href="https://themes.gohugo.io/">https://themes.gohugo.io/</a></p>
+</blockquote>
+
+<ul>
+<li>修改主题
+<br /></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma"> cp themes/jane/exampleSite/config.toml ./</pre></td></tr></table>
+</div>
+</div>
+<p>特别是config.toml文件</p>
+
+<ul>
+<li>本地测试</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">../hugo.exe server</pre></td></tr></table>
+</div>
+</div>
+<p>在<a href="http://localhost:1313/">http://localhost:1313/</a> 可以查看效果</p>
+
+<ul>
+<li>发布</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">../hugo.exe</pre></td></tr></table>
+</div>
+</div>
+<p>生成public文件夹，将该文件夹所有文件push到username.github.io仓库。</p>
+
+<blockquote>
+<p>我之前以为要把整个目录上传，发现不现实，最后才搞明白是把public上传就可以了，但是每次生成发布比较麻烦，准备搞个脚本弄哈。</p>
+</blockquote>
+
+<h2 id="参考">参考</h2>
+
+<blockquote>
+<ul>
+<li><a href="http://nanshu.wang/post/2015-01-31/">http://nanshu.wang/post/2015-01-31/</a></li>
+<li><a href="https://keysaim.github.io/post/blog/deploy-hugo-blog-in-github.io/">https://keysaim.github.io/post/blog/deploy-hugo-blog-in-github.io/</a></li>
+</ul>
+</blockquote>
 
     </div>
 
