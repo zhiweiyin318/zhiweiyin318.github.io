@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://zhiweiyin318.github.io/sitemap.xml

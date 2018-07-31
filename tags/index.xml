@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on ZhiweiYin&#39;s Blog</title>
+    <title>Tags on Zhiwei Yin&#39;s Blog</title>
     <link>https://zhiweiyin318.github.io/tags/</link>
-    <description>Recent content in Tags on ZhiweiYin&#39;s Blog</description>
+    <description>Recent content in Tags on Zhiwei Yin&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en</language>
+    <lastBuildDate>Tue, 31 Jul 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://zhiweiyin318.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Hugo</title>
+      <link>https://zhiweiyin318.github.io/tags/hugo/</link>
+      <pubDate>Tue, 31 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhiweiyin318.github.io/tags/hugo/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Others</title>
+      <link>https://zhiweiyin318.github.io/tags/others/</link>
+      <pubDate>Tue, 31 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhiweiyin318.github.io/tags/others/</guid>
+      <description></description>
+    </item>
     
   </channel>
 </rss>

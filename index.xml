@@ -1,23 +1,47 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>ZhiweiYin&#39;s Blog</title>
+    <title>Zhiwei Yin&#39;s Blog</title>
     <link>https://zhiweiyin318.github.io/</link>
-    <description>Recent content on ZhiweiYin&#39;s Blog</description>
+    <description>Recent content on Zhiwei Yin&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Tue, 31 Jul 2018 10:11:01 +0800</lastBuildDate>
+    <language>en</language>
+    <lastBuildDate>Tue, 31 Jul 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://zhiweiyin318.github.io/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://zhiweiyin318.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Start</title>
-      <link>https://zhiweiyin318.github.io/start/</link>
-      <pubDate>Tue, 31 Jul 2018 10:11:01 +0800</pubDate>
+      <title>About</title>
+      <link>https://zhiweiyin318.github.io/about/</link>
+      <pubDate>Tue, 31 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://zhiweiyin318.github.io/start/</guid>
-      <description>Note Test blog using hugo</description>
+      <guid>https://zhiweiyin318.github.io/about/</guid>
+      
+        <description>&lt;p&gt;Hi,我是殷智伟。&lt;br /&gt;
+这里主要自己的工作学习生活笔记。&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>Start</title>
+      <link>https://zhiweiyin318.github.io/post/start/</link>
+      <pubDate>Tue, 31 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhiweiyin318.github.io/post/start/</guid>
+      
+        <description>
+
+&lt;h2 id=&#34;为啥搞blog&#34;&gt;为啥搞blog&lt;/h2&gt;
+
+&lt;p&gt;之前在sina写过复盘日记，后来也没坚持下来；之前在github上用其他框架搭过blog，太繁琐了，也放弃了。&lt;/p&gt;
+
+&lt;p&gt;最近在有道云上记笔记，开始用markdown，觉得很方便，正好看到Hugo这个go写的静态网页框架，天然对go的好感，索性就搞一把。&lt;/p&gt;
+
+&lt;p&gt;以后把笔记就记这了，走哪都方便查看。&lt;/p&gt;
+</description>
+      
     </item>
     
   </channel>
