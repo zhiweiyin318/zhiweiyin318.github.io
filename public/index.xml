@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ZhiweiYin&#39;s Blog</title>
+    <link>https://zhiweiyin318.github.io/</link>
+    <description>Recent content on ZhiweiYin&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 31 Jul 2018 10:11:01 +0800</lastBuildDate>
+    
+	<atom:link href="https://zhiweiyin318.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Start</title>
+      <link>https://zhiweiyin318.github.io/start/</link>
+      <pubDate>Tue, 31 Jul 2018 10:11:01 +0800</pubDate>
+      
+      <guid>https://zhiweiyin318.github.io/start/</guid>
+      <description>Note Test blog using hugo</description>
+    </item>
+    
+  </channel>
+</rss>
