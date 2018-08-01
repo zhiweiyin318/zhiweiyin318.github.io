@@ -43,18 +43,13 @@
 
 &lt;h2 id=&#34;怎么用hugo-github搭建blog&#34;&gt;怎么用hugo+github搭建blog&lt;/h2&gt;
 
-&lt;ul&gt;
-&lt;li&gt;下载hugo可执行文件（二进制文件）
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
+&lt;h3 id=&#34;下载hugo可执行文件-二进制文件&#34;&gt;下载hugo可执行文件（二进制文件）&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;下载地址： &lt;a href=&#34;https://github.com/gohugoio/hugo/releases&#34;&gt;https://github.com/gohugoio/hugo/releases&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;ul&gt;
-&lt;li&gt;创建框架&lt;/li&gt;
-&lt;/ul&gt;
+&lt;h3 id=&#34;创建框架&#34;&gt;创建框架&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -63,9 +58,7 @@
 &lt;pre class=&#34;chroma&#34;&gt; ./hugo.exe new site blog     &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;ul&gt;
-&lt;li&gt;下载更换主题&lt;/li&gt;
-&lt;/ul&gt;
+&lt;h3 id=&#34;下载更换主题&#34;&gt;下载更换主题&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -80,10 +73,7 @@ git clone https://github.com/xianmin/hugo-theme-jane.git themes/jane&lt;/pre&gt;
 &lt;p&gt;主题下载地址：&lt;a href=&#34;https://themes.gohugo.io/&#34;&gt;https://themes.gohugo.io/&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;ul&gt;
-&lt;li&gt;修改主题
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
+&lt;h3 id=&#34;修改主题&#34;&gt;修改主题&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -94,9 +84,7 @@ git clone https://github.com/xianmin/hugo-theme-jane.git themes/jane&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;特别是config.toml文件&lt;/p&gt;
 
-&lt;ul&gt;
-&lt;li&gt;本地测试&lt;/li&gt;
-&lt;/ul&gt;
+&lt;h3 id=&#34;本地测试&#34;&gt;本地测试&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -107,9 +95,7 @@ git clone https://github.com/xianmin/hugo-theme-jane.git themes/jane&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;在&lt;a href=&#34;http://localhost:1313/&#34;&gt;http://localhost:1313/&lt;/a&gt; 可以查看效果&lt;/p&gt;
 
-&lt;ul&gt;
-&lt;li&gt;发布&lt;/li&gt;
-&lt;/ul&gt;
+&lt;h3 id=&#34;发布&#34;&gt;发布&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1

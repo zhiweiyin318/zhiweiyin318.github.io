@@ -311,10 +311,94 @@
   <div class="post-content">
     
     <div class="post-summary">
-      为啥搞blog 之前在sina写过复盘日记，后来也没坚持下来；之前在github上用其他框架搭过blog，太繁琐了，也放弃了。 最近在有道云上记
-    </div>
-    <div class="read-more">
-      <a href="/post/start/" class="read-more-link">Read more</a>
+      
+
+<h2 id="为啥搞blog">为啥搞blog</h2>
+
+<p>之前在sina写过复盘日记，后来也没坚持下来；之前在github上用其他框架搭过blog，太繁琐了，也放弃了。</p>
+
+<p>最近在有道云上记笔记，开始用markdown，觉得很方便，正好看到Hugo这个go写的静态网页框架，天然对go的好感，索性就搞一把。</p>
+
+<p>以后把笔记就记这了，走哪都方便查看。</p>
+
+<h2 id="怎么用hugo-github搭建blog">怎么用hugo+github搭建blog</h2>
+
+<h3 id="下载hugo可执行文件-二进制文件">下载hugo可执行文件（二进制文件）</h3>
+
+<blockquote>
+<p>下载地址： <a href="https://github.com/gohugoio/hugo/releases">https://github.com/gohugoio/hugo/releases</a></p>
+</blockquote>
+
+<h3 id="创建框架">创建框架</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma"> ./hugo.exe new site blog     </pre></td></tr></table>
+</div>
+</div>
+<h3 id="下载更换主题">下载更换主题</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">cd blog
+git clone https://github.com/xianmin/hugo-theme-jane.git themes/jane</pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p>主题下载地址：<a href="https://themes.gohugo.io/">https://themes.gohugo.io/</a></p>
+</blockquote>
+
+<h3 id="修改主题">修改主题</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma"> cp themes/jane/exampleSite/config.toml ./</pre></td></tr></table>
+</div>
+</div>
+<p>特别是config.toml文件</p>
+
+<h3 id="本地测试">本地测试</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">../hugo.exe server</pre></td></tr></table>
+</div>
+</div>
+<p>在<a href="http://localhost:1313/">http://localhost:1313/</a> 可以查看效果</p>
+
+<h3 id="发布">发布</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">../hugo.exe</pre></td></tr></table>
+</div>
+</div>
+<p>生成public文件夹，将该文件夹所有文件push到username.github.io仓库。</p>
+
+<blockquote>
+<p>我之前以为要把整个目录上传，发现不现实，最后才搞明白是把public上传就可以了，但是每次生成发布比较麻烦，准备搞个脚本弄哈。</p>
+</blockquote>
+
+<h2 id="参考">参考</h2>
+
+<blockquote>
+<ul>
+<li><a href="http://nanshu.wang/post/2015-01-31/">http://nanshu.wang/post/2015-01-31/</a></li>
+<li><a href="https://keysaim.github.io/post/blog/deploy-hugo-blog-in-github.io/">https://keysaim.github.io/post/blog/deploy-hugo-blog-in-github.io/</a></li>
+</ul>
+</blockquote>
+
     </div>
     
   </div>
@@ -392,6 +476,13 @@
 <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
 <script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 
 
 
