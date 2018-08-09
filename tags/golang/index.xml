@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Golang on Zhiwei Yin&#39;s Blog</title>
+    <link>https://zhiweiyin318.github.io/tags/golang/</link>
+    <description>Recent content in Golang on Zhiwei Yin&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 09 Aug 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://zhiweiyin318.github.io/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>golang的测试框架</title>
+      <link>https://zhiweiyin318.github.io/golang%E7%9A%84%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6/</link>
+      <pubDate>Thu, 09 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhiweiyin318.github.io/golang%E7%9A%84%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6/</guid>
+      <description>golang 测试框架 本文主要介绍golang 测试的集中常见的框架。 go test 文件名称位xx_test.go 测试函数Testxxx(t *testing.T) 1 go test -v GoConvey 可以管理和运</description>
+    </item>
+    
+  </channel>
+</rss>

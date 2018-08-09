@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>golang的测试框架 - Zhiwei Yin&#39;s Blog</title>
+  <link rel="alternate" hreflang="en" href="https://zhiweiyin318.github.io" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Zhiwei Yin" />
+  <meta name="description" content="golang 测试框架 本文主要介绍golang 测试的集中常见的框架。 go test 文件名称位xx_test.go 测试函数Testxxx(t *testing.T) 1 go test -v GoConvey 可以管理和运" />
+
+  <meta name="keywords" content="Hugo, theme, jane" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.45.1" />
+
+
+<link rel="canonical" href="https://zhiweiyin318.github.io/golang%E7%9A%84%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6/" />
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="golang的测试框架" />
+<meta property="og:description" content="golang 测试框架 本文主要介绍golang 测试的集中常见的框架。 go test 文件名称位xx_test.go 测试函数Testxxx(t *testing.T) 1 go test -v GoConvey 可以管理和运" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zhiweiyin318.github.io/golang%E7%9A%84%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6/" />
+
+
+
+<meta property="article:published_time" content="2018-08-09T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2018-08-09T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="golang的测试框架">
+<meta itemprop="description" content="golang 测试框架 本文主要介绍golang 测试的集中常见的框架。 go test 文件名称位xx_test.go 测试函数Testxxx(t *testing.T) 1 go test -v GoConvey 可以管理和运">
+
+
+<meta itemprop="datePublished" content="2018-08-09T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2018-08-09T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1219">
+
+
+
+<meta itemprop="keywords" content="golang,code," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="golang的测试框架"/>
+<meta name="twitter:description" content="golang 测试框架 本文主要介绍golang 测试的集中常见的框架。 go test 文件名称位xx_test.go 测试函数Testxxx(t *testing.T) 1 go test -v GoConvey 可以管理和运"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Zhiwei Yin</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/">Home</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/post/">Archives</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/tags/">Tags</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/categories/">Categories</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/about/">About</a>
+          
+        
+      </li>
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Zhiwei Yin
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/">Home</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/post/">Archives</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/tags/">Tags</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/categories/">Categories</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/about/">About</a>
+          
+
+        
+
+      </li>
+    
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+  
+  <header class="post-header">
+    <h1 class="post-title">golang的测试框架</h1>
+    
+    <div class="post-meta">
+      <span class="post-time">
+        2018-08-09
+      </span>
+    </div>
+  </header>
+
+  
+  
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Table of Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#golang-测试框架">golang 测试框架</a>
+<ul>
+<li><a href="#go-test">go test</a></li>
+<li><a href="#goconvey">GoConvey</a>
+<ul>
+<li>
+<ul>
+<li><a href="#安装">安装</a></li>
+<li><a href="#使用">使用</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#gostub">GoStub</a>
+<ul>
+<li>
+<ul>
+<li><a href="#安装-1">安装</a></li>
+<li><a href="#使用-1">使用</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#monkey">Monkey</a>
+<ul>
+<li>
+<ul>
+<li><a href="#安装-2">安装</a></li>
+<li><a href="#使用-2">使用</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#gomock">GoMock</a>
+<ul>
+<li>
+<ul>
+<li><a href="#安装-3">安装</a></li>
+<li><a href="#使用-3">使用</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+  
+  <div class="post-content">
+      
+
+<h1 id="golang-测试框架">golang 测试框架</h1>
+
+<p>本文主要介绍golang 测试的集中常见的框架。</p>
+
+<h2 id="go-test">go test</h2>
+
+<ul>
+<li>文件名称位xx_test.go</li>
+<li>测试函数Testxxx(t *testing.T)</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-command" data-lang="command"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-command" data-lang="command">go test -v</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="goconvey">GoConvey</h2>
+
+<p>可以管理和运行测试用例，同时提供了丰富的断言函数，并支持很多 Web 界面特性，集成go test。</p>
+
+<p>Write behavioral tests in your editor. Get live results in your browser.</p>
+
+<ul>
+<li>项目：<code>https://github.com/smartystreets/goconvey</code></li>
+<li>官网：<code>http://goconvey.co/</code></li>
+<li>介绍：<code>https://www.jianshu.com/p/e3b2b1194830</code></li>
+</ul>
+
+<h4 id="安装">安装</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-command" data-lang="command"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-command" data-lang="command">go get github.com/smartystreets/goconvey </code></pre></td></tr></table>
+</div>
+</div>
+<ol>
+<li>在$GOPATH/src目录下新增了github.com子目录，该子目录里包含了GoConvey框架的库代码</li>
+<li>在$GOPATH/bin目录下新增了GoConvey框架的可执行程序goconvey</li>
+</ol>
+
+<h4 id="使用">使用</h4>
+
+<ul>
+<li>web显示结果，在测试目录下执行goconvoy就可以</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-code" data-lang="code"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-code" data-lang="code">import (
+    . &#34;github.com/smartystreets/goconvey/convey&#34;
+    &#34;testing&#34;
+)
+
+func Test_ServerRun(t *testing.T) {
+    Convey(&#34;Test ServerRun &#34;, t, func() {
+        Convey(&#34;Case 1 port &gt; 10000:&#34;, func(){
+            port := 100000
+            So(ServerRun(port), ShouldBeError)
+        })
+        Convey(&#34;Case 2 port &lt;= 10000:&#34;, func() {
+            port := 1000
+            So(ServerRun(port), ShouldBeNil)
+        })
+    })
+}</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="gostub">GoStub</h2>
+
+<p>主要用来给全局变量打桩，也可以给函数打桩，无法给方法接口打桩。
+* 项目：<code>https://github.com/prashantv/gostub</code>
+* 介绍：<code>https://www.jianshu.com/p/70a93a9ed186</code></p>
+
+<h4 id="安装-1">安装</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-command" data-lang="command"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-command" data-lang="command">go get github.com/prashantv/gostub</code></pre></td></tr></table>
+</div>
+</div>
+<h4 id="使用-1">使用</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-code" data-lang="code"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-code" data-lang="code">import (
+    &#34;testing&#34;
+    . &#34;github.com/prashantv/gostub&#34;
+)
+func Test_ServerRun_Case3(t *testing.T){
+    Convey(&#34;Test ServerRun &#34;,t,func(){
+        Convey(&#34;Case 1 IP is not local IP:&#34;,func(){
+            stubs :=Stub(&amp;localIP,&#34;192.168.1.1&#34;)
+            defer stubs.Reset()
+            So(ServerRun(8080), ShouldBeError)
+        })
+    })
+}</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="monkey">Monkey</h2>
+
+<p>可以给函数，方法打桩</p>
+
+<ul>
+<li>项目：<code>https://github.com/bouk/monkey</code></li>
+<li>官网：<code>https://bou.ke/</code></li>
+<li>介绍：<code>https://www.jianshu.com/p/2f675d5e334e</code></li>
+</ul>
+
+<h4 id="安装-2">安装</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-command" data-lang="command"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-command" data-lang="command">go get github.com/bouk/monkey</code></pre></td></tr></table>
+</div>
+</div>
+<h4 id="使用-2">使用</h4>
+
+<ul>
+<li>inline 函数打桩无效</li>
+<li>方法的首字母大小写，只能给首大写字母的方法打桩</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-code" data-lang="code"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-code" data-lang="code">import (
+    &#34;github.com/bouk/monkey&#34;
+    . &#34;github.com/smartystreets/goconvey/convey&#34;
+    &#34;reflect&#34;
+    &#34;testing&#34;
+    &#34;errors&#34;
+)
+func Test_ServerRun_Monkey(t *testing.T) {
+    Convey(&#34;Test ServerRun &#34;, t, func() {
+        Convey(&#34;Case 1 Listen failed:&#34;, func() {
+            defer monkey.UnpatchAll()
+            monkey.Patch(Listen, func(s *server) error {
+                return errors.New(&#34;fake return fail&#34;)
+            })
+            So(ServerRun(8080), ShouldBeError)
+        })
+
+        Convey(&#34;Case 2 s.GetIP failed:&#34;, func() {
+            var s *server
+            defer monkey.UnpatchAll()
+            monkey.PatchInstanceMethod(reflect.TypeOf(s), &#34;GetIP&#34;, func(_ *server) string {
+                return &#34;192.168.1.1&#34;
+            })
+            So(ServerRun(8080),ShouldBeError)
+        })
+    })
+}</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="gomock">GoMock</h2>
+
+<p>给接口打桩</p>
+
+<ul>
+<li>项目：<code>https://github.com/golang/mock</code></li>
+<li>文档：<code>https://godoc.org/github.com/golang/mock/gomock</code></li>
+<li>参考：<code>https://www.jianshu.com/p/f4e773a1b11f</code></li>
+</ul>
+
+<h4 id="安装-3">安装</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-command" data-lang="command"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-command" data-lang="command">mkdir $GOPATH/src/golang.org/x/
+cd $GOPATH/src/golang.org/x/
+git clone https://github.com/golang/net.git net 
+go install net
+go get github.com/golang/mock/gomock
+go install github.com/golang/mock/mockgen</code></pre></td></tr></table>
+</div>
+</div>
+<h4 id="使用-3">使用</h4>
+
+<ul>
+<li>生成接口的mock文件</li>
+<li>输出目录需要提起建好</li>
+<li>gomock的代码需放在$GOPATH/src下，mockgen运行时要在这个路径下访问gomock</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-command" data-lang="command"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-command" data-lang="command">./mockgen -source=/home/yzw/go/src/examples/pkg/common/common.go &gt; /home/yzw/go/src/examples/test/common/mock_common.go</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>测试代码</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-code" data-lang="code"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-code" data-lang="code">import (
+    . &#34;github.com/golang/mock/gomock&#34;
+    . &#34;github.com/smartystreets/goconvey/convey&#34;
+    &#34;testing&#34;
+
+    &#34;examples/test/common&#34;
+    &#34;errors&#34;
+    &#34;github.com/bouk/monkey&#34;
+    &#34;examples/pkg/common&#34;
+    &#34;fmt&#34;
+)
+
+func Test_ClientRun_GoMock(t *testing.T) {
+    Convey(&#34;Test ClientRun&#34;, t, func() {
+        ctrl := NewController(t)
+        defer ctrl.Finish()
+        mockOpter := mock_common.NewMockOpter(ctrl)
+        mockOpter.EXPECT().Get(Any()).Return(&#34;mock get data&#34;, errors.New(&#34;mock get error&#34;))
+
+        defer monkey.UnpatchAll()
+        monkey.Patch(NewClient, func() common.Opter {
+            fmt.Println(&#34;fake newclient&#34;)
+            return mockOpter
+        })
+        So(ClientRun(&#34;ip&#34;,&#34;port&#34;,&#34;opt&#34;),ShouldBeError)
+    })
+}</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>如果mock的接口被调用多次，需要用Times</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-code" data-lang="code"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-code" data-lang="code">mockOpter.EXPECT().Get(Any()).Return(&#34;mock get data&#34;, errors.New(&#34;mock get error&#34;)).Times(5)</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>mock的接口有先后顺序的时候，需要同After，InOder来保序</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-code" data-lang="code"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-code" data-lang="code">getCall := mockOpter.EXPECT().Get(Any()).Return(&#34;mock get data&#34;, errors.New(&#34;mock get error&#34;))
+mockOpter.EXPECT().Post(Any()).Return(errors.New(&#34;mock post error&#34;)).After(getCall)
+InOder(
+    mockOpter.EXPECT().Get(Any()).Return(&#34;mock get data&#34;, errors.New(&#34;mock get error&#34;))
+    mockOpter.EXPECT().Post(Any()).Return(errors.New(&#34;mock post error&#34;))
+)</code></pre></td></tr></table>
+</div>
+</div>
+  </div>
+
+  
+  
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Zhiwei Yin</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2018-08-09</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+  
+  
+</article>
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="zhiweiyin@hotmail.com" rel="me noopener" class="iconfont icon-email"
+        title="email" target="_blank">
+      </a>
+      <a href="https://github.com/zhiweiyin318" rel="me noopener" class="iconfont icon-github"
+        title="github" target="_blank">
+      </a>
+  <a href="https://zhiweiyin318.github.io/index.xml" rel="noopener alternate" type="application/rss&#43;xml" class="iconfont icon-rss"
+    title="rss" target="_blank">
+  </a>
+  </div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span><span class="author">Zhiwei Yin</span></span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+</body>
+</html>
