@@ -6,10 +6,19 @@
     <description>Recent content in Golang on Zhiwei Yin&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 09 Aug 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 03 Sep 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://zhiweiyin318.github.io/categories/golang/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>golang rand生成随机数</title>
+      <link>https://zhiweiyin318.github.io/post/golang-rand%E7%94%9F%E6%88%90%E9%9A%8F%E6%9C%BA%E6%95%B0/</link>
+      <pubDate>Mon, 03 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhiweiyin318.github.io/post/golang-rand%E7%94%9F%E6%88%90%E9%9A%8F%E6%9C%BA%E6%95%B0/</guid>
+      <description>简介 math/rand package实现了伪随机数字生成器。 随机数字是通过Source生成的，rand.Seed会初始化默认全局的Source，如果不调用r</description>
+    </item>
     
     <item>
       <title>golang的测试框架</title>
