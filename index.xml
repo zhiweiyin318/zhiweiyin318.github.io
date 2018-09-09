@@ -204,13 +204,13 @@ docker run -H “Swarm集群IP” “我的镜像”&lt;/pre&gt;&lt;/td&gt;&lt;/
 
 &lt;h3 id=&#34;kubernetes的诞生&#34;&gt;Kubernetes的诞生&lt;/h3&gt;
 
-&lt;p&gt;这个时候CoreOS完全被Docker压制，RedHat作为Dockers项目早期重要贡献者也因为Docker公司的平台战略不满退出，OpenSift还勉强支撑，Mesos和Swarm是主要竞争对手。2014年6月Google发力，发布了Kubernetes项目，这个项目不仅挽救了CoreOS和RedHat，同时改变了整个容器市场的格局。&lt;/p&gt;
+&lt;p&gt;这个时候CoreOS完全被Docker压制，RedHat作为Docker项目早期重要贡献者也因为Docker公司的平台战略不满退出，OpenSift还勉强支撑，Mesos和Swarm是主要竞争对手。2014年6月Google发力，发布了Kubernetes项目，这个项目不仅挽救了CoreOS和RedHat，同时改变了整个容器市场的格局。&lt;/p&gt;
 
 &lt;p&gt;2014-2015年，整个容器社区热闹非凡，大量围绕Docker项目的网络，存储，监控，CI/CD，UI项目纷纷出台，也涌现出了Rancher，Tutun开源和商业上都取得成功的创业公司。Docker公司发布了Compose，Swarm和Machine三件套，Docker公司想从开源成功走向商业成功。&lt;/p&gt;
 
-&lt;p&gt;Google的容器项目也招架住Docker，Google本想提议关停自己容器项目，和Docker共同推出了一个中立的容器运行时库（container runtime）作为Dockers项目的核心依赖。DOcker没有同意削弱自己地位的建议，推出了自己的容器运行时库Libcontainer。由于比较匆忙，代码可读性差，可维护不强，被社区长期诟病。&lt;/p&gt;
+&lt;p&gt;Google的容器项目也招架住Docker，Google本想提议关停自己容器项目，和Docker共同推出了一个中立的容器运行时库（container runtime）作为Docker项目的核心依赖。DOcker没有同意削弱自己地位的建议，推出了自己的容器运行时库Libcontainer。由于比较匆忙，代码可读性差，可维护不强，被社区长期诟病。&lt;/p&gt;
 
-&lt;p&gt;2015年6月，各个玩家开始切割Docker项目的话语权，手段也很经典。由Dockers牵头，CoreOS，Google，RedHat等公司宣布，Docker将LibContainer捐出，改名RunC项目，交由一个完全中立的基金会管理，然后以RunC为依据，共同指定一套容器和镜像的标准和规范。&lt;/p&gt;
+&lt;p&gt;2015年6月，各个玩家开始切割Docker项目的话语权，手段也很经典。由Docker牵头，CoreOS，Google，RedHat等公司宣布，Docker将LibContainer捐出，改名RunC项目，交由一个完全中立的基金会管理，然后以RunC为依据，共同指定一套容器和镜像的标准和规范。&lt;/p&gt;
 
 &lt;p&gt;这套标准规范就是OCI （open Container Initiative）。提出将容器运行和镜像的实现从Dokcer项目完全剥离出来，一方面改善了Docker在这一块一家独大的现状，另一方面各个玩家可以不依赖Docker项目构建各自的平台能力。这是一群玩家根据各自利益干涉的一个妥协结果。Docker公司虽然时OCI的发起者和创始成员，但是很少在标准指定上扮演关键角色，也没有动力去推进这些所谓的标准，这就是为啥OCI组织效率持续低下的根本原因。&lt;/p&gt;
 
@@ -234,7 +234,7 @@ docker run -H “Swarm集群IP” “我的镜像”&lt;/pre&gt;&lt;/td&gt;&lt;/
 
 &lt;p&gt;2018年1月20日，RedHat收购CoreOS。&lt;/p&gt;
 
-&lt;p&gt;2018年3月28日，Dockers公司的CTO Solomon Hykes 宣布辞职。&lt;/p&gt;
+&lt;p&gt;2018年3月28日，Docker公司的CTO Solomon Hykes 宣布辞职。&lt;/p&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;后面这段历史原作者将的酣畅淋漓，基本照搬过来的。大家自行体会这几年这个领域的风云变化和各大玩家的角逐。&lt;/p&gt;
