@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>golang rand生成随机数 - Zhiwei Yin&#39;s Blog</title>
+  <title>OpenStack olso_config - Zhiwei Yin&#39;s Blog</title>
   <link rel="alternate" hreflang="en" href="https://zhiweiyin318.github.io" />
 
 <meta name="renderer" content="webkit" />
@@ -25,7 +25,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 
 <meta name="author" content="Zhiwei Yin" />
-  <meta name="description" content="简介 math/rand package实现了伪随机数字生成器。 随机数字是通过Source生成的，rand.Seed会初始化默认全局的Source，如果不调用r" />
+  <meta name="description" content="oslo oslo作为OpenStack的通用组件，在每一个项目中都有用到，oslo.config主要用于命令行和配置项解析。 参考: * https://gtcsq.readthedocs.io/en/latest/openstack/oslo_cfg.html * https://blog.csdn.net/zhangyifei216/article/details/50434980 * https://blog.csdn.net/hobertony_7/article/details/79206297 * https://www.programcreek.com/python/example/106149/oslo_config.cfg.ConfigOpts" />
 
   <meta name="keywords" content="Golang, Kubernetes, Docker" />
 
@@ -37,7 +37,7 @@
 <meta name="generator" content="Hugo 0.45.1" />
 
 
-<link rel="canonical" href="https://zhiweiyin318.github.io/post/golang-rand%E7%94%9F%E6%88%90%E9%9A%8F%E6%9C%BA%E6%95%B0/" />
+<link rel="canonical" href="https://zhiweiyin318.github.io/post/olso_config/" />
 
 
 
@@ -57,20 +57,16 @@
 
 
 
-<meta property="og:title" content="golang rand生成随机数" />
-<meta property="og:description" content="简介 math/rand package实现了伪随机数字生成器。 随机数字是通过Source生成的，rand.Seed会初始化默认全局的Source，如果不调用r" />
+<meta property="og:title" content="OpenStack olso_config" />
+<meta property="og:description" content="oslo oslo作为OpenStack的通用组件，在每一个项目中都有用到，oslo.config主要用于命令行和配置项解析。 参考: * https://gtcsq.readthedocs.io/en/latest/openstack/oslo_cfg.html * https://blog.csdn.net/zhangyifei216/article/details/50434980 * https://blog.csdn.net/hobertony_7/article/details/79206297 * https://www.programcreek.com/python/example/106149/oslo_config.cfg.ConfigOpts" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://zhiweiyin318.github.io/post/golang-rand%E7%94%9F%E6%88%90%E9%9A%8F%E6%9C%BA%E6%95%B0/" />
+<meta property="og:url" content="https://zhiweiyin318.github.io/post/olso_config/" />
 
 
 
-<meta property="article:published_time" content="2018-09-03T00:00:00&#43;00:00"/>
+<meta property="article:published_time" content="2018-09-10T00:00:00&#43;00:00"/>
 
-<meta property="article:modified_time" content="2018-09-03T00:00:00&#43;00:00"/>
-
-
-
-
+<meta property="article:modified_time" content="2018-09-10T00:00:00&#43;00:00"/>
 
 
 
@@ -78,20 +74,24 @@
 
 
 
-<meta itemprop="name" content="golang rand生成随机数">
-<meta itemprop="description" content="简介 math/rand package实现了伪随机数字生成器。 随机数字是通过Source生成的，rand.Seed会初始化默认全局的Source，如果不调用r">
-
-
-<meta itemprop="datePublished" content="2018-09-03T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2018-09-03T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="779">
 
 
 
-<meta itemprop="keywords" content="golang,code," />
+
+<meta itemprop="name" content="OpenStack olso_config">
+<meta itemprop="description" content="oslo oslo作为OpenStack的通用组件，在每一个项目中都有用到，oslo.config主要用于命令行和配置项解析。 参考: * https://gtcsq.readthedocs.io/en/latest/openstack/oslo_cfg.html * https://blog.csdn.net/zhangyifei216/article/details/50434980 * https://blog.csdn.net/hobertony_7/article/details/79206297 * https://www.programcreek.com/python/example/106149/oslo_config.cfg.ConfigOpts">
+
+
+<meta itemprop="datePublished" content="2018-09-10T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2018-09-10T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="477">
+
+
+
+<meta itemprop="keywords" content="Python,code," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="golang rand生成随机数"/>
-<meta name="twitter:description" content="简介 math/rand package实现了伪随机数字生成器。 随机数字是通过Source生成的，rand.Seed会初始化默认全局的Source，如果不调用r"/>
+<meta name="twitter:title" content="OpenStack olso_config"/>
+<meta name="twitter:description" content="oslo oslo作为OpenStack的通用组件，在每一个项目中都有用到，oslo.config主要用于命令行和配置项解析。 参考: * https://gtcsq.readthedocs.io/en/latest/openstack/oslo_cfg.html * https://blog.csdn.net/zhangyifei216/article/details/50434980 * https://blog.csdn.net/hobertony_7/article/details/79206297 * https://www.programcreek.com/python/example/106149/oslo_config.cfg.ConfigOpts"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -302,16 +302,16 @@
           <article class="post bg-white">
     
     <header class="post-header">
-      <h1 class="post-title">golang rand生成随机数</h1>
+      <h1 class="post-title">OpenStack olso_config</h1>
       
       <div class="post-meta">
-        <span class="post-time"> 2018-09-03 </span>
+        <span class="post-time"> 2018-09-10 </span>
         <div class="post-category">
-            <a href="https://zhiweiyin318.github.io/categories/golang/"> golang </a>
+            <a href="https://zhiweiyin318.github.io/categories/python/"> Python </a>
             
           </div>
-        <span class="more-meta"> 779 words </span>
-        <span class="more-meta"> 2 min read </span>
+        <span class="more-meta"> 477 words </span>
+        <span class="more-meta"> 1 min read </span>
       </div>
     </header>
 
@@ -322,14 +322,8 @@
   <div class="post-toc-content">
     <nav id="TableOfContents">
 <ul>
-<li>
-<ul>
-<li>
-<ul>
-<li><a href="#简介">简介</a></li>
-<li><a href="#例子">例子</a></li>
-</ul></li>
-</ul></li>
+<li><a href="#oslo">oslo</a></li>
+<li><a href="#使用说明">使用说明</a></li>
 </ul>
 </nav>
   </div>
@@ -339,29 +333,167 @@
     <div class="post-content">
       
 
-<h3 id="简介">简介</h3>
+<h1 id="oslo">oslo</h1>
 
-<ul>
-<li>math/rand package实现了伪随机数字生成器。<br /></li>
-<li>随机数字是通过Source生成的，rand.Seed会初始化默认全局的Source，如果不调用rand.Seed就会使用默认的Source。所生成的随机数字是固定顺序生成的，每次运行程序如果seed相同的话，生成随机数是相同的。<br /></li>
-<li>默认的Source是线程安全的，自己通过New生成的不是。<br /></li>
-</ul>
+<p>oslo作为OpenStack的通用组件，在每一个项目中都有用到，oslo.config主要用于命令行和配置项解析。  </p>
 
 <blockquote>
-<p>参考： <a href="https://golang.org/pkg/math/rand/">https://golang.org/pkg/math/rand/</a><br />
-Package rand implements pseudo-random number generators.</p>
-
-<p>Random numbers are generated by a Source. Top-level functions, such as Float64 and Int, use a default shared Source that produces a deterministic sequence of values each time a program is run. Use the Seed function to initialize the default Source if different behavior is required for each run. The default Source is safe for concurrent use by multiple goroutines, but Sources created by NewSource are not.</p>
+<p><strong>参考:</strong><br />
+* <a href="https://gtcsq.readthedocs.io/en/latest/openstack/oslo_cfg.html">https://gtcsq.readthedocs.io/en/latest/openstack/oslo_cfg.html</a><br />
+* <a href="https://blog.csdn.net/zhangyifei216/article/details/50434980">https://blog.csdn.net/zhangyifei216/article/details/50434980</a><br />
+* <a href="https://blog.csdn.net/hobertony_7/article/details/79206297">https://blog.csdn.net/hobertony_7/article/details/79206297</a><br />
+* <a href="https://www.programcreek.com/python/example/106149/oslo_config.cfg.ConfigOpts">https://www.programcreek.com/python/example/106149/oslo_config.cfg.ConfigOpts</a></p>
 </blockquote>
 
-<h3 id="例子">例子</h3>
+<h1 id="使用说明">使用说明</h1>
 
-<blockquote>
-<p>源码：<a href="https://github.com/zhiweiyin318/yzw.go.demo/tree/master/rand">https://github.com/zhiweiyin318/yzw.go.demo/tree/master/rand</a></p>
-</blockquote>
+<p>demo的代码归档：<br />
+<a href="https://github.com/zhiweiyin318/yzw.python.demo/tree/master/oslo_config">https://github.com/zhiweiyin318/yzw.python.demo/tree/master/oslo_config</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">#!/usr/bin/env python
 
-<ul>
-<li><p>rand1 使用默认的Seed和Source，每次执行main，获取的随机数字都是相同的。</p>
+# reference:
+# https://gtcsq.readthedocs.io/en/latest/openstack/oslo_cfg.html
+# https://blog.csdn.net/zhangyifei216/article/details/50434980
+# https://blog.csdn.net/hobertony_7/article/details/79206297
+# https://www.programcreek.com/python/example/106149/oslo_config.cfg.ConfigOpts
+
+
+from oslo_config import cfg
+from oslo_config import types
+import sys
+
+BASE_OS_DISTRO = [&#39;centos&#39;, &#39;rhel&#39;, &#39;ubuntu&#39;, &#39;oraclelinux&#39;, &#39;debian&#39;]
+# 命令行参数定义
+_CLI_OPTS = [
+    cfg.StrOpt(&#39;os&#39;, short=&#39;o&#39;, default=&#39;centos&#39;,
+               choices=BASE_OS_DISTRO,
+               help=&#39;The system OS &#39;
+                    &#39;are &#39; + &#39;, &#39;.join(BASE_OS_DISTRO)),
+    cfg.IntOpt(&#39;cpu&#39;, short=&#39;c&#39;, default=1, min=1,
+               help=&#39;The number of CPU&#39;)
+]
+
+#配置参数定义
+_CFG_OPTS = [
+    cfg.StrOpt(&#34;host&#34;, default=&#34;0.0.0.0&#34;,
+               help=&#34;the host ip addr&#34;),
+    cfg.Opt(&#34;port&#34;, default=5999,
+            type=types.Integer(1000, 6000),
+            help=&#34;the port number&#34;)
+]
+
+_DEBUG_OPTS = [
+    cfg.BoolOpt(&#34;debug&#34;, default=False,
+                help=&#34;debug config True or False&#34;)
+]
+
+
+def main():
+
+    # 定义configOpts实例还可以通过  conf = cfg.ConfigOpts()
+    conf = cfg.CONF
+    
+    # 注册 命令和配置项
+    conf.register_cli_opts(_CLI_OPTS)
+    conf.register_opts(_DEBUG_OPTS)
+
+    # 配置分组定义
+    # DEFAULT是一个默认组，默认情况下Opt定义的选项都是属于这个组的，cfg Module给配置选项提供了组的概念，不同的组配置选项是可以重复的。
+    ip_group = cfg.OptGroup(name=&#34;IP&#34;, title=&#34;ip cfg&#34;)
+    conf.register_group(ip_group)
+
+    # 待分组的配置项
+    conf.register_opts(_CFG_OPTS, ip_group)
+
+    # 获取参数，默认配置也可以通过--config-file来指定
+    conf(args=sys.argv[1:],
+         default_config_files=[&#39;test.conf&#39;])
+
+    print &#34;System OS is &#34;, conf.os
+    print &#34;The number of CPU is &#34;, conf.cpu
+    print &#34;The debug: &#34;, conf.debug
+    print &#34;Host IP: &#34;, conf.IP.host
+    print &#34;Port number: &#34;, conf.IP.port
+
+
+if __name__ == &#39;__main__&#39;:
+    main()</pre></td></tr></table>
+</div>
+</div>
+<p>配置文件定义</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><span class="lnt">1
@@ -370,122 +502,16 @@ Package rand implements pseudo-random number generators.</p>
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
 </span></pre></td>
 <td class="lntd">
-<pre class="chroma">func rand1() {
-	fmt.Println(&#34;rand1 test ######## rand.xx ######## &#34;)
-	fmt.Println(&#34;rand int : &#34;, rand.Int(), rand.Int31())
-	// random int in [0,100)
-	fmt.Println(&#34;random int in [0,100) : &#34;, rand.Intn(100))
-	// random int in [-50,50)
-	fmt.Println(&#34;random int in [-50,50) : &#34;, rand.Intn(100)-50)
-	fmt.Println(&#34;rand float : &#34;, rand.Float64())
-}</pre></td></tr></table>
-</div>
-</div></li>
+<pre class="chroma">[DEFAULT]
+debug = true
 
-<li><p>rand2 每次配置相同的Seed，则生成的随机值都是相同的。下面循环5次的随机数字都是一样的，因为Seed重装了Source，都是从头开始生成随机数。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">func rand2() {
-	fmt.Println(&#34;rand2 test ######## generate the same random values using the same rand.Seed  ######## &#34;)
-	for i := 0; i &lt; 5; i++ {
-		rand.Seed(10)
-		fmt.Println(&#34;rand seed 10 int : &#34;, rand.Int(), rand.Int31())
-	}
-}</pre></td></tr></table>
+[IP]
+host = 8.8.8.8
+port = 4555</pre></td></tr></table>
 </div>
-</div></li>
-
-<li><p>rand3 配置不同的Seed，生成的随机值是不同的。但是同一个Seed在执行main后生成的值都是相同的。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">func rand3(){
-	fmt.Println(&#34;rand2 test ######## generate the same random values using the different rand.Seed  ######## &#34;)
-	for i := 0; i &lt; 5; i++ {
-		rand.Seed((int64)(i))
-		fmt.Println(&#34;rand seed 10 int : &#34;, rand.Int(), rand.Int31())
-	}
-}</pre></td></tr></table>
 </div>
-</div></li>
-
-<li><p>rand4 使用rand.New()生成新的rand，rand.NewSource()生成新的Source。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">func rand4() {
-	fmt.Println(&#34;rand4 test ######## rand.NewSource and rand.New ######## &#34;)
-	s := rand.New(rand.NewSource(1))
-	for i := 0; i &lt; 5; i++ {
-		fmt.Println(&#34;rand4: &#34;, s.Int(), s.Intn(20), s.Float64())
-	}
-}</pre></td></tr></table>
-</div>
-</div></li>
-
-<li><p>rand5 保证每次运行程序随机值跟上次不一样，可以通过当前实际生成Seed</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">func rand5(){
-	fmt.Println(&#34;rand4 test ######## use time.Now().Unix() as seed ######## &#34;)
-	rand.Seed(time.Now().Unix())
-	for i := 0; i &lt; 5; i++ {
-		fmt.Println(&#34;rand seed 10 int : &#34;, rand.Int(), rand.Int31())
-	}
-}</pre></td></tr></table>
-</div>
-</div></li>
-
-<li><p>rand6 协程安全测试</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">待补充...</pre></td></tr></table>
-</div>
-</div></li>
-</ul>
-
     </div>
 
     
@@ -497,7 +523,7 @@ Package rand implements pseudo-random number generators.</p>
   </p>
   <p class="copyright-item">
     <span class="item-title">LastMod</span>
-    <span class="item-content">2018-09-03</span>
+    <span class="item-content">2018-09-10</span>
   </p>
   
   <p class="copyright-item">
@@ -511,7 +537,7 @@ Package rand implements pseudo-random number generators.</p>
 
     <footer class="post-footer">
       <div class="post-tags">
-          <a href="https://zhiweiyin318.github.io/tags/golang/">golang</a>
+          <a href="https://zhiweiyin318.github.io/tags/python/">Python</a>
           <a href="https://zhiweiyin318.github.io/tags/code/">code</a>
           
         </div>
@@ -519,14 +545,9 @@ Package rand implements pseudo-random number generators.</p>
       
       <nav class="post-nav">
         
-          <a class="prev" href="/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-history/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">《深入剖析Kubernetes》-学习笔记-History</span>
-            <span class="prev-text nav-mobile">Prev</span>
-          </a>
         
-          <a class="next" href="/post/golang%E7%9A%84%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6/">
-            <span class="next-text nav-default">golang的测试框架</span>
+          <a class="next" href="/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-cgroups-namepspace/">
+            <span class="next-text nav-default">《深入剖析Kubernetes》-学习笔记-Cgroups-Namespace</span>
             <span class="prev-text nav-mobile">Next</span>
             <i class="iconfont icon-right"></i>
           </a>

@@ -6,17 +6,35 @@
     <description>Recent content in Tags on Zhiwei Yin&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 03 Sep 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 10 Sep 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://zhiweiyin318.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Cgroups</title>
+      <link>https://zhiweiyin318.github.io/tags/cgroups/</link>
+      <pubDate>Mon, 10 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhiweiyin318.github.io/tags/cgroups/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Code</title>
       <link>https://zhiweiyin318.github.io/tags/code/</link>
-      <pubDate>Mon, 03 Sep 2018 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 10 Sep 2018 00:00:00 +0000</pubDate>
       
       <guid>https://zhiweiyin318.github.io/tags/code/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Docker</title>
+      <link>https://zhiweiyin318.github.io/tags/docker/</link>
+      <pubDate>Mon, 10 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhiweiyin318.github.io/tags/docker/</guid>
       <description></description>
     </item>
     
@@ -41,27 +59,27 @@
     <item>
       <title>Kubernetes</title>
       <link>https://zhiweiyin318.github.io/tags/kubernetes/</link>
-      <pubDate>Sun, 09 Sep 2018 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 10 Sep 2018 00:00:00 +0000</pubDate>
       
       <guid>https://zhiweiyin318.github.io/tags/kubernetes/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Note</title>
-      <link>https://zhiweiyin318.github.io/tags/note/</link>
-      <pubDate>Sun, 09 Sep 2018 00:00:00 +0000</pubDate>
+      <title>Namespace</title>
+      <link>https://zhiweiyin318.github.io/tags/namespace/</link>
+      <pubDate>Mon, 10 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://zhiweiyin318.github.io/tags/note/</guid>
+      <guid>https://zhiweiyin318.github.io/tags/namespace/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Others</title>
-      <link>https://zhiweiyin318.github.io/tags/others/</link>
-      <pubDate>Tue, 31 Jul 2018 00:00:00 +0000</pubDate>
+      <title>Python</title>
+      <link>https://zhiweiyin318.github.io/tags/python/</link>
+      <pubDate>Mon, 10 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://zhiweiyin318.github.io/tags/others/</guid>
+      <guid>https://zhiweiyin318.github.io/tags/python/</guid>
       <description></description>
     </item>
     

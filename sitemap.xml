@@ -10,7 +10,21 @@
   </url>
   
   <url>
-    <loc>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%8E%86%E5%8F%B2/</loc>
+    <loc>https://zhiweiyin318.github.io/post/olso_config/</loc>
+    <lastmod>2018-09-10T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-cgroups-namepspace/</loc>
+    <lastmod>2018-09-10T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-history/</loc>
     <lastmod>2018-09-09T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -31,7 +45,7 @@
   </url>
   
   <url>
-    <loc>https://zhiweiyin318.github.io/post/start/</loc>
+    <loc>https://zhiweiyin318.github.io/post/hugo/</loc>
     <lastmod>2018-07-31T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -44,7 +58,28 @@
   </url>
   
   <url>
+    <loc>https://zhiweiyin318.github.io/tags/cgroups/</loc>
+    <lastmod>2018-09-10T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://zhiweiyin318.github.io/tags/code/</loc>
+    <lastmod>2018-09-10T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://zhiweiyin318.github.io/tags/docker/</loc>
+    <lastmod>2018-09-10T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://zhiweiyin318.github.io/categories/golang/</loc>
     <lastmod>2018-09-03T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
@@ -58,13 +93,6 @@
   </url>
   
   <url>
-    <loc>https://zhiweiyin318.github.io/categories/golang/</loc>
-    <lastmod>2018-09-03T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://zhiweiyin318.github.io/tags/hugo/</loc>
     <lastmod>2018-07-31T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -72,57 +100,50 @@
   </url>
   
   <url>
-    <loc>https://zhiweiyin318.github.io/tags/kubernetes/</loc>
-    <lastmod>2018-09-09T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://zhiweiyin318.github.io/categories/kubernetes/</loc>
-    <lastmod>2018-09-09T00:00:00+00:00</lastmod>
+    <lastmod>2018-09-10T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://zhiweiyin318.github.io/tags/note/</loc>
-    <lastmod>2018-09-09T00:00:00+00:00</lastmod>
+    <loc>https://zhiweiyin318.github.io/tags/kubernetes/</loc>
+    <lastmod>2018-09-10T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://zhiweiyin318.github.io/categories/note/</loc>
-    <lastmod>2018-09-09T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://zhiweiyin318.github.io/tags/others/</loc>
-    <lastmod>2018-07-31T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://zhiweiyin318.github.io/categories/others/</loc>
-    <lastmod>2018-07-31T00:00:00+00:00</lastmod>
+    <loc>https://zhiweiyin318.github.io/tags/namespace/</loc>
+    <lastmod>2018-09-10T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://zhiweiyin318.github.io/post/</loc>
-    <lastmod>2018-09-09T00:00:00+00:00</lastmod>
+    <lastmod>2018-09-10T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://zhiweiyin318.github.io/categories/python/</loc>
+    <lastmod>2018-09-10T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://zhiweiyin318.github.io/tags/python/</loc>
+    <lastmod>2018-09-10T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://zhiweiyin318.github.io/tags/</loc>
-    <lastmod>2018-09-03T00:00:00+00:00</lastmod>
+    <lastmod>2018-09-10T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

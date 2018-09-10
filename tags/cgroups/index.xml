@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Kubernetes on Zhiwei Yin&#39;s Blog</title>
-    <link>https://zhiweiyin318.github.io/tags/kubernetes/</link>
-    <description>Recent content in Kubernetes on Zhiwei Yin&#39;s Blog</description>
+    <title>Cgroups on Zhiwei Yin&#39;s Blog</title>
+    <link>https://zhiweiyin318.github.io/tags/cgroups/</link>
+    <description>Recent content in Cgroups on Zhiwei Yin&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Mon, 10 Sep 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://zhiweiyin318.github.io/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://zhiweiyin318.github.io/tags/cgroups/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -18,15 +18,6 @@
       
       <guid>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-cgroups-namepspace/</guid>
       <description>概述 容器其实就是一种沙盒技术的，沙盒就像集装箱一样，把应用装起来，应用于应用之间，有了边界，互不干扰，而且方便被搬来搬去，这就是PaaS最理</description>
-    </item>
-    
-    <item>
-      <title>《深入剖析Kubernetes》-学习笔记-History</title>
-      <link>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-history/</link>
-      <pubDate>Sun, 09 Sep 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-history/</guid>
-      <description>我是2017年误打误撞的掉进了云计算这个坑里，上来就是Docker，Mesos，Kubernetes，现在主要从事Kubernetes相关工</description>
     </item>
     
   </channel>

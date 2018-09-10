@@ -29,5 +29,14 @@
       <description>golang 测试框架 本文主要介绍golang 测试的集中常见的框架。 go test 文件名称位xx_test.go 测试函数Testxxx(t *testing.T) 1 go test -v GoConvey 可以管理和运</description>
     </item>
     
+    <item>
+      <title>Hugo</title>
+      <link>https://zhiweiyin318.github.io/post/hugo/</link>
+      <pubDate>Tue, 31 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhiweiyin318.github.io/post/hugo/</guid>
+      <description>为啥搞blog 之前在sina写过复盘日记，后来也没坚持下来；之前在github上用其他框架搭过blog，太繁琐了，也放弃了。 最近在有道云上记</description>
+    </item>
+    
   </channel>
 </rss>

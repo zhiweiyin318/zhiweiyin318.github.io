@@ -6,17 +6,35 @@
     <description>Recent content in Posts on Zhiwei Yin&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 09 Sep 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 10 Sep 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://zhiweiyin318.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>《深入剖析Kubernetes》-学习笔记-历史</title>
-      <link>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%8E%86%E5%8F%B2/</link>
+      <title>OpenStack olso_config</title>
+      <link>https://zhiweiyin318.github.io/post/olso_config/</link>
+      <pubDate>Mon, 10 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhiweiyin318.github.io/post/olso_config/</guid>
+      <description>oslo oslo作为OpenStack的通用组件，在每一个项目中都有用到，oslo.config主要用于命令行和配置项解析。 参考: * https://gtcsq.readthedocs.io/en/latest/openstack/oslo_cfg.html * https://blog.csdn.net/zhangyifei216/article/details/50434980 * https://blog.csdn.net/hobertony_7/article/details/79206297 * https://www.programcreek.com/python/example/106149/oslo_config.cfg.ConfigOpts</description>
+    </item>
+    
+    <item>
+      <title>《深入剖析Kubernetes》-学习笔记-Cgroups-Namespace</title>
+      <link>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-cgroups-namepspace/</link>
+      <pubDate>Mon, 10 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-cgroups-namepspace/</guid>
+      <description>概述 容器其实就是一种沙盒技术的，沙盒就像集装箱一样，把应用装起来，应用于应用之间，有了边界，互不干扰，而且方便被搬来搬去，这就是PaaS最理</description>
+    </item>
+    
+    <item>
+      <title>《深入剖析Kubernetes》-学习笔记-History</title>
+      <link>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-history/</link>
       <pubDate>Sun, 09 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%8E%86%E5%8F%B2/</guid>
+      <guid>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-history/</guid>
       <description>我是2017年误打误撞的掉进了云计算这个坑里，上来就是Docker，Mesos，Kubernetes，现在主要从事Kubernetes相关工</description>
     </item>
     
@@ -39,11 +57,11 @@
     </item>
     
     <item>
-      <title>Start</title>
-      <link>https://zhiweiyin318.github.io/post/start/</link>
+      <title>Hugo</title>
+      <link>https://zhiweiyin318.github.io/post/hugo/</link>
       <pubDate>Tue, 31 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://zhiweiyin318.github.io/post/start/</guid>
+      <guid>https://zhiweiyin318.github.io/post/hugo/</guid>
       <description>为啥搞blog 之前在sina写过复盘日记，后来也没坚持下来；之前在github上用其他框架搭过blog，太繁琐了，也放弃了。 最近在有道云上记</description>
     </item>
     
