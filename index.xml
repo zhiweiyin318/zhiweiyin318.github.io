@@ -25,6 +25,208 @@
     </item>
     
     <item>
+      <title>Python docker-client</title>
+      <link>https://zhiweiyin318.github.io/post/python-docker-client/</link>
+      <pubDate>Tue, 11 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhiweiyin318.github.io/post/python-docker-client/</guid>
+      
+        <description>
+
+&lt;p&gt;简单记录哈python的docker client的使用。&lt;br /&gt;
+&amp;gt; 官方文档：&lt;br /&gt;
+&amp;gt; &lt;a href=&#34;https://docker-py.readthedocs.io/en/stable/client.html&#34;&gt;https://docker-py.readthedocs.io/en/stable/client.html&lt;/a&gt;&lt;br /&gt;
+&amp;gt; &lt;a href=&#34;https://docs.docker.com/develop/sdk/examples/&#34;&gt;https://docs.docker.com/develop/sdk/examples/&lt;/a&gt;&lt;br /&gt;
+&amp;gt; demo地址：&lt;br /&gt;
+&amp;gt; &lt;a href=&#34;https://github.com/zhiweiyin318/yzw.python.demo/tree/master/dockerclient&#34;&gt;https://github.com/zhiweiyin318/yzw.python.demo/tree/master/dockerclient&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;安装&#34;&gt;安装&lt;/h1&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;$ pip install docker&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h1 id=&#34;使用&#34;&gt;使用&lt;/h1&gt;
+
+&lt;h2 id=&#34;client-初始化&#34;&gt;client 初始化&lt;/h2&gt;
+
+&lt;p&gt;需要先创建一个DockerClient类的对象，相当于本地的docker client端。有三种方式：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;import docker
+
+# 方式1 base_url 可以是socket或者tcp方式，还有version，timeout等参数
+dc = docker.APIClient(base_url=&amp;#39;unix://var/run/docker.sock&amp;#39;,timeout=5)
+# 方式2
+docker_kwargs = docker.utils.kwargs_from_env()
+dc = docker.APIClient(version=&amp;#39;auto&amp;#39;, **docker_kwargs)
+# 方式3 这是上面2个的子集
+dc = docker.from_env()&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2 id=&#34;client-的方法&#34;&gt;client 的方法&lt;/h2&gt;
+
+&lt;p&gt;client对象的有一些方法：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;dc.configs
+dc.containers
+dc.images
+dc.networks
+dc.nodes
+dc.plugins
+dc.volumes
+dc.services
+dc.events
+...&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3 id=&#34;运行-查询-停止-删除-一个容器&#34;&gt;运行，查询，停止，删除 一个容器&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&amp;gt;&amp;gt;&amp;gt; import docker
+&amp;gt;&amp;gt;&amp;gt; dc = docker.from_env()
+&amp;gt;&amp;gt;&amp;gt; dc.containers.run(&amp;#34;busybox&amp;#34;,&amp;#39;echo hello world&amp;#39;)
+&amp;#39;hello world\n&amp;#39;
+&amp;gt;&amp;gt;&amp;gt; &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;import docker
+dc = docker.from_env()
+container = dc.containers.run(&amp;#34;busybox&amp;#34;, name=&amp;#39;test&amp;#39;, command=&amp;#39;echo hello world&amp;#39;, detach=True, tty=True,
+                                stdin_open=True)
+print container.logs()
+print &amp;#34;containers: {}&amp;#34;.format(dc.containers.list())
+print &amp;#34;container {} status is {}&amp;#34;.format(container.name, container.status)
+container.stop()
+container.remove()
+print &amp;#34;container {} status is {}&amp;#34;.format(container.name, container.status)
+print &amp;#34;containers: {}&amp;#34;.format(dc.containers.list())&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3 id=&#34;list-pull-image&#34;&gt;list/pull image&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;import docker
+dc = docker.from_env()
+for i in dc.images.list():
+    print &amp;#34;image ID:{}, tag:{}&amp;#34;.format(i.short_id, i.tags)
+    for t in i.tags:
+        if t == &amp;#34;busybox:latest&amp;#34;:
+            print &amp;#34;remove image {}&amp;#34;.format(t)
+            dc.images.remove(&amp;#39;busybox:latest&amp;#39;)
+
+# if no tag is specified all tags from the repo will be pulled.
+image = dc.images.pull(&amp;#39;busybox:latest&amp;#39;)
+print &amp;#34;pull busybox image, id:{},tag:{}&amp;#34;.format(image.short_id, image.tags)&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2 id=&#34;low-level-api&#34;&gt;Low-level API&lt;/h2&gt;
+
+&lt;p&gt;The main object-orientated API is built on top of APIClient. Each method on APIClient maps one-to-one with a REST API endpoint, and returns the response that the API responds with.&lt;/p&gt;
+
+&lt;p&gt;It’s possible to use APIClient directly. Some basic things (e.g. running a container) consist of several API calls and are complex to do with the low-level API, but it’s useful if you need extra flexibility and power.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;import docker
+dc = docker.APIClient(base_url=&amp;#39;unix://var/run/docker.sock&amp;#39;)
+    print dc.version()
+dc.containers()&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;等同于：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;import docker
+dc = docker.from_env()
+dc.api.containers()&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;输出结果是json结构的map&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;[{u&amp;#39;Status&amp;#39;: u&amp;#39;Up Less than a second&amp;#39;, u&amp;#39;Created&amp;#39;: 1536673589, u&amp;#39;Image&amp;#39;: u&amp;#39;busybox&amp;#39;, u&amp;#39;Labels&amp;#39;: {}, u&amp;#39;NetworkSettings&amp;#39;: {u&amp;#39;Networks&amp;#39;: {u&amp;#39;bridge&amp;#39;: {u&amp;#39;NetworkID&amp;#39;: u&amp;#39;754e02dfae9aa61b96e78ca6dfa743f121177c2985cd3179641e8650032180b4&amp;#39;, u&amp;#39;MacAddress&amp;#39;: u&amp;#39;02:42:ac:11:00:03&amp;#39;, u&amp;#39;GlobalIPv6PrefixLen&amp;#39;: 0, u&amp;#39;Links&amp;#39;: None, u&amp;#39;GlobalIPv6Address&amp;#39;: u&amp;#39;&amp;#39;, u&amp;#39;IPv6Gateway&amp;#39;: u&amp;#39;&amp;#39;, u&amp;#39;DriverOpts&amp;#39;: None, u&amp;#39;IPAMConfig&amp;#39;: None, u&amp;#39;EndpointID&amp;#39;: u&amp;#39;06443f233bfac60c83c9835172c9d076a9df406bd84a350e1e713fd274caf5d3&amp;#39;, u&amp;#39;IPPrefixLen&amp;#39;: 16, u&amp;#39;IPAddress&amp;#39;: u&amp;#39;172.17.0.3&amp;#39;, u&amp;#39;Gateway&amp;#39;: u&amp;#39;172.17.0.1&amp;#39;, u&amp;#39;Aliases&amp;#39;: None}}}, u&amp;#39;HostConfig&amp;#39;: {u&amp;#39;NetworkMode&amp;#39;: u&amp;#39;default&amp;#39;}, u&amp;#39;ImageID&amp;#39;: u&amp;#39;sha256:e1ddd7948a1c31709a23cc5b7dfe96e55fc364f90e1cebcde0773a1b5a30dcda&amp;#39;, u&amp;#39;State&amp;#39;: u&amp;#39;running&amp;#39;, u&amp;#39;Command&amp;#39;: u&amp;#39;/bin/sh&amp;#39;, u&amp;#39;Names&amp;#39;: [u&amp;#39;/cranky_lichterman&amp;#39;], u&amp;#39;Mounts&amp;#39;: [], u&amp;#39;Id&amp;#39;: u&amp;#39;ededc6515049f2d13b8ee79df0729bf9f8f4d92940e6012c4f1e23ccc055c0f7&amp;#39;, u&amp;#39;Ports&amp;#39;: []}, {u&amp;#39;Status&amp;#39;: u&amp;#39;Up About a minute&amp;#39;, u&amp;#39;Created&amp;#39;: 1536673521, u&amp;#39;Image&amp;#39;: u&amp;#39;busybox&amp;#39;, u&amp;#39;Labels&amp;#39;: {}, u&amp;#39;NetworkSettings&amp;#39;: {u&amp;#39;Networks&amp;#39;: {u&amp;#39;bridge&amp;#39;: {u&amp;#39;NetworkID&amp;#39;: u&amp;#39;754e02dfae9aa61b96e78ca6dfa743f121177c2985cd3179641e8650032180b4&amp;#39;, u&amp;#39;MacAddress&amp;#39;: u&amp;#39;02:42:ac:11:00:02&amp;#39;, u&amp;#39;GlobalIPv6PrefixLen&amp;#39;: 0, u&amp;#39;Links&amp;#39;: None, u&amp;#39;GlobalIPv6Address&amp;#39;: u&amp;#39;&amp;#39;, u&amp;#39;IPv6Gateway&amp;#39;: u&amp;#39;&amp;#39;, u&amp;#39;DriverOpts&amp;#39;: None, u&amp;#39;IPAMConfig&amp;#39;: None, u&amp;#39;EndpointID&amp;#39;: u&amp;#39;2a3d90402db5b9c26583a5bb4bad5c4561fb263cd2858d0e01774ab7fa5cc336&amp;#39;, u&amp;#39;IPPrefixLen&amp;#39;: 16, u&amp;#39;IPAddress&amp;#39;: u&amp;#39;172.17.0.2&amp;#39;, u&amp;#39;Gateway&amp;#39;: u&amp;#39;172.17.0.1&amp;#39;, u&amp;#39;Aliases&amp;#39;: None}}}, u&amp;#39;HostConfig&amp;#39;: {u&amp;#39;NetworkMode&amp;#39;: u&amp;#39;default&amp;#39;}, u&amp;#39;ImageID&amp;#39;: u&amp;#39;sha256:e1ddd7948a1c31709a23cc5b7dfe96e55fc364f90e1cebcde0773a1b5a30dcda&amp;#39;, u&amp;#39;State&amp;#39;: u&amp;#39;running&amp;#39;, u&amp;#39;Command&amp;#39;: u&amp;#39;/bin/sh&amp;#39;, u&amp;#39;Names&amp;#39;: [u&amp;#39;/loving_wright&amp;#39;], u&amp;#39;Mounts&amp;#39;: [], u&amp;#39;Id&amp;#39;: u&amp;#39;6721f996af1e9d04237fef0a1cb3f50e9e564173e8ff25056cdc475e8a985de5&amp;#39;, u&amp;#39;Ports&amp;#39;: []}]&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+      
+    </item>
+    
+    <item>
       <title>OpenStack olso_config</title>
       <link>https://zhiweiyin318.github.io/post/olso_config/</link>
       <pubDate>Mon, 10 Sep 2018 00:00:00 +0000</pubDate>
