@@ -84,7 +84,7 @@
 
 <meta itemprop="datePublished" content="2018-09-12T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2018-09-12T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="6841">
+<meta itemprop="wordCount" content="7277">
 
 
 
@@ -310,8 +310,8 @@
             <a href="https://zhiweiyin318.github.io/categories/kubernetes/"> kubernetes </a>
             
           </div>
-        <span class="more-meta"> 6841 words </span>
-        <span class="more-meta"> 14 min read </span>
+        <span class="more-meta"> 7277 words </span>
+        <span class="more-meta"> 15 min read </span>
       </div>
     </header>
 
@@ -342,6 +342,7 @@
 <li><a href="#性能">性能</a></li>
 </ul></li>
 </ul></li>
+<li><a href="#dockerfile">Dockerfile</a></li>
 </ul>
 </nav>
   </div>
@@ -1161,6 +1162,123 @@ OverlayFS只工作在两层中。这比AUFS要在多层镜像中查找时性能�
 
 <p>使用数据卷： 数据卷提供了最好的以及最可预见的性能。 因为绕过了存储驱动，因此不会存在瘦供给和copy-on-write带来的潜在性能开销。 因此，写操作较频繁的数据应该放在数据卷上。</p>
 
+<h1 id="dockerfile">Dockerfile</h1>
+
+<p>python:2.7-slim基础镜像一共有4层layer。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">root@yzw-vm:/home/yzw/docker# docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+python              2.7-slim            c9cde4658340        7 days ago          120MB
+root@yzw-vm:/home/yzw/docker# ls -l /var/lib/docker/overlay2/
+total 20
+drwx------ 4 root root 4096 Sep 12 22:07 0111758e6c9c78c7ae33a181232bf15aa1fc9c314d1b9cacd9506541065a7379
+drwx------ 2 root root 4096 Sep 12 22:07 l
+drwx------ 4 root root 4096 Sep 12 22:07 4560378751a6edaa1b7ed848d632310eaf96431d9643792a5d2462b315263c0e
+drwx------ 4 root root 4096 Sep 12 22:07 f6a44ab116768ddf5ba69b2f9601a627ececb2d9d20b6a5956bf97818fd46691
+drwx------ 3 root root 4096 Sep 12 22:07 897596fd5f4efb3890c0801cb3813374fb9c40513f172bf2bf05f3f0c9e37d4b</pre></td></tr></table>
+</div>
+</div>
+<p>基于python:2.7-slim基础镜像build一个新的镜像</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">root@yzw-vm:/home/yzw/docker# cat Dockerfile 
+FROM python:2.7-slim
+WORKDIR /app
+ADD . /app
+RUN pip install --trusted-host pypi.python.org -r requirements.txt
+EXPOSE 80
+ENV NAME World
+CMD [&#34;python&#34;,&#34;app.py&#34;]
+
+root@yzw-vm:/home/yzw/docker# docker build -t helloworld .
+...
+root@yzw-vm:/home/yzw/docker# docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+helloword           latest              7c6f3f79a9d1        30 minutes ago      131MB
+python              2.7-slim            c9cde4658340        7 days ago          120MB</pre></td></tr></table>
+</div>
+</div>
+<p>在python基础镜像的基础上多出了3个layer，WORKDIR，ADD，RUN每一个操作会生成一个layer</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">root@yzw-vm:/var/lib/docker/overlay2# ls -lt
+total 32
+drwx------ 2 root root 4096 Sep 12 22:10 l
+drwx------ 4 root root 4096 Sep 12 22:10 4463cacc12fd606d136c25228be202afba963954ea3b90b9aa22e760230eb559
+drwx------ 4 root root 4096 Sep 12 22:09 1c6de6d90e60da84614b9ffe7147ccc3465e9d301445161f1c8d0b8bdb3e8044
+drwx------ 4 root root 4096 Sep 12 22:09 44744bbff15cfb1a73c168cee6d23b4e99458d5c4a72199a310016d7ebd4e28d
+drwx------ 4 root root 4096 Sep 12 22:07 0111758e6c9c78c7ae33a181232bf15aa1fc9c314d1b9cacd9506541065a7379
+drwx------ 4 root root 4096 Sep 12 22:07 4560378751a6edaa1b7ed848d632310eaf96431d9643792a5d2462b315263c0e
+drwx------ 4 root root 4096 Sep 12 22:07 f6a44ab116768ddf5ba69b2f9601a627ececb2d9d20b6a5956bf97818fd46691
+drwx------ 3 root root 4096 Sep 12 22:07 897596fd5f4efb3890c0801cb3813374fb9c40513f172bf2bf05f3f0c9e37d4b
+root@yzw-vm:/var/lib/docker/overlay2# ls -lt 44744bbff15cfb1a73c168cee6d23b4e99458d5c4a72199a310016d7ebd4e28d/diff/app
+total 0
+root@yzw-vm:/var/lib/docker/overlay2# ls -lt 1c6de6d90e60da84614b9ffe7147ccc3465e9d301445161f1c8d0b8bdb3e8044/diff/app/
+total 12
+-rw-r--r-- 1 root root 168 Sep 12 22:08 Dockerfile
+-rw-r--r-- 1 root root   6 Sep 12 22:01 requirements.txt
+-rw-rw-r-- 1 root root 324 Sep 12 21:59 app.py
+root@yzw-vm:/var/lib/docker/overlay2# ls -lt 4463cacc12fd606d136c25228be202afba963954ea3b90b9aa22e760230eb559/diff
+total 12
+drwxrwxrwt 2 root root 4096 Sep 12 22:10 tmp
+drwx------ 3 root root 4096 Sep 12 22:09 root
+drwxr-xr-x 3 root root 4096 Aug 31 08:00 usr</pre></td></tr></table>
+</div>
+</div>
     </div>
 
     
@@ -1196,8 +1314,8 @@ OverlayFS只工作在两层中。这比AUFS要在多层镜像中查找时性能�
       <nav class="post-nav">
         
         
-          <a class="next" href="/post/python-docker-client/">
-            <span class="next-text nav-default">Python docker-client</span>
+          <a class="next" href="/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-exec-volume/">
+            <span class="next-text nav-default">《深入剖析Kubernetes》-学习笔记-exec-volume</span>
             <span class="prev-text nav-mobile">Next</span>
             <i class="iconfont icon-right"></i>
           </a>

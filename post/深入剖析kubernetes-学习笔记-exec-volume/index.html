@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>《深入剖析Kubernetes》-学习笔记-exec-volume - Zhiwei Yin&#39;s Blog</title>
+  <link rel="alternate" hreflang="en" href="https://zhiweiyin318.github.io" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Zhiwei Yin" />
+  <meta name="description" content="docker exec 是怎么进入容器的？ 容器进程python2，docker exec又重新拉起来了进程跟python2进程都是docker-container" />
+
+  <meta name="keywords" content="Golang, Kubernetes, Docker" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.45.1" />
+
+
+<link rel="canonical" href="https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-exec-volume/" />
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="《深入剖析Kubernetes》-学习笔记-exec-volume" />
+<meta property="og:description" content="docker exec 是怎么进入容器的？ 容器进程python2，docker exec又重新拉起来了进程跟python2进程都是docker-container" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-exec-volume/" />
+
+
+
+<meta property="article:published_time" content="2018-09-12T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2018-09-12T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="《深入剖析Kubernetes》-学习笔记-exec-volume">
+<meta itemprop="description" content="docker exec 是怎么进入容器的？ 容器进程python2，docker exec又重新拉起来了进程跟python2进程都是docker-container">
+
+
+<meta itemprop="datePublished" content="2018-09-12T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2018-09-12T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1987">
+
+
+
+<meta itemprop="keywords" content="docker,kubernetes,volume,exec," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="《深入剖析Kubernetes》-学习笔记-exec-volume"/>
+<meta name="twitter:description" content="docker exec 是怎么进入容器的？ 容器进程python2，docker exec又重新拉起来了进程跟python2进程都是docker-container"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Zhiwei Yin</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/">Home</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/post/">Archives</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/tags/">Tags</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/categories/">Categories</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/about/">About</a>
+          
+        
+      </li>
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Zhiwei Yin
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/">Home</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/post/">Archives</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/tags/">Tags</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/categories/">Categories</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/about/">About</a>
+          
+
+        
+
+      </li>
+    
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">《深入剖析Kubernetes》-学习笔记-exec-volume</h1>
+      
+      <div class="post-meta">
+        <span class="post-time"> 2018-09-12 </span>
+        <div class="post-category">
+            <a href="https://zhiweiyin318.github.io/categories/kubernetes/"> kubernetes </a>
+            
+          </div>
+        <span class="more-meta"> 1987 words </span>
+        <span class="more-meta"> 4 min read </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Table of Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#docker-exec-是怎么进入容器的">docker exec 是怎么进入容器的？</a></li>
+<li><a href="#docker-volume-是怎么实现的">docker volume 是怎么实现的？</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h1 id="docker-exec-是怎么进入容器的">docker exec 是怎么进入容器的？</h1>
+
+<p>容器进程python2，docker exec又重新拉起来了进程跟python2进程都是docker-containerd-shim的子进程。docker exec又是怎么进入 python2进程的Namespace的呢?</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">root@yzw-vm:/home/yzw/docker# docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+9e4bdd819dc0        python:2.7-slim     &#34;python2&#34;           3 seconds ago       Up 1 second                             flamboyant_darwin
+root@yzw-vm:/home/yzw/docker# ps auxf
+...
+root      1488  0.3  1.9 1405040 78288 ?       Ssl  11:53   2:20 /usr/bin/dockerd -H fd://
+root      1743  0.2  0.8 1319652 35928 ?       Ssl  11:53   1:30  \_ docker-containerd --config /var/run/docker/containerd/containerd.toml
+root     11223  0.0  0.1   7500  4080 ?        Sl   23:07   0:00      \_ docker-containerd-shim -namespace moby -workdir /var/lib/docker/containerd/daemon/io.containerd.runtime.v1.linux/moby/9e4bdd819dc0b462eb
+root     11243  0.0  0.1  30084  7764 pts/0    Ss+  23:07   0:00          \_ python2
+
+root@yzw-vm:/home/yzw/docker# docker exec -it 9e4bdd819dc0 /bin/bash
+root@9e4bdd819dc0:/# 
+
+root@yzw-vm:/home/yzw/docker# ps auxf
+...
+root      1488  0.3  1.9 1405040 78208 ?       Ssl  11:53   2:21 /usr/bin/dockerd -H fd://
+root      1743  0.2  0.8 1319652 35928 ?       Ssl  11:53   1:31  \_ docker-containerd --config /var/run/docker/containerd/containerd.toml
+root     11223  0.0  0.0   7500  4020 ?        Sl   23:07   0:00      \_ docker-containerd-shim -namespace moby -workdir /var/lib/docker/containerd/daemon/io.containerd.runtime.v1.linux/moby/9e4bdd819dc0b462eb
+root     11243  0.0  0.1  30084  7764 pts/0    Ss+  23:07   0:00          \_ python2
+root     11367  0.0  0.0  19952  3444 pts/1    Ss+  23:12   0:00          \_ /bin/bash</pre></td></tr></table>
+</div>
+</div>
+<p>Linux Namespace 创建了一个隔离的空间，但是一个进程的Namespace在宿主机上是以文件形式存在着的，进程的每一个namespace都链接到一个真是的文件。</p>
+
+<p>一个进程，可以加入到某个进程已有的Namespace当中，达到进入这个进程所在容器的目的，就是exec的实现原理。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">root@yzw-vm:/home/yzw/docker# docker inspect --format ‘{{.State.Pid}}’ 9e4bdd819dc0
+‘11243’
+root@yzw-vm:/home/yzw/docker# ls -l /proc/11243/ns
+total 0
+lrwxrwxrwx 1 root root 0 Sep 12 23:25 cgroup -&gt; &#39;cgroup:[4026531835]&#39;
+lrwxrwxrwx 1 root root 0 Sep 12 23:12 ipc -&gt; &#39;ipc:[4026532239]&#39;
+lrwxrwxrwx 1 root root 0 Sep 12 23:12 mnt -&gt; &#39;mnt:[4026532237]&#39;
+lrwxrwxrwx 1 root root 0 Sep 12 23:07 net -&gt; &#39;net:[4026532242]&#39;
+lrwxrwxrwx 1 root root 0 Sep 12 23:12 pid -&gt; &#39;pid:[4026532240]&#39;
+lrwxrwxrwx 1 root root 0 Sep 12 23:25 pid_for_children -&gt; &#39;pid:[4026532240]&#39;
+lrwxrwxrwx 1 root root 0 Sep 12 23:25 user -&gt; &#39;user:[4026531837]&#39;
+lrwxrwxrwx 1 root root 0 Sep 12 23:12 uts -&gt; &#39;uts:[4026532238]&#39;</pre></td></tr></table>
+</div>
+</div>
+<p>这个操作依赖一个setns()的系统调用。将需要进入的Namespace的文件描述符fd交给setns()，就可以将当前进程加入到这个Namespace里面了。下面小程序传入2个参数，一个是Namespace的文件名，第二个是执行的程序。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">#define _GNU_SOURCE
+#include &lt;fcntl.h&gt;
+#include &lt;sched.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+
+#define errExit(msg) do { perror(msg);exit(EXIT_FAILURE);} while(0)
+
+int main(int argc, char *argv[]){
+    int fd;
+    fd =open(argv[1],O_RDONLY);
+    if (setns(fd,0) == -1){
+        errExit(&#34;setns&#34;);
+    }
+    execvp(argv[2],&amp;argv[2]);
+    errExit(&#34;execvp&#34;);
+}</pre></td></tr></table>
+</div>
+</div>
+<p>编译后，传入mnt的namespace文件。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">root@yzw-vm:/home/yzw/docker# gcc -o setnc setns.c 
+
+root@yzw-vm:/home/yzw/docker# docker exec -it 9e4bdd819dc0 /bin/bash
+root@9e4bdd819dc0:/# cd /home/
+root@9e4bdd819dc0:/home# ls
+root@9e4bdd819dc0:/home# touch abc
+root@9e4bdd819dc0:/home# ls
+abc
+
+
+root@yzw-vm:/home/yzw/docker# ./setnc /proc/11243/ns/mnt /bin/bash
+root@yzw-vm:/# ls
+bin  boot  dev	etc  home  lib	lib64  media  mnt  opt	proc  root  run  sbin  srv  sys  tmp  usr  var
+root@yzw-vm:/# ls /home/
+abc
+root@yzw-vm:/# </pre></td></tr></table>
+</div>
+</div>
+<p>查下新启的bin/bash的进程的PID的mnt Namespace，和python2进程的一样。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">root@yzw-vm:/home/yzw/docker# ps axuf | grep /bin/bash
+root     11863  0.0  0.0  18204  3156 pts/4    S+   23:57   0:00  |                       \_ /bin/bash
+root     11866  0.0  0.0  21536  1084 pts/5    S+   23:57   0:00                          \_ grep --color=auto /bin/bash
+root@yzw-vm:/home/yzw/docker# ls -l /proc/11863/ns/mnt 
+lrwxrwxrwx 1 root root 0 Sep 12 23:57 /proc/11863/ns/mnt -&gt; &#39;mnt:[4026532237]&#39;</pre></td></tr></table>
+</div>
+</div>
+<h1 id="docker-volume-是怎么实现的">docker volume 是怎么实现的？</h1>
+
+<p>docker volume又2种声明方式,比如把宿主机目录挂进容器/test目录：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma"># 在宿主机/var/lib/docker/volumes/xxx/_data 挂到容器/test目录
+$ docker run -v /test ...
+# 把宿主机/home目录挂到容器/test目录
+$ docker run -v /home:/test ...</pre></td></tr></table>
+</div>
+</div>
+<p>docker怎么把宿主机上的目录挂到容器里面的？</p>
+
+<p>前面namespace总结中，当容器进程（dockerinit 容器初始化进程）被创建之后，尽管开启了Mount Namespace，但是它执行chroot或者pivot_root之前，容器进程一直可以看到宿主机上整个文件系统。宿主机上的容器镜像的各个层，在容器进程启动后，就会被联合挂载到/var/lib/docker/overlay2/xxx/merged目录中，这样容器的rootfs就准备好了。</p>
+
+<blockquote>
+<p>容器启动进程dockerinit，而不是应用进程ENTRYPOINT+CMD,dockerinit负责完成根目录准备，挂载设备目录配置hostname一系列初始化工作，然后通过execv()，让应用程序取代自己，成为PID=1的进程。</p>
+</blockquote>
+
+<p>只需要在rootfs准备好之后，chroot之前，把volume指定的目录，挂载到容器指定目录在宿主机上对应的目录（/var/lib/docker/overlay2/读写层/test），就可以了。这时候Mount Namespace已经开启，挂载后，容器里面是可见的，宿主机上看不到容器里面的挂载点，容器的隔离性不好被volume打破。</p>
+
+<p>这里用到的挂载技术，就是Linux的绑定挂载 bind mount 机制，主要作用就是将一个目录/文件，而不是一个设备，挂载到一个指定目录上。并且，这时候你在该挂载点上进行的任何操作，发生在被挂载的目录或者文件上，而原挂载点的内容则会被隐藏起来，不受影响。</p>
+
+<p>绑定挂载实际上是一个inode替换的过程，indoe可以理解为存放文件内容的“对象”，dentry，目录项，就是访问inode所使用的“指针”。 bind mount相当于/test的dentry，重定向到/home的inode。当修改/test目录，实际是修改/home目录的inode。一旦umount后，/test目录原先的内容会恢复。</p>
+
+<p>这个/test目录的内容，是挂载在容器rootfs的可读写层，是不会被docker commit提交的，以为docker commint是发生在宿主机空间，由于mount namespace的隔离，不知道绑定挂载的存储，所有/test目录会被打包，出现在新的镜像里面的，但是里面是空的。</p>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Zhiwei Yin</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2018-09-12</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://zhiweiyin318.github.io/tags/docker/">docker</a>
+          <a href="https://zhiweiyin318.github.io/tags/kubernetes/">kubernetes</a>
+          <a href="https://zhiweiyin318.github.io/tags/volume/">volume</a>
+          <a href="https://zhiweiyin318.github.io/tags/exec/">exec</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-image/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">《深入剖析Kubernetes》-学习笔记-Image</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        
+          <a class="next" href="/post/python-docker-client/">
+            <span class="next-text nav-default">Python docker-client</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="zhiweiyin@hotmail.com" rel="me noopener" class="iconfont icon-email"
+        title="email" target="_blank">
+      </a>
+      <a href="https://github.com/zhiweiyin318" rel="me noopener" class="iconfont icon-github"
+        title="github" target="_blank">
+      </a>
+  <a href="https://zhiweiyin318.github.io/index.xml" rel="noopener alternate" type="application/rss&#43;xml" class="iconfont icon-rss"
+    title="rss" target="_blank">
+  </a>
+  </div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span><span class="author">Zhiwei Yin</span></span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+</body>
+</html>

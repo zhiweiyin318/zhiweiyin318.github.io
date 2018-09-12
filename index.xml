@@ -842,6 +842,349 @@ OverlayFS只工作在两层中。这比AUFS要在多层镜像中查找时性能�
 &lt;p&gt;SSD：为了获得最佳性能，一个通常的想法是使用诸如SSD这类更快的存储设备；&lt;/p&gt;
 
 &lt;p&gt;使用数据卷： 数据卷提供了最好的以及最可预见的性能。 因为绕过了存储驱动，因此不会存在瘦供给和copy-on-write带来的潜在性能开销。 因此，写操作较频繁的数据应该放在数据卷上。&lt;/p&gt;
+
+&lt;h1 id=&#34;dockerfile&#34;&gt;Dockerfile&lt;/h1&gt;
+
+&lt;p&gt;python:2.7-slim基础镜像一共有4层layer。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;root@yzw-vm:/home/yzw/docker# docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+python              2.7-slim            c9cde4658340        7 days ago          120MB
+root@yzw-vm:/home/yzw/docker# ls -l /var/lib/docker/overlay2/
+total 20
+drwx------ 4 root root 4096 Sep 12 22:07 0111758e6c9c78c7ae33a181232bf15aa1fc9c314d1b9cacd9506541065a7379
+drwx------ 2 root root 4096 Sep 12 22:07 l
+drwx------ 4 root root 4096 Sep 12 22:07 4560378751a6edaa1b7ed848d632310eaf96431d9643792a5d2462b315263c0e
+drwx------ 4 root root 4096 Sep 12 22:07 f6a44ab116768ddf5ba69b2f9601a627ececb2d9d20b6a5956bf97818fd46691
+drwx------ 3 root root 4096 Sep 12 22:07 897596fd5f4efb3890c0801cb3813374fb9c40513f172bf2bf05f3f0c9e37d4b&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;基于python:2.7-slim基础镜像build一个新的镜像&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;root@yzw-vm:/home/yzw/docker# cat Dockerfile 
+FROM python:2.7-slim
+WORKDIR /app
+ADD . /app
+RUN pip install --trusted-host pypi.python.org -r requirements.txt
+EXPOSE 80
+ENV NAME World
+CMD [&amp;#34;python&amp;#34;,&amp;#34;app.py&amp;#34;]
+
+root@yzw-vm:/home/yzw/docker# docker build -t helloworld .
+...
+root@yzw-vm:/home/yzw/docker# docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+helloword           latest              7c6f3f79a9d1        30 minutes ago      131MB
+python              2.7-slim            c9cde4658340        7 days ago          120MB&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;在python基础镜像的基础上多出了3个layer，WORKDIR，ADD，RUN每一个操作会生成一个layer&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;root@yzw-vm:/var/lib/docker/overlay2# ls -lt
+total 32
+drwx------ 2 root root 4096 Sep 12 22:10 l
+drwx------ 4 root root 4096 Sep 12 22:10 4463cacc12fd606d136c25228be202afba963954ea3b90b9aa22e760230eb559
+drwx------ 4 root root 4096 Sep 12 22:09 1c6de6d90e60da84614b9ffe7147ccc3465e9d301445161f1c8d0b8bdb3e8044
+drwx------ 4 root root 4096 Sep 12 22:09 44744bbff15cfb1a73c168cee6d23b4e99458d5c4a72199a310016d7ebd4e28d
+drwx------ 4 root root 4096 Sep 12 22:07 0111758e6c9c78c7ae33a181232bf15aa1fc9c314d1b9cacd9506541065a7379
+drwx------ 4 root root 4096 Sep 12 22:07 4560378751a6edaa1b7ed848d632310eaf96431d9643792a5d2462b315263c0e
+drwx------ 4 root root 4096 Sep 12 22:07 f6a44ab116768ddf5ba69b2f9601a627ececb2d9d20b6a5956bf97818fd46691
+drwx------ 3 root root 4096 Sep 12 22:07 897596fd5f4efb3890c0801cb3813374fb9c40513f172bf2bf05f3f0c9e37d4b
+root@yzw-vm:/var/lib/docker/overlay2# ls -lt 44744bbff15cfb1a73c168cee6d23b4e99458d5c4a72199a310016d7ebd4e28d/diff/app
+total 0
+root@yzw-vm:/var/lib/docker/overlay2# ls -lt 1c6de6d90e60da84614b9ffe7147ccc3465e9d301445161f1c8d0b8bdb3e8044/diff/app/
+total 12
+-rw-r--r-- 1 root root 168 Sep 12 22:08 Dockerfile
+-rw-r--r-- 1 root root   6 Sep 12 22:01 requirements.txt
+-rw-rw-r-- 1 root root 324 Sep 12 21:59 app.py
+root@yzw-vm:/var/lib/docker/overlay2# ls -lt 4463cacc12fd606d136c25228be202afba963954ea3b90b9aa22e760230eb559/diff
+total 12
+drwxrwxrwt 2 root root 4096 Sep 12 22:10 tmp
+drwx------ 3 root root 4096 Sep 12 22:09 root
+drwxr-xr-x 3 root root 4096 Aug 31 08:00 usr&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>《深入剖析Kubernetes》-学习笔记-exec-volume</title>
+      <link>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-exec-volume/</link>
+      <pubDate>Wed, 12 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-exec-volume/</guid>
+      
+        <description>
+
+&lt;h1 id=&#34;docker-exec-是怎么进入容器的&#34;&gt;docker exec 是怎么进入容器的？&lt;/h1&gt;
+
+&lt;p&gt;容器进程python2，docker exec又重新拉起来了进程跟python2进程都是docker-containerd-shim的子进程。docker exec又是怎么进入 python2进程的Namespace的呢?&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;root@yzw-vm:/home/yzw/docker# docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+9e4bdd819dc0        python:2.7-slim     &amp;#34;python2&amp;#34;           3 seconds ago       Up 1 second                             flamboyant_darwin
+root@yzw-vm:/home/yzw/docker# ps auxf
+...
+root      1488  0.3  1.9 1405040 78288 ?       Ssl  11:53   2:20 /usr/bin/dockerd -H fd://
+root      1743  0.2  0.8 1319652 35928 ?       Ssl  11:53   1:30  \_ docker-containerd --config /var/run/docker/containerd/containerd.toml
+root     11223  0.0  0.1   7500  4080 ?        Sl   23:07   0:00      \_ docker-containerd-shim -namespace moby -workdir /var/lib/docker/containerd/daemon/io.containerd.runtime.v1.linux/moby/9e4bdd819dc0b462eb
+root     11243  0.0  0.1  30084  7764 pts/0    Ss+  23:07   0:00          \_ python2
+
+root@yzw-vm:/home/yzw/docker# docker exec -it 9e4bdd819dc0 /bin/bash
+root@9e4bdd819dc0:/# 
+
+root@yzw-vm:/home/yzw/docker# ps auxf
+...
+root      1488  0.3  1.9 1405040 78208 ?       Ssl  11:53   2:21 /usr/bin/dockerd -H fd://
+root      1743  0.2  0.8 1319652 35928 ?       Ssl  11:53   1:31  \_ docker-containerd --config /var/run/docker/containerd/containerd.toml
+root     11223  0.0  0.0   7500  4020 ?        Sl   23:07   0:00      \_ docker-containerd-shim -namespace moby -workdir /var/lib/docker/containerd/daemon/io.containerd.runtime.v1.linux/moby/9e4bdd819dc0b462eb
+root     11243  0.0  0.1  30084  7764 pts/0    Ss+  23:07   0:00          \_ python2
+root     11367  0.0  0.0  19952  3444 pts/1    Ss+  23:12   0:00          \_ /bin/bash&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Linux Namespace 创建了一个隔离的空间，但是一个进程的Namespace在宿主机上是以文件形式存在着的，进程的每一个namespace都链接到一个真是的文件。&lt;/p&gt;
+
+&lt;p&gt;一个进程，可以加入到某个进程已有的Namespace当中，达到进入这个进程所在容器的目的，就是exec的实现原理。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;root@yzw-vm:/home/yzw/docker# docker inspect --format ‘{{.State.Pid}}’ 9e4bdd819dc0
+‘11243’
+root@yzw-vm:/home/yzw/docker# ls -l /proc/11243/ns
+total 0
+lrwxrwxrwx 1 root root 0 Sep 12 23:25 cgroup -&amp;gt; &amp;#39;cgroup:[4026531835]&amp;#39;
+lrwxrwxrwx 1 root root 0 Sep 12 23:12 ipc -&amp;gt; &amp;#39;ipc:[4026532239]&amp;#39;
+lrwxrwxrwx 1 root root 0 Sep 12 23:12 mnt -&amp;gt; &amp;#39;mnt:[4026532237]&amp;#39;
+lrwxrwxrwx 1 root root 0 Sep 12 23:07 net -&amp;gt; &amp;#39;net:[4026532242]&amp;#39;
+lrwxrwxrwx 1 root root 0 Sep 12 23:12 pid -&amp;gt; &amp;#39;pid:[4026532240]&amp;#39;
+lrwxrwxrwx 1 root root 0 Sep 12 23:25 pid_for_children -&amp;gt; &amp;#39;pid:[4026532240]&amp;#39;
+lrwxrwxrwx 1 root root 0 Sep 12 23:25 user -&amp;gt; &amp;#39;user:[4026531837]&amp;#39;
+lrwxrwxrwx 1 root root 0 Sep 12 23:12 uts -&amp;gt; &amp;#39;uts:[4026532238]&amp;#39;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;这个操作依赖一个setns()的系统调用。将需要进入的Namespace的文件描述符fd交给setns()，就可以将当前进程加入到这个Namespace里面了。下面小程序传入2个参数，一个是Namespace的文件名，第二个是执行的程序。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;#define _GNU_SOURCE
+#include &amp;lt;fcntl.h&amp;gt;
+#include &amp;lt;sched.h&amp;gt;
+#include &amp;lt;unistd.h&amp;gt;
+#include &amp;lt;stdlib.h&amp;gt;
+#include &amp;lt;stdio.h&amp;gt;
+
+#define errExit(msg) do { perror(msg);exit(EXIT_FAILURE);} while(0)
+
+int main(int argc, char *argv[]){
+    int fd;
+    fd =open(argv[1],O_RDONLY);
+    if (setns(fd,0) == -1){
+        errExit(&amp;#34;setns&amp;#34;);
+    }
+    execvp(argv[2],&amp;amp;argv[2]);
+    errExit(&amp;#34;execvp&amp;#34;);
+}&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;编译后，传入mnt的namespace文件。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;root@yzw-vm:/home/yzw/docker# gcc -o setnc setns.c 
+
+root@yzw-vm:/home/yzw/docker# docker exec -it 9e4bdd819dc0 /bin/bash
+root@9e4bdd819dc0:/# cd /home/
+root@9e4bdd819dc0:/home# ls
+root@9e4bdd819dc0:/home# touch abc
+root@9e4bdd819dc0:/home# ls
+abc
+
+
+root@yzw-vm:/home/yzw/docker# ./setnc /proc/11243/ns/mnt /bin/bash
+root@yzw-vm:/# ls
+bin  boot  dev	etc  home  lib	lib64  media  mnt  opt	proc  root  run  sbin  srv  sys  tmp  usr  var
+root@yzw-vm:/# ls /home/
+abc
+root@yzw-vm:/# &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;查下新启的bin/bash的进程的PID的mnt Namespace，和python2进程的一样。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;root@yzw-vm:/home/yzw/docker# ps axuf | grep /bin/bash
+root     11863  0.0  0.0  18204  3156 pts/4    S+   23:57   0:00  |                       \_ /bin/bash
+root     11866  0.0  0.0  21536  1084 pts/5    S+   23:57   0:00                          \_ grep --color=auto /bin/bash
+root@yzw-vm:/home/yzw/docker# ls -l /proc/11863/ns/mnt 
+lrwxrwxrwx 1 root root 0 Sep 12 23:57 /proc/11863/ns/mnt -&amp;gt; &amp;#39;mnt:[4026532237]&amp;#39;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h1 id=&#34;docker-volume-是怎么实现的&#34;&gt;docker volume 是怎么实现的？&lt;/h1&gt;
+
+&lt;p&gt;docker volume又2种声明方式,比如把宿主机目录挂进容器/test目录：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;# 在宿主机/var/lib/docker/volumes/xxx/_data 挂到容器/test目录
+$ docker run -v /test ...
+# 把宿主机/home目录挂到容器/test目录
+$ docker run -v /home:/test ...&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;docker怎么把宿主机上的目录挂到容器里面的？&lt;/p&gt;
+
+&lt;p&gt;前面namespace总结中，当容器进程（dockerinit 容器初始化进程）被创建之后，尽管开启了Mount Namespace，但是它执行chroot或者pivot_root之前，容器进程一直可以看到宿主机上整个文件系统。宿主机上的容器镜像的各个层，在容器进程启动后，就会被联合挂载到/var/lib/docker/overlay2/xxx/merged目录中，这样容器的rootfs就准备好了。&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;容器启动进程dockerinit，而不是应用进程ENTRYPOINT+CMD,dockerinit负责完成根目录准备，挂载设备目录配置hostname一系列初始化工作，然后通过execv()，让应用程序取代自己，成为PID=1的进程。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;只需要在rootfs准备好之后，chroot之前，把volume指定的目录，挂载到容器指定目录在宿主机上对应的目录（/var/lib/docker/overlay2/读写层/test），就可以了。这时候Mount Namespace已经开启，挂载后，容器里面是可见的，宿主机上看不到容器里面的挂载点，容器的隔离性不好被volume打破。&lt;/p&gt;
+
+&lt;p&gt;这里用到的挂载技术，就是Linux的绑定挂载 bind mount 机制，主要作用就是将一个目录/文件，而不是一个设备，挂载到一个指定目录上。并且，这时候你在该挂载点上进行的任何操作，发生在被挂载的目录或者文件上，而原挂载点的内容则会被隐藏起来，不受影响。&lt;/p&gt;
+
+&lt;p&gt;绑定挂载实际上是一个inode替换的过程，indoe可以理解为存放文件内容的“对象”，dentry，目录项，就是访问inode所使用的“指针”。 bind mount相当于/test的dentry，重定向到/home的inode。当修改/test目录，实际是修改/home目录的inode。一旦umount后，/test目录原先的内容会恢复。&lt;/p&gt;
+
+&lt;p&gt;这个/test目录的内容，是挂载在容器rootfs的可读写层，是不会被docker commit提交的，以为docker commint是发生在宿主机空间，由于mount namespace的隔离，不知道绑定挂载的存储，所有/test目录会被打包，出现在新的镜像里面的，但是里面是空的。&lt;/p&gt;
 </description>
       
     </item>

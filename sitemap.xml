@@ -17,6 +17,13 @@
   </url>
   
   <url>
+    <loc>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-exec-volume/</loc>
+    <lastmod>2018-09-12T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://zhiweiyin318.github.io/post/python-docker-client/</loc>
     <lastmod>2018-09-11T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -87,6 +94,13 @@
   
   <url>
     <loc>https://zhiweiyin318.github.io/tags/docker/</loc>
+    <lastmod>2018-09-12T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://zhiweiyin318.github.io/tags/exec/</loc>
     <lastmod>2018-09-12T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
@@ -165,6 +179,13 @@
   <url>
     <loc>https://zhiweiyin318.github.io/tags/</loc>
     <lastmod>2018-09-10T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://zhiweiyin318.github.io/tags/volume/</loc>
+    <lastmod>2018-09-12T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
