@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>《深入剖析Kubernetes》-学习笔记-Image - Zhiwei Yin&#39;s Blog</title>
+  <link rel="alternate" hreflang="en" href="https://zhiweiyin318.github.io" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Zhiwei Yin" />
+  <meta name="description" content="mount namespace “左耳朵耗子” 叔的一篇将docker的Namespace的文章，文章地址：https://coolshell.cn/articles/1" />
+
+  <meta name="keywords" content="Golang, Kubernetes, Docker" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.45.1" />
+
+
+<link rel="canonical" href="https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-image/" />
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="《深入剖析Kubernetes》-学习笔记-Image" />
+<meta property="og:description" content="mount namespace “左耳朵耗子” 叔的一篇将docker的Namespace的文章，文章地址：https://coolshell.cn/articles/1" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-image/" />
+
+
+
+<meta property="article:published_time" content="2018-09-12T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2018-09-12T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="《深入剖析Kubernetes》-学习笔记-Image">
+<meta itemprop="description" content="mount namespace “左耳朵耗子” 叔的一篇将docker的Namespace的文章，文章地址：https://coolshell.cn/articles/1">
+
+
+<meta itemprop="datePublished" content="2018-09-12T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2018-09-12T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="6841">
+
+
+
+<meta itemprop="keywords" content="docker,kubernetes,image," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="《深入剖析Kubernetes》-学习笔记-Image"/>
+<meta name="twitter:description" content="mount namespace “左耳朵耗子” 叔的一篇将docker的Namespace的文章，文章地址：https://coolshell.cn/articles/1"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Zhiwei Yin</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/">Home</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/post/">Archives</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/tags/">Tags</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/categories/">Categories</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/about/">About</a>
+          
+        
+      </li>
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Zhiwei Yin
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/">Home</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/post/">Archives</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/tags/">Tags</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/categories/">Categories</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/about/">About</a>
+          
+
+        
+
+      </li>
+    
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">《深入剖析Kubernetes》-学习笔记-Image</h1>
+      
+      <div class="post-meta">
+        <span class="post-time"> 2018-09-12 </span>
+        <div class="post-category">
+            <a href="https://zhiweiyin318.github.io/categories/kubernetes/"> kubernetes </a>
+            
+          </div>
+        <span class="more-meta"> 6841 words </span>
+        <span class="more-meta"> 14 min read </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Table of Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#mount-namespace">mount namespace</a>
+<ul>
+<li><a href="#issue">issue</a></li>
+</ul></li>
+<li><a href="#chroot">chroot</a></li>
+<li><a href="#镜像">镜像</a>
+<ul>
+<li><a href="#aufs">AUFS</a>
+<ul>
+<li><a href="#issue-1">issue</a></li>
+</ul></li>
+<li><a href="#devicemapper">devicemapper</a></li>
+<li><a href="#overlay2">overlay2</a>
+<ul>
+<li><a href="#overlay2是什么">overlay2是什么</a></li>
+<li><a href="#举个例子">举个例子</a></li>
+<li><a href="#容器使用overlay读写">容器使用overlay读写</a></li>
+<li><a href="#性能">性能</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h1 id="mount-namespace">mount namespace</h1>
+
+<p>“左耳朵耗子” 叔的一篇将docker的Namespace的文章，文章地址：<a href="https://coolshell.cn/articles/17010.html">https://coolshell.cn/articles/17010.html</a> ,里面有个小程序:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">#define _GNU_SOURCE
+#include &lt;sys/mount.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/wait.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;sched.h&gt;
+#include &lt;signal.h&gt;
+#include &lt;unistd.h&gt;
+
+/* 定义一个给 clone 用的栈，栈大小1M */
+#define STACK_SIZE (1024 * 1024)
+static char container_stack[STACK_SIZE];
+ 
+char* const container_args[] = {
+    &#34;/bin/bash&#34;,
+    NULL
+};
+
+int container_main(void* arg)
+{
+    printf(&#34;Container [%5d] - inside the container!\n&#34;, getpid());
+    execv(container_args[0], container_args);
+    printf(&#34;Something&#39;s wrong!\n&#34;);
+    return 1;
+}
+ 
+int main()
+{
+    printf(&#34;Parent [%5d] - start a container!\n&#34;, getpid());
+    /* 启用Mount Namespace - 增加CLONE_NEWNS参数 */
+    int container_pid = clone(container_main, container_stack+STACK_SIZE, 
+            CLONE_NEWUTS | CLONE_NEWPID | CLONE_NEWNS | SIGCHLD, NULL);
+    waitpid(container_pid, NULL, 0);
+    printf(&#34;Parent - container stopped!\n&#34;);
+    return 0;
+}</pre></td></tr></table>
+</div>
+</div>
+<p>clone创建一个新的子进程，启动mount namespace（CLONE_NEWNS标志），子进程启动/bin/bash程序，这个shell就运行在mount namespace的隔离环境里。<br />
+编译下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">[root@yzw test]# gcc -o container container.c 
+[root@yzw test]# ./container 
+Parent [19645] - start a container!
+Container [    1] - inside the container!
+[root@yzw test]# ls /tmp/
+test</pre></td></tr></table>
+</div>
+</div>
+<p>发现依然能看到很多宿主机的文件。为什么mount namespace开启后，容器里面和宿主机的文件完全一样呢？<br />
+因为mount namespace修改的是容器进程对文件系统“挂载点”的认知，只有在“挂载”操作之后才能起作用，之前新创建的容器会继承宿主机的挂载点。<br />
+我们在上面程序bash操作前重新以tmpfs内存盘的格式mount /tmp目录：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">int container_main(void* arg)
+{
+    printf(&#34;Container [%5d] - inside the container!\n&#34;, getpid());
+    //如果机器根目录的挂载类型是shared，得重新挂载根目录
+    //mount(&#34;&#34;,&#34;/&#34;,NULL,MS_PRIVATE,&#34;&#34;)
+    mount(&#34;none&#34;,&#34;/tmp&#34;,&#34;tmpfs&#34;,0,&#34;&#34;)
+    execv(container_args[0], container_args);
+    printf(&#34;Something&#39;s wrong!\n&#34;);
+    return 1;
+}</pre></td></tr></table>
+</div>
+</div>
+<p>编译执行结果：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">[root@yzw test]# gcc -o container container.c 
+[root@yzw test]# ./container 
+Parent [19861] - start a container!
+Container [    1] - inside the container!
+[root@yzw test]# ls /tmp/
+[root@yzw test]# 
+[root@yzw test]# mount -l | grep tmpfs
+...
+none on /tmp type tmpfs (rw,relatime,seclabel)</pre></td></tr></table>
+</div>
+</div>
+<p>在宿主机上：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma"># 按理说应该是看不见的，在虚拟机里还能看到，后面再调查哈为啥？？</pre></td></tr></table>
+</div>
+</div>
+<p>tmp目录下已经和宿主机的tmp目录内容不一致了。</p>
+
+<p>当新创一个容器时，在容器进程启动前重新挂载根目录，由于mount namespace的存在，这个目录对宿主机不可见，容器里面的文件系统就是一个隔离的环境了。</p>
+
+<h2 id="issue">issue</h2>
+
+<p>重新挂载/tmp目录的实验执行完成后，在宿主机上居然可以看到这个挂载信息。。这是怎么回事呢？实际上，大家自己装的虚拟机，或者云上的虚拟机的根目录，很多都是以share方式的挂载的。这时候，你在容器里做mount也会继承share方式。这样就会把容器内挂载传播到宿主机上。解决这个问题，你可以在重新挂载/tmp之前，在容器内先执行一句：mount(“”, “/“, NULL, MS_PRIVATE, “”) 这样，容器内的根目录就是private挂载的了。（没起作用?）</p>
+
+<h1 id="chroot">chroot</h1>
+
+<p>chroot可以改变进程的根目录到指定目录，把bash和ls程序以及运行需要的so文件拷贝过来:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">[root@yzw tmp]# mkdir -p test/{bin,lib64,lib}
+[root@yzw tmp]# cd test/
+[root@yzw test]# cp /bin/{bash,ls} bin/
+[root@yzw test]# T=/tmp/test
+[root@yzw test]# list=&#34;$(ldd /bin/ls | egrep -o &#39;/lib.*\.[0-9]&#39;)&#34;
+[root@yzw test]# for i in $list; do cp -v &#34;$i&#34; &#34;${T}${i}&#34;;done
+[root@yzw test]# list=&#34;$(ldd /bin/bash | egrep -o &#39;/lib.*\.[0-9]&#39;)&#34;
+[root@yzw test]# for i in $list; do cp -v &#34;$i&#34; &#34;${T}${i}&#34;;done
+[root@yzw tmp]# chroot /tmp/test /bin/bash
+bash-4.2# ls /
+bin  lib  lib64</pre></td></tr></table>
+</div>
+</div>
+<p>bash进程的根目录被修改了，感知不到宿主机的目录，这种方式和mount namespace效果类似，mount namespace就是基于chroot改进而来的。</p>
+
+<h1 id="镜像">镜像</h1>
+
+<p>为了让容器的这个根目录真实，我们一般会把给根目录挂载一个完整的操作系统的文件系统，比如ubuntu的ISO。这样启动之后，我们ls根目录就是整个ubuntu的所有目录和文件了。这个挂载在容器根目录，用来为容器j进程提供隔离后执行环境的文件系统，就是容器镜像，还有关于专业的名称，rootfs（根文件系统）。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">[root@yzw ~]# docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+ededc6515049        busybox             &#34;/bin/sh&#34;           2 hours ago         Up 2 hours                              cranky_lichterman
+[root@yzw ~]# docker exec -it ededc6515049 /bin/sh
+/ # ls
+bin   dev   etc   home  proc  root  sys   tmp   usr   var</pre></td></tr></table>
+</div>
+</div>
+<p>进入容器执行的sh，ls程序，就是容器/bin目录下的程序，和宿主机上的sh，ls完全不一样。</p>
+
+<p>docker项目最核心的的原理就是为带创建的用户进程：<br />
+1. 启动namespace设置；<br />
+2. 设置指定的cgroup参数；<br />
+3. 切换进程的根目录；<br />
+docker 优先使用pivot_root系统调用，如果不支持才使用chroot。</p>
+
+<p>rootfs只是一个操作系统包含的文件，配置和目录，并不包括内核。linux操作系统中，内核和这些是分开的，开机时将内核加载到内存中。所有同一个宿主机上的容器公用同一个内核。如果容器应用要修改内核的配置啥的会影响这个宿主机的，这点不如虚机隔离性好。</p>
+
+<p>容器的一致性</p>
+
+<p>不管是本地，还是云端，还是任何一个机器，用户只要解压打包好的rootfs，这个应用就能跑起来。解决了PaaS打包的大问题。</p>
+
+<p>如果一个rootfs做好，另外一个应用像在这个上面进行修改，再发布，这样维护起来比较麻烦，不具备扩展性。docker公司引入了layer的概念，用户制作镜像的每一个步骤，都会生成一个layer，就是一个增量的rootfs。</p>
+
+<p>Docker 的storage driver除了支持AUFS外，还支持devicemapper，overlayer，btrfs等，现在Docker CE默认为overlayer2，如果后端是direct-LVM的话，会默认为devicemapper。通过docker info可以查询到：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">[root@yzw ~]# docker info
+Containers: 1
+ Running: 1
+ Paused: 0
+ Stopped: 0
+Images: 109
+Server Version: 18.06.1-ce
+Storage Driver: overlay2
+ Backing Filesystem: extfs
+ Supports d_type: true
+ Native Overlay Diff: true</pre></td></tr></table>
+</div>
+</div>
+<h2 id="aufs">AUFS</h2>
+
+<p>联合文件系统（union file system） unionFS最主要的功能就是可以将多个不同位置的目录联合挂载在同一个目录下。AUFS全称Another UnionFS，后面又叫Alternative UnionFS，再后就又叫Advance UnionFS，只能在ubuntu和Debian上使用，因为没有被Linus合入linux主分干，下面例子在Ubuntu上跑的。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">root@yzw-vm:/tmp# tree
+.
+├── A
+│   ├── a
+│   └── x
+├── B
+│   ├── b
+│   └── x
+└── C
+
+3 directories, 4 files
+root@yzw-vm:/tmp# cat A/x
+a
+root@yzw-vm:/tmp# cat B/x
+b
+root@yzw-vm:/tmp# mount -t aufs -o dirs=./A:./B none ./C
+root@yzw-vm:/tmp# tree
+.
+├── A
+│   ├── a
+│   └── x
+├── B
+│   ├── b
+│   └── x
+└── C
+    ├── a
+    ├── b
+    └── x
+3 directories, 7 files
+root@yzw-vm:/tmp# cat C/x
+a
+root@yzw-vm:/tmp# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+...
+none             59G   22G   34G  40% /tmp/C
+root@yzw-vm:/tmp# echo &#34;c&#34; &gt; C/x
+root@yzw-vm:/tmp# cat C/x
+c
+root@yzw-vm:/tmp# cat A/x
+c
+root@yzw-vm:/tmp# cat B/x
+b</pre></td></tr></table>
+</div>
+</div>
+<p>合并后的C目录，x只有一份，通过“写时复制策略实现镜像的共享和最小化磁盘开销。对C中的文件进行修改，A，B 中对应文件也会生效(相同文件存在覆盖除外)。</p>
+
+<p>AUFS工作在文件的层次上，也就是说AUFS对文件的操作需要将整个文件复制到读写层内，哪怕只是文件的一小部分被改变，也需要复制整个文件。这在一定成度上会影响容器的性能，尤其是当要复制的文件很大，文件在栈的下面几层或文件在目录中很深的位置时，对性能的影响会很显著。</p>
+
+<p>通过“写时复制（CoW）”策略实现镜像的共享和最小化磁盘开销。任何对于底层文件系统分层的更改都会被“向上拷贝”到文件系统的一个临时、工作、或高层的分层里面。这个可写的层然后可以被看做是一个“改动（diff）”，能将之应用到下层只读的层，而这些层很可能作为底层被很多容器的进程中共享。</p>
+
+<p>一个Docker中使用分层文件系统的好处就是，1000个运行着bash的ubuntu:latest容器的副本，会共享一个底层的镜像，而并不会产生1000个文件系统的副本（vfs是个例外，请参考下边vfs部分）。并且同样重要的是，对于aufs和overlay的实现，用来读取或执行共享库的共享内存也在所有运行的容器之间共享，大大的减少了通用库如&rsquo;libc&rsquo;的内存占用。</p>
+
+<h3 id="issue-1">issue</h3>
+
+<ul>
+<li>目录联合挂载时，如果A和B目录里的x文件内容不一样，这时如何处理？<br /></li>
+</ul>
+
+<p>aufs是一层一层往上盖的，所以我给的例子里，A里面的x会覆盖B里面的x.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">root@yzw-vm:/tmp# mount -t aufs -o dirs=./B:./A none ./C
+root@yzw-vm:/tmp# tree
+.
+├── A
+│   ├── a
+│   └── x
+├── B
+│   ├── b
+│   └── x
+└── C
+    ├── a
+    ├── b
+    └── x
+
+3 directories, 7 files
+root@yzw-vm:/tmp# cat C/x
+b</pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>没有内核所以rootfs会比较小，请问一般安装的linux系统内核文件在哪里存放呢？
+首先，docker镜像比较小不只是因为没有内核，内核本身其实不大。大小的差异主要因为我们平常看见的虚拟机镜像实际上是整个磁盘的快照。其次，一般情况下，内核放下安装盘里，解压到磁盘上，加载到内存中。有兴趣可以读这里：<a href="https://blog.csdn.net/gatieme/article/details/50914250">https://blog.csdn.net/gatieme/article/details/50914250</a><br /></li>
+</ul>
+
+<h2 id="devicemapper">devicemapper</h2>
+
+<p>早期Docker在Debian，Ubuntu系统中默认使用AUFS，RedHat系统用devicemapper。devicemapper是红帽系主推的。</p>
+
+<p>devicemapper是基于块设备的，不是基于文件的。它质量上有优点也有缺点，如果安装/配置过程中没有特别格外注意的话，可能导致和其他选项比较起来性能低下、质量不高。鉴于overlay和overlay2受到了Fedora和RHEL最新的内核的支持，并且拥有SELinux的支持，除非在Red Hat场景中有某种必须使用devicemapper的需求，我想随着用户的成熟他们会转向overlay的怀抱。</p>
+
+<h2 id="overlay2">overlay2</h2>
+
+<h3 id="overlay2是什么">overlay2是什么</h3>
+
+<p>Overlay是一个联合文件系统，它的概念较之aufs的分支模型更为简单。Overlay通过三个概念来实现它的文件系统：一个“下层目录（lower-dir）”，一个“上层目录（upper-dir）”，将着两个layers联合挂载后就是一个做为文件系统合并视图的“合并（merged）”目录。镜像层和容器曾可以有相同的文件，这中情况下，upperdir中的文件覆盖lowerdir中的文件。</p>
+
+<p><img src="/images/overlay_constructs.jpg" alt="image" /></p>
+
+<p>受限于只有一个“下层目录”，需要额外的工作来让“下层目录”递归嵌套（下层目录自己又是另外一个overlay的联合），或者按照Docker的实现，将所有位于下层的内容都硬链接到“下层目录”中。正是这种可能潜在的inode爆炸式增长（因为有大量的分层和硬连接）阻碍了很多人采用Overlay。<br />
+Overlay2支持多个下层目录，最多128个，解决了Overlay的inode耗尽的问题，继承了Overlay很多优点，包括包括在同一个引擎的多个容器间从同一个分层中加载内库从而达到内存共享。</p>
+
+<p>Docker 配置使用overlay2：<a href="https://docs.docker.com/storage/storagedriver/overlayfs-driver/#configure-docker-with-the-overlay-or-overlay2-storage-driver">https://docs.docker.com/storage/storagedriver/overlayfs-driver/#configure-docker-with-the-overlay-or-overlay2-storage-driver</a></p>
+
+<h3 id="举个例子">举个例子</h3>
+
+<p>看下ubuntu镜像由5层构成：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">root@yzw-vm:~# docker pull ubuntu:latest
+latest: Pulling from library/ubuntu
+124c757242f8: Pull complete 
+9d866f8bde2a: Pull complete 
+fa3f2f277e67: Pull complete 
+398d32b153e8: Pull complete 
+afde35469481: Pull complete 
+Digest: sha256:de774a3145f7ca4f0bd144c7d4ffb2931e06634f11529653b23eba85aef8e378
+Status: Downloaded newer image for ubuntu:latest
+
+root@yzw-vm:~# docker image inspect ubuntu
+[
+...
+       &#34;GraphDriver&#34;: {
+            &#34;Data&#34;: {
+                &#34;LowerDir&#34;: &#34;/var/lib/docker/overlay2/c9f2c1bb3948f7d2ccd2b84e13b317b0a41fb47c35b89bf6d2a7b19f3e81b339/diff:/var/lib/docker/overlay2/b0f87a2c50b9b290269ee5ee55ce06dae5b877dc740cbc9ce3103476818d3438/diff:/var/lib/docker/overlay2/098182c0afb45de2f0f8911a95d3bcb282e130dbeea4f9ea8c1f0899d267b314/diff:/var/lib/docker/overlay2/a708ff445d90980fd58da00dd9b2fc2917ef61cb3b1aaed9bda7ea44aba12412/diff&#34;,
+                &#34;MergedDir&#34;: &#34;/var/lib/docker/overlay2/ff432dd74bd7f4b941c667517c450bb75e7af61eda23a005d75db6e9b812d0e0/merged&#34;,
+                &#34;UpperDir&#34;: &#34;/var/lib/docker/overlay2/ff432dd74bd7f4b941c667517c450bb75e7af61eda23a005d75db6e9b812d0e0/diff&#34;,
+                &#34;WorkDir&#34;: &#34;/var/lib/docker/overlay2/ff432dd74bd7f4b941c667517c450bb75e7af61eda23a005d75db6e9b812d0e0/work&#34;
+            },
+            &#34;Name&#34;: &#34;overlay2&#34;
+        },
+        &#34;RootFS&#34;: {
+            &#34;Type&#34;: &#34;layers&#34;,
+            &#34;Layers&#34;: [
+                &#34;sha256:a30b835850bfd4c7e9495edf7085cedfad918219227c7157ff71e8afe2661f63&#34;,
+                &#34;sha256:6267b420796f78004358a36a2dd7ea24640e0d2cd9bbfdba43bb0c140ce73567&#34;,
+                &#34;sha256:f73b2816c52ac5f8c1f64a1b309b70ff4318d11adff253da4320eee4b3236373&#34;,
+                &#34;sha256:6a061ee02432e1472146296de3f6dab653f57c109316fa178b40a5052e695e41&#34;,
+                &#34;sha256:8d7ea83e3c626d5ef1e6a05de454c3fe8b7a567db96293cb094e71930dba387d&#34;
+            ]
+        },
+...</pre></td></tr></table>
+</div>
+</div>
+<p>在/var/lib/docker/overylay2目录下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">root@yzw-vm:/var/lib/docker/overlay2# ls -lt
+total 156
+drwx------ 4 root root 4096 Sep 12 11:25 ff432dd74bd7f4b941c667517c450bb75e7af61eda23a005d75db6e9b812d0e0
+drwx------ 2 root root 4096 Sep 12 11:25 l
+drwx------ 4 root root 4096 Sep 12 11:25 c9f2c1bb3948f7d2ccd2b84e13b317b0a41fb47c35b89bf6d2a7b19f3e81b339
+drwx------ 4 root root 4096 Sep 12 11:25 b0f87a2c50b9b290269ee5ee55ce06dae5b877dc740cbc9ce3103476818d3438
+drwx------ 4 root root 4096 Sep 12 11:25 098182c0afb45de2f0f8911a95d3bcb282e130dbeea4f9ea8c1f0899d267b314
+drwx------ 3 root root 4096 Sep 12 11:25 a708ff445d90980fd58da00dd9b2fc2917ef61cb3b1aaed9bda7ea44aba12412
+...</pre></td></tr></table>
+</div>
+</div>
+<p>l目录包含了很多软连接，使用短名称指向了其他层。短名称用于避免mount参数时达到页面大小的限制。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">root@yzw-vm:/var/lib/docker/overlay2# ls -lt l/
+total 152
+lrwxrwxrwx 1 root root 72 Sep 12 11:25 AKSNN53ER6ZYNOBNG66LKFO64B -&gt; ../ff432dd74bd7f4b941c667517c450bb75e7af61eda23a005d75db6e9b812d0e0/diff
+lrwxrwxrwx 1 root root 72 Sep 12 11:25 INN4Q6OLITXODWESIJWDCOU7W5 -&gt; ../c9f2c1bb3948f7d2ccd2b84e13b317b0a41fb47c35b89bf6d2a7b19f3e81b339/diff
+lrwxrwxrwx 1 root root 72 Sep 12 11:25 USMKDHE2W2PPV64EAYHRKEJQDX -&gt; ../b0f87a2c50b9b290269ee5ee55ce06dae5b877dc740cbc9ce3103476818d3438/diff
+lrwxrwxrwx 1 root root 72 Sep 12 11:25 JGVKVFIFNC4A2SCJW2MTBLPCJK -&gt; ../098182c0afb45de2f0f8911a95d3bcb282e130dbeea4f9ea8c1f0899d267b314/diff
+lrwxrwxrwx 1 root root 72 Sep 12 11:25 2XXDFCYHLGAYYD4NHPEYWAQRAN -&gt; ../a708ff445d90980fd58da00dd9b2fc2917ef61cb3b1aaed9bda7ea44aba12412/diff</pre></td></tr></table>
+</div>
+</div>
+<p>link文件里是l目录下这个目录的短名称，diff目录就是镜像内容，lower文件指出了该层的组成，由高层到低层；work目录？？？</p>
+
+<p>最底层目录只有diff目录和link文件。其他底层目录除了diff，link外还有lower文件和work目录。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">root@yzw-vm:/var/lib/docker/overlay2# ls ff432dd74bd7f4b941c667517c450bb75e7af61eda23a005d75db6e9b812d0e0/
+diff  link  lower  work
+root@yzw-vm:/var/lib/docker/overlay2# ls c9f2c1bb3948f7d2ccd2b84e13b317b0a41fb47c35b89bf6d2a7b19f3e81b339/
+diff  link  lower  work
+root@yzw-vm:/var/lib/docker/overlay2# ls b0f87a2c50b9b290269ee5ee55ce06dae5b877dc740cbc9ce3103476818d3438/
+diff  link  lower  work
+root@yzw-vm:/var/lib/docker/overlay2# ls 098182c0afb45de2f0f8911a95d3bcb282e130dbeea4f9ea8c1f0899d267b314/
+diff  link  lower  work
+root@yzw-vm:/var/lib/docker/overlay2# ls a708ff445d90980fd58da00dd9b2fc2917ef61cb3b1aaed9bda7ea44aba12412/
+diff  link
+root@yzw-vm:/var/lib/docker/overlay2# ls a708ff445d90980fd58da00dd9b2fc2917ef61cb3b1aaed9bda7ea44aba12412/diff/
+bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+root@yzw-vm:/var/lib/docker/overlay2# cat a708ff445d90980fd58da00dd9b2fc2917ef61cb3b1aaed9bda7ea44aba12412/link 
+2XXDFCYHLGAYYD4NHPEYWAQRAN
+root@yzw-vm:/var/lib/docker/overlay2# cat ff432dd74bd7f4b941c667517c450bb75e7af61eda23a005d75db6e9b812d0e0/lower 
+l/INN4Q6OLITXODWESIJWDCOU7W5:l/USMKDHE2W2PPV64EAYHRKEJQDX:l/JGVKVFIFNC4A2SCJW2MTBLPCJK:l/2XXDFCYHLGAYYD4NHPEYWAQRAN</pre></td></tr></table>
+</div>
+</div>
+<p>容器运行起来后多了2个目录，读写层和初始层：</p>
+
+<p>merged（挂载点）： 容器根目录。<br />
+/var/lib/docker/overlay2/e6f0c6c4c30099c6903e0c65fdeb46de4f9ed4d1d71338a54480f66f0b00010a/merged</p>
+
+<p>upperdir（容器层）：初始时这个读写层时空的。<br />
+/var/lib/docker/overlay2/e6f0c6c4c30099c6903e0c65fdeb46de4f9ed4d1d71338a54480f66f0b00010a/diff</p>
+
+<p>lowerdir（镜像层）：总共6层，除了image的5层外，多了一个init层。<br />
+/var/lib/docker/overlay2/l/LC4OCZQCW7HCEKLXMY4AIYBT7U<br />
+/var/lib/docker/overlay2/l/AKSNN53ER6ZYNOBNG66LKFO64B<br />
+/var/lib/docker/overlay2/l/INN4Q6OLITXODWESIJWDCOU7W5<br />
+/var/lib/docker/overlay2/l/USMKDHE2W2PPV64EAYHRKEJQDX<br />
+/var/lib/docker/overlay2/l/JGVKVFIFNC4A2SCJW2MTBLPCJK<br />
+/var/lib/docker/overlay2/l/2XXDFCYHLGAYYD4NHPEYWAQRAN</p>
+
+<p>workdir：是用来完成如copy-on_write的操作。<br />
+/var/lib/docker/overlay2/e6f0c6c4c30099c6903e0c65fdeb46de4f9ed4d1d71338a54480f66f0b00010a/work</p>
+
+<p>init层，这个位于只读层和读写层之间，docker项目单独生成的一个内部层，专门用来存/etc/hosts，/etc/resolv.conf等信息，这些原本属于ubuntu镜像一部分，但是用户往往需要在启动容器时写入一些指定的值比如hostname，需要在可读性层对他们进行修改。  这些修改支队当前容器有效，在docker commit时，不会把这一层提交掉，只会提交读写层。</p>
+
+<p>/etc/hosts, /etc/resolv.conf和/etc/hostname，容器中的这三个文件不存在于镜像，而是存在于/var/lib/docker/containers/<container_id>，在启动容器的时候，通过mount的形式将这些文件挂载到容器内部。</p>
+
+<p>修改容器里面/etc/hostname的内容，会在/var/lib/docker/containers/xxx/hostname看到修改。</p>
+
+<p><img src="/images/ubuntu-image-layer.png" alt="image" /></p>
+
+<p>容器内部的所有修改都在可读写层，docker commit和push保存的也是这个可读写层。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">root@yzw-vm:/var/lib/docker/overlay2# docker run -it -d ubuntu /bin/bash
+13d8a0e5162bfa3e087d20eef15a3805136ba2c2d6413356078ada71886639d4
+root@yzw-vm:/var/lib/docker/overlay2# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+...
+tmpfs           395M   28K  395M   1% /run/user/120
+tmpfs           395M   28K  395M   1% /run/user/1000
+tmpfs           395M     0  395M   0% /run/user/0
+overlay          59G   22G   35G  38% /var/lib/docker/overlay2/e6f0c6c4c30099c6903e0c65fdeb46de4f9ed4d1d71338a54480f66f0b00010a/merged
+shm              64M     0   64M   0% /var/lib/docker/containers/13d8a0e5162bfa3e087d20eef15a3805136ba2c2d6413356078ada71886639d4/mounts/shm
+
+root@yzw-vm:/var/lib/docker/overlay2# mount | grep overlay
+overlay on /var/lib/docker/overlay2/e6f0c6c4c30099c6903e0c65fdeb46de4f9ed4d1d71338a54480f66f0b00010a/merged type overlay (rw,relatime,lowerdir=/var/lib/docker/overlay2/l/LC4OCZQCW7HCEKLXMY4AIYBT7U:/var/lib/docker/overlay2/l/AKSNN53ER6ZYNOBNG66LKFO64B:/var/lib/docker/overlay2/l/INN4Q6OLITXODWESIJWDCOU7W5:/var/lib/docker/overlay2/l/USMKDHE2W2PPV64EAYHRKEJQDX:/var/lib/docker/overlay2/l/JGVKVFIFNC4A2SCJW2MTBLPCJK:/var/lib/docker/overlay2/l/2XXDFCYHLGAYYD4NHPEYWAQRAN,upperdir=/var/lib/docker/overlay2/e6f0c6c4c30099c6903e0c65fdeb46de4f9ed4d1d71338a54480f66f0b00010a/diff,workdir=/var/lib/docker/overlay2/e6f0c6c4c30099c6903e0c65fdeb46de4f9ed4d1d71338a54480f66f0b00010a/work)</pre></td></tr></table>
+</div>
+</div>
+<p>在容器内部可以看到overlay和shm两个文件挂载到根目录和/dev/shm目录</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">root@13d8a0e5162b:~# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+overlay          59G   22G   35G  38% /
+tmpfs            64M     0   64M   0% /dev
+tmpfs           2.0G     0  2.0G   0% /sys/fs/cgroup
+/dev/sda1        59G   22G   35G  38% /etc/hosts
+shm              64M     0   64M   0% /dev/shm
+tmpfs           2.0G     0  2.0G   0% /proc/acpi
+tmpfs           2.0G     0  2.0G   0% /proc/scsi
+tmpfs           2.0G     0  2.0G   0% /sys/firmware</pre></td></tr></table>
+</div>
+</div>
+<p>各个layer目录：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">root@yzw-vm:/var/lib/docker/overlay2# ls -lt
+total 32
+drwx------ 5 root root 4096 Sep 12 14:23 e6f0c6c4c30099c6903e0c65fdeb46de4f9ed4d1d71338a54480f66f0b00010a
+drwx------ 4 root root 4096 Sep 12 14:23 e6f0c6c4c30099c6903e0c65fdeb46de4f9ed4d1d71338a54480f66f0b00010a-init
+drwx------ 2 root root 4096 Sep 12 14:23 l
+drwx------ 4 root root 4096 Sep 12 11:25 ff432dd74bd7f4b941c667517c450bb75e7af61eda23a005d75db6e9b812d0e0
+drwx------ 4 root root 4096 Sep 12 11:25 c9f2c1bb3948f7d2ccd2b84e13b317b0a41fb47c35b89bf6d2a7b19f3e81b339
+drwx------ 4 root root 4096 Sep 12 11:25 b0f87a2c50b9b290269ee5ee55ce06dae5b877dc740cbc9ce3103476818d3438
+drwx------ 4 root root 4096 Sep 12 11:25 098182c0afb45de2f0f8911a95d3bcb282e130dbeea4f9ea8c1f0899d267b314
+drwx------ 3 root root 4096 Sep 12 11:25 a708ff445d90980fd58da00dd9b2fc2917ef61cb3b1aaed9bda7ea44aba12412
+root@yzw-vm:/var/lib/docker/overlay2# ls e6f0c6c4c30099c6903e0c65fdeb46de4f9ed4d1d71338a54480f66f0b00010a
+diff  link  lower  merged  work
+root@yzw-vm:/var/lib/docker/overlay2# ls e6f0c6c4c30099c6903e0c65fdeb46de4f9ed4d1d71338a54480f66f0b00010a/diff/
+root@yzw-vm:/var/lib/docker/overlay2# ls e6f0c6c4c30099c6903e0c65fdeb46de4f9ed4d1d71338a54480f66f0b00010a/merged/
+bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+root@yzw-vm:/var/lib/docker/overlay2# ls e6f0c6c4c30099c6903e0c65fdeb46de4f9ed4d1d71338a54480f66f0b00010a/work/
+work
+root@yzw-vm:/var/lib/docker/overlay2# ls e6f0c6c4c30099c6903e0c65fdeb46de4f9ed4d1d71338a54480f66f0b00010a/work/work/
+root@yzw-vm:/var/lib/docker/overlay2# cat e6f0c6c4c30099c6903e0c65fdeb46de4f9ed4d1d71338a54480f66f0b00010a/link 
+A4DRDBGDJJI2XIR7VGQ4T2WOFF
+root@yzw-vm:/var/lib/docker/overlay2# cat e6f0c6c4c30099c6903e0c65fdeb46de4f9ed4d1d71338a54480f66f0b00010a/lower 
+l/LC4OCZQCW7HCEKLXMY4AIYBT7U:l/AKSNN53ER6ZYNOBNG66LKFO64B:l/INN4Q6OLITXODWESIJWDCOU7W5:l/USMKDHE2W2PPV64EAYHRKEJQDX:l/JGVKVFIFNC4A2SCJW2MTBLPCJK:l/2XXDFCYHLGAYYD4NHPEYWAQRAN
+root@yzw-vm:/var/lib/docker/overlay2# 
+root@yzw-vm:/var/lib/docker/overlay2# ls e6f0c6c4c30099c6903e0c65fdeb46de4f9ed4d1d71338a54480f66f0b00010a-init/
+diff  link  lower  work
+root@yzw-vm:/var/lib/docker/overlay2# ls e6f0c6c4c30099c6903e0c65fdeb46de4f9ed4d1d71338a54480f66f0b00010a-init/diff/
+dev  etc
+root@yzw-vm:/var/lib/docker/overlay2# ls e6f0c6c4c30099c6903e0c65fdeb46de4f9ed4d1d71338a54480f66f0b00010a-init/work/
+work
+root@yzw-vm:/var/lib/docker/overlay2# ls e6f0c6c4c30099c6903e0c65fdeb46de4f9ed4d1d71338a54480f66f0b00010a-init/work/work/
+root@yzw-vm:/var/lib/docker/overlay2# 
+root@yzw-vm:/var/lib/docker/overlay2# cat e6f0c6c4c30099c6903e0c65fdeb46de4f9ed4d1d71338a54480f66f0b00010a-init/link 
+LC4OCZQCW7HCEKLXMY4AIYBT7U
+root@yzw-vm:/var/lib/docker/overlay2# cat e6f0c6c4c30099c6903e0c65fdeb46de4f9ed4d1d71338a54480f66f0b00010a-init/lower 
+l/AKSNN53ER6ZYNOBNG66LKFO64B:l/INN4Q6OLITXODWESIJWDCOU7W5:l/USMKDHE2W2PPV64EAYHRKEJQDX:l/JGVKVFIFNC4A2SCJW2MTBLPCJK:l/2XXDFCYHLGAYYD4NHPEYWAQRAN
+root@yzw-vm:/var/lib/docker/overlay2# </pre></td></tr></table>
+</div>
+</div>
+<h3 id="容器使用overlay读写">容器使用overlay读写</h3>
+
+<ul>
+<li>读容器层不存在的文件：<br />
+从镜像层中读取，有小的性能损耗。<br /></li>
+<li>读只存在于容器层的文件：<br />
+直接读取，不拷贝，无额外性能损耗。</li>
+<li>读同时存在于容器和镜像层的文件：<br />
+直接读取容器层文件，因为容器层隐藏了镜像层的同名文件。无额外性能损耗。</li>
+<li>写一个文件：
+容器写一个已经存在的文件，容器层不存在这个文件，overlay会将整个文件拷贝到容器层进行修改，拷贝只发生在第一次写入文件时，后面就直接容器层写了。<br />
+OverlayFS只工作在两层中。这比AUFS要在多层镜像中查找时性能要好。<br /></li>
+<li>删除文件和目录：<br />
+删除文件时，容器层会镜像层创建一个whiteout文件，而镜像层的文件并没有被删，whiteout文件会隐藏它。例如删除一个foo文件，容器层创建一个.wh.foo的文件，当这两层被联合挂载之后，foo文件就会被.wh.foo文件遮挡起来消失了。翻译成“白障”。
+删除目录时，容器层会创建一个不透明目录，和whiteout文件隐藏镜像层文件类似。<br /></li>
+<li>重命名目录：<br />
+只有在源路径和目的路径都在顶层容器层时，才允许执行rename操作。否则，会返回EXDEV。因此，你的应用需要能够处理EXDEV，并且回滚操作，执行替代的“拷贝和删除”策略。<strong>（没理解）</strong><br /></li>
+</ul>
+
+<h3 id="性能">性能</h3>
+
+<p>引用: <a href="https://arkingc.github.io/2017/05/05/docker-filesystem-overlay/">https://arkingc.github.io/2017/05/05/docker-filesystem-overlay/</a></p>
+
+<p>一般来说，overlay/overlay2很快，几乎肯定比aufs和devicemapper快。在某些特定场景下，还可能比btrfs快。 此外，还有几点overlay/overlay2驱动性能相关的注意事项：</p>
+
+<p>页缓存：OverlayFS支持页缓存共享，意味着多个容器访问相同的文件能够共享一个单一的page cache entry。 使得overlay/overlay2驱动能高效使用内存，是PaaS以及其它高密度场景一个好的选择。</p>
+
+<p>copy_up：对镜像层大文件进行写操作时，copy-on-write会给写操作带来大量延迟。</p>
+
+<p>inode 限制：使用overlay会引起过度的inode消耗，消耗会随着主机上的镜像和容器的增加而增加。 拥有大量镜像的主机在大量容器启动和停止时可能会耗尽inodes。 不幸的是你只能在文件系统创建时指定inode数，因此你可能需要考虑将/var/lib/docker放在另一个独立的设备上， 或者在创建文件系统时手动修改inode值。而overlay2则没有这样的问题。</p>
+
+<p>RPM和Yum：OverlayFS仅实现了POSIX标准的一部分，某些操作还会违反POSIX标准，copy_up操作就是其中一个。</p>
+
+<p>下面是提升OverlayFS驱动性能的最佳实践。</p>
+
+<p>SSD：为了获得最佳性能，一个通常的想法是使用诸如SSD这类更快的存储设备；</p>
+
+<p>使用数据卷： 数据卷提供了最好的以及最可预见的性能。 因为绕过了存储驱动，因此不会存在瘦供给和copy-on-write带来的潜在性能开销。 因此，写操作较频繁的数据应该放在数据卷上。</p>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Zhiwei Yin</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2018-09-12</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://zhiweiyin318.github.io/tags/docker/">docker</a>
+          <a href="https://zhiweiyin318.github.io/tags/kubernetes/">kubernetes</a>
+          <a href="https://zhiweiyin318.github.io/tags/image/">image</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/python-docker-client/">
+            <span class="next-text nav-default">Python docker-client</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="zhiweiyin@hotmail.com" rel="me noopener" class="iconfont icon-email"
+        title="email" target="_blank">
+      </a>
+      <a href="https://github.com/zhiweiyin318" rel="me noopener" class="iconfont icon-github"
+        title="github" target="_blank">
+      </a>
+  <a href="https://zhiweiyin318.github.io/index.xml" rel="noopener alternate" type="application/rss&#43;xml" class="iconfont icon-rss"
+    title="rss" target="_blank">
+  </a>
+  </div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span><span class="author">Zhiwei Yin</span></span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+</body>
+</html>
