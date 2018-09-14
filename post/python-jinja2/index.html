@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Python jinja2 - Zhiwei Yin&#39;s Blog</title>
+  <link rel="alternate" hreflang="en" href="https://zhiweiyin318.github.io" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Zhiwei Yin" />
+  <meta name="description" content="jinja2是啥 python的模板引擎，也是Flask的模板引擎，能根据模板字符串替换，有自己的语法规则。 官网: http://docs.jinkan.org/docs/jinja2/ 使用 安装 1 $ pip install jinja2 语法定义" />
+
+  <meta name="keywords" content="Golang, Kubernetes, Docker" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.45.1" />
+
+
+<link rel="canonical" href="https://zhiweiyin318.github.io/post/python-jinja2/" />
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="Python jinja2" />
+<meta property="og:description" content="jinja2是啥 python的模板引擎，也是Flask的模板引擎，能根据模板字符串替换，有自己的语法规则。 官网: http://docs.jinkan.org/docs/jinja2/ 使用 安装 1 $ pip install jinja2 语法定义" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zhiweiyin318.github.io/post/python-jinja2/" />
+
+
+
+<meta property="article:published_time" content="2018-09-14T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2018-09-14T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Python jinja2">
+<meta itemprop="description" content="jinja2是啥 python的模板引擎，也是Flask的模板引擎，能根据模板字符串替换，有自己的语法规则。 官网: http://docs.jinkan.org/docs/jinja2/ 使用 安装 1 $ pip install jinja2 语法定义">
+
+
+<meta itemprop="datePublished" content="2018-09-14T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2018-09-14T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="833">
+
+
+
+<meta itemprop="keywords" content="python,code,jinja2," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Python jinja2"/>
+<meta name="twitter:description" content="jinja2是啥 python的模板引擎，也是Flask的模板引擎，能根据模板字符串替换，有自己的语法规则。 官网: http://docs.jinkan.org/docs/jinja2/ 使用 安装 1 $ pip install jinja2 语法定义"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Zhiwei Yin</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/">Home</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/post/">Archives</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/tags/">Tags</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/categories/">Categories</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/about/">About</a>
+          
+        
+      </li>
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Zhiwei Yin
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/">Home</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/post/">Archives</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/tags/">Tags</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/categories/">Categories</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/about/">About</a>
+          
+
+        
+
+      </li>
+    
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Python jinja2</h1>
+      
+      <div class="post-meta">
+        <span class="post-time"> 2018-09-14 </span>
+        <div class="post-category">
+            <a href="https://zhiweiyin318.github.io/categories/python/"> python </a>
+            
+          </div>
+        <span class="more-meta"> 833 words </span>
+        <span class="more-meta"> 2 min read </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Table of Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#jinja2是啥">jinja2是啥</a></li>
+<li><a href="#使用">使用</a>
+<ul>
+<li><a href="#安装">安装</a></li>
+<li><a href="#语法定义">语法定义</a>
+<ul>
+<li><a href="#变量">变量</a></li>
+<li><a href="#控制语句">控制语句</a></li>
+<li><a href="#空白控制">空白控制</a></li>
+<li><a href="#程序">程序</a></li>
+<li><a href="#demo">demo</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h1 id="jinja2是啥">jinja2是啥</h1>
+
+<p>python的模板引擎，也是Flask的模板引擎，能根据模板字符串替换，有自己的语法规则。<br />
+官网: <a href="http://docs.jinkan.org/docs/jinja2/">http://docs.jinkan.org/docs/jinja2/</a></p>
+
+<h1 id="使用">使用</h1>
+
+<h2 id="安装">安装</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ pip install jinja2</pre></td></tr></table>
+</div>
+</div>
+<h2 id="语法定义">语法定义</h2>
+
+<p>jinja的语法很灵活，也很丰富，下面就列举几个常用到的，详细见官网文档介绍。</p>
+
+<ul>
+<li>{% &hellip; %} 语句（Statements）</li>
+<li>{{ &hellip; }} 打印模板输出的表达式（Expressions）</li>
+<li>{# &hellip; #} 注释</li>
+<li>#&hellip; ## 行语句（Line Statements）</li>
+</ul>
+
+<h3 id="变量">变量</h3>
+
+<p>除了普通的字符串变量，Jinja2还支持列表、字典和对象。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">{{ mydict[&#39;key&#39;] }}
+{{ mylist[3] }}
+{{ mylist[myintvar] }}
+{{ myobj.somemethod() }}</pre></td></tr></table>
+</div>
+</div>
+<p>获取一个变量的属性的两种方式：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">{{ foo.bar }}
+{{ foo[&#39;bar&#39;] }}</pre></td></tr></table>
+</div>
+</div>
+<h3 id="控制语句">控制语句</h3>
+
+<ul>
+<li>if<br /></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">{% if xxx %}
+   xxx
+{% elif %}
+    xxx
+{% else %}
+    xxx
+{% endif %}</pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>for<br /></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">{% for x in xx %}
+  xxx
+{% endfor %}</pre></td></tr></table>
+</div>
+</div>
+<h3 id="空白控制">空白控制</h3>
+
+<p>默认配置中，不会对空白做进一步修改，每个空白（空格，制表符，换行符等等）都会原封不动的返回，注释也会占一行。<br />
+可以在注释，for，if或者变量表达式的开始或者结束放一个&rsquo;-&lsquo;，可以移除块前或者后的空白。<br />
+标签和&rsquo;-&lsquo;之间不能有空格</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">{% for item in [1,2,3,4,5,6,7,8,9]] -%}
+    {{ item }}
+{%- endfor %}
+
+# 输出结果123456789</pre></td></tr></table>
+</div>
+</div>
+<h3 id="程序">程序</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">import jinja2
+# 传递的参数
+values = {&#39;base_distro&#39;: &#39;centos&#39;,
+              &#39;base_distro_tag&#39;: &#39;7&#39;,
+              &#39;base_image&#39;: &#39;centos&#39;,
+              &#39;namespace&#39;: &#39;test&#39;,
+              &#39;tag&#39;: &#39;latest&#39;,
+              &#39;maintainer&#39;: &#39;zhiwei yin&#39;,
+              &#39;version&#39;: &#39;v1.0.0&#39;,
+              &#39;image_name&#39;: &#39;demo&#39;,
+              &#39;build_date&#39;: datetime.datetime.fromtimestamp(time.time()).strftime(&#39;%Y%m%d&#39;)}
+    
+    # 模板放置目录
+    path = &#39;./template&#39;
+    
+    # 创建一个loader，jinja2会从这个path加载文件
+    # 用loader创建一个环境，有了它才能读取模板
+    env = jinja2.Environment(loader=jinja2.FileSystemLoader(path))
+    
+    #加载模板并返回
+    template = env.get_template(&#39;Dockerfile.j2&#39;)
+    
+    # 完成渲染模板
+    content = template.render(values)</pre></td></tr></table>
+</div>
+</div>
+<h3 id="demo">demo</h3>
+
+<p>demo 地址：<a href="https://github.com/zhiweiyin318/yzw.python.demo/tree/master/jinja2">https://github.com/zhiweiyin318/yzw.python.demo/tree/master/jinja2</a></p>
+
+<p>模板：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">{# This is a dome file #}
+FROM {{ base_image }}:{{ base_distro_tag }}
+LABEL maintainer=&#34;{{ maintainer }}&#34; name=&#34;{{ image_name }}&#34; build-date=&#34;{{ build_date }}&#34;
+
+LABEL version=&#34;{{ version }}&#34;
+
+{% if base_image in [&#39;ubuntu&#39;, &#39;debian&#39;] %}
+    {% set work_dir = &#39;ubuntu&#39; %}
+{% else %}
+    {% set work_dir = &#39;centos&#39; %}
+{% endif %}
+
+WORKDIR /{{ work_dir }}
+
+
+{% for file in [&#39;a&#39;,&#39;b&#39;] %}
+COPY {{ file }} /{{ work_dir }}
+{% endfor %}
+
+RUN{% for item in [&#39;yum&#39;,&#39;install&#39;,&#39;python&#39;, &#39;-y&#39;] %} {{ item }}
+{%- endfor %}</pre></td></tr></table>
+</div>
+</div>
+<p>渲染后的文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">FROM centos:7
+LABEL maintainer=&#34;zhiwei yin&#34; name=&#34;demo&#34; build-date=&#34;20180914&#34;
+
+LABEL version=&#34;v1.0.0&#34;
+
+
+    
+
+
+WORKDIR /centos
+
+
+
+COPY a /centos
+
+COPY b /centos
+
+
+RUN yum install python -y</pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Zhiwei Yin</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2018-09-14</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://zhiweiyin318.github.io/tags/python/">python</a>
+          <a href="https://zhiweiyin318.github.io/tags/code/">code</a>
+          <a href="https://zhiweiyin318.github.io/tags/jinja2/">jinja2</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-image/">
+            <span class="next-text nav-default">《深入剖析Kubernetes》-学习笔记-Image</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="zhiweiyin@hotmail.com" rel="me noopener" class="iconfont icon-email"
+        title="email" target="_blank">
+      </a>
+      <a href="https://github.com/zhiweiyin318" rel="me noopener" class="iconfont icon-github"
+        title="github" target="_blank">
+      </a>
+  <a href="https://zhiweiyin318.github.io/index.xml" rel="noopener alternate" type="application/rss&#43;xml" class="iconfont icon-rss"
+    title="rss" target="_blank">
+  </a>
+  </div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span><span class="author">Zhiwei Yin</span></span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+</body>
+</html>
