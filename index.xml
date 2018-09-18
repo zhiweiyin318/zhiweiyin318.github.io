@@ -25,6 +25,403 @@
     </item>
     
     <item>
+      <title>kolla源码走读</title>
+      <link>https://zhiweiyin318.github.io/post/kolla%E6%BA%90%E7%A0%81%E8%B5%B0%E8%AF%BB/</link>
+      <pubDate>Tue, 18 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhiweiyin318.github.io/post/kolla%E6%BA%90%E7%A0%81%E8%B5%B0%E8%AF%BB/</guid>
+      
+        <description>
+
+&lt;blockquote&gt;
+&lt;p&gt;代码路径：&lt;a href=&#34;https://github.com/openstack/kolla&#34;&gt;https://github.com/openstack/kolla&lt;/a&gt;&lt;br /&gt;
+代码版本: origin/stable/pike branch&lt;br /&gt;
+文档: &lt;a href=&#34;https://docs.openstack.org/kolla/latest/&#34;&gt;https://docs.openstack.org/kolla/latest/&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
+
+&lt;p&gt;kolla项目主要是把容器化的openstack的各个组件的容器编译出来的，实现很简单：&lt;br /&gt;
+1. 定义Dockerfile.j2模板&lt;br /&gt;
+2. 通过jinja2根据参数渲染模板生成Dockerfile&lt;br /&gt;
+3. 调用docker的python接口build镜像&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;kolla 项目的难点不在项目的实现上，在各个组件编译的依赖上，rpm，pip安装相关组件的依赖上。&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;项目目录结构&#34;&gt;项目目录结构&lt;/h1&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;36
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;37
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;38
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;39
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;40
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;41
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;42
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;43
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;44
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;45
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;46
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;[root@yzw kolla]# tree -L 2
+.
+├── bindep.txt
+├── contrib
+├── doc
+├── docker
+│...
+│   ├── base
+│   │   ├── aarch64-cbs.repo
+│   │   ├── ...
+│   │   ├── Dockerfile.j2
+│...
+├── etc
+│   ├── kolla
+│   │   └── kolla-build.conf
+│   └── oslo-config-generator
+├── HACKING.rst
+├── kolla
+│   ├── cmd
+│   ├── common
+│   ├── exception.py
+│   ├── exception.pyc
+│   ├── hacking
+│   ├── image
+│   ├── __init__.py
+│   ├── __init__.pyc
+│   ├── opts.py
+│   ├── opts.pyc
+│   ├── template
+│   ├── tests
+│   ├── version.py
+│   └── version.pyc
+├── kolla.egg-info
+├── LICENSE
+├── README.rst
+├── releasenotes
+├── requirements.txt
+├── setup.cfg
+├── setup.py
+├── specs
+├── test-requirements.txt
+├── tests
+├── tools
+│   ├── build.py -&amp;gt; ../kolla/cmd/build.py
+│   ├── cleanup-images
+└── tox.ini&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;主要目录介绍：&lt;br /&gt;
+* docker目录&lt;/p&gt;
+
+&lt;p&gt;容器目录，包含了所有容器的Dockerfile模板Dockerfile.j2文件，和其他需要打包的一堆文件。&lt;/p&gt;
+
+&lt;p&gt;base目录是所有基础容器镜像目录，其他容器都是From这个镜像的。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;kolla目录&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;放的源码，后面详细说。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;tools目录&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;一些工具，最主要的就是*build.py&lt;em&gt;，是&lt;/em&gt;/kolla/cmd/build.py*的软链接，就是项目命令行工具的入口。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;etc目录&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;放的是配置文件kolla-build.conf，项目所有配置项都在里面，有一部分是跟命令行重合的，如果命令行配置了，就覆盖掉配置文件的配置了。&lt;/p&gt;
+
+&lt;h1 id=&#34;源码&#34;&gt;源码&lt;/h1&gt;
+
+&lt;h2 id=&#34;源码目录&#34;&gt;源码目录&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;[root@yzw kolla]# tree -L 3
+.
+├── cmd
+│   ├── build.py
+├── common
+│   ├── config.py
+│   ├── task.py
+├── exception.py
+├── hacking
+├── image
+│   ├── build.py
+├── opts.py
+├── template
+│   ├── filters.py
+│   ├── filters.pyc
+│   ├── methods.py
+│   └── methods.pyc
+├── tests
+├── version.py
+└── version.pyc&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;目录介绍：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;cmd&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;build.py是命令行入口&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;common&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;config.py是命令行和配置文件相关的定义和设置。所有参数都在这定义的。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;image&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;build.py是build镜像的相关的流程。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;template&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;给模板渲染时增加过滤和函数（属于jinja2的机制），替换字符串之类的操作。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;tests&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;ut相关的东西。&lt;/p&gt;
+
+&lt;h2 id=&#34;用到的主要库&#34;&gt;用到的主要库&lt;/h2&gt;
+
+&lt;h3 id=&#34;oslo-config&#34;&gt;oslo_config&lt;/h3&gt;
+
+&lt;p&gt;oslo作为OpenStack的通用组件，在每一个项目中都有用到，oslo.config主要用于命令行和配置项解析。&lt;/p&gt;
+
+&lt;p&gt;写了一个简单的使用介绍和domo，放到了github上：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;介绍：&lt;br /&gt;
+&lt;a href=&#34;https://zhiweiyin318.github.io/post/olso_config/&#34;&gt;https://zhiweiyin318.github.io/post/olso_config/&lt;/a&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;demo:&lt;br /&gt;
+&lt;a href=&#34;https://github.com/zhiweiyin318/yzw.python.demo/tree/master/oslo_config&#34;&gt;https://github.com/zhiweiyin318/yzw.python.demo/tree/master/oslo_config&lt;/a&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;jinja2&#34;&gt;jinja2&lt;/h3&gt;
+
+&lt;p&gt;python的模板引擎，也是Flask的模板引擎，能根据模板字符串替换，有自己的语法规则。就是定义自己的模板，然后根据配置生成想要的内容。&lt;/p&gt;
+
+&lt;p&gt;写的简单的使用介绍和domo，放到了github上：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;介绍：&lt;br /&gt;
+&lt;a href=&#34;https://zhiweiyin318.github.io/post/python-jinja2/&#34;&gt;https://zhiweiyin318.github.io/post/python-jinja2/&lt;/a&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;demo：&lt;br /&gt;
+&lt;a href=&#34;https://github.com/zhiweiyin318/yzw.python.demo/tree/master/jinja2&#34;&gt;https://github.com/zhiweiyin318/yzw.python.demo/tree/master/jinja2&lt;/a&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;dokcer-client&#34;&gt;dokcer-client&lt;/h3&gt;
+
+&lt;p&gt;python的docker client的库，直接调用跟命令行一样使用docker。&lt;/p&gt;
+
+&lt;p&gt;写的简单的使用介绍和domo，放到了github上：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;介绍:&lt;br /&gt;
+&lt;a href=&#34;https://zhiweiyin318.github.io/post/python-docker-client/&#34;&gt;https://zhiweiyin318.github.io/post/python-docker-client/&lt;/a&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;demo:&lt;br /&gt;
+&lt;a href=&#34;https://github.com/zhiweiyin318/yzw.python.demo/tree/master/dockerclient&#34;&gt;https://github.com/zhiweiyin318/yzw.python.demo/tree/master/dockerclient&lt;/a&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;代码流程&#34;&gt;代码流程&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;cmd/build.py main()  ## 入口
+  -&amp;gt; image/build.py build.run_build()
+    -&amp;gt; common/config.py common_config.parse(...) ## 命令行，配置文件参数的定义配置注册。
+    -&amp;gt; KollaWorker()  ## build的任务对象,把命令行，配置文件的参数拿出来给对象。
+      -&amp;gt; docker.APIClient() ## 创建docker api client 用于调用docker 接口
+    -&amp;gt; kolla.setup_working_dir() ## 新建个放dockerfile和构建的工作目录，把docker目录的文件拷贝过来
+    -&amp;gt; kolla.find_dockerfiles() ## 检查下工作目录下的dokerfile.j2文件
+    -&amp;gt; kolla.create_dockerfiles() ## 做镜像文件
+      -&amp;gt; jinja2.Environment() ## jinja2的使用流程 见jinja2 介绍
+      -&amp;gt; jinja2.FileSystemLoader() 
+      -&amp;gt; template.render() ## 所有的*j2模板重新渲染，后面写入新建dockerfie文件
+    -&amp;gt; kolla.build_queue() ## 创建多队列来执行build操作
+     -&amp;gt; queue.put(BuildTask(self.conf, image, push_queue))
+    
+      -&amp;gt; task.run()       
+        -&amp;gt; BuildTask.run
+          -&amp;gt; self.builder()
+            -&amp;gt; self.dc.build  ## 调用 docker api 创建image
+        
+            -&amp;gt; PushTask.run
+              -&amp;gt; self.push_image(image)
+                -&amp;gt; self.dc.push  ## 调用 docker api push image到仓库
+    &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>《深入剖析Kubernetes》-学习笔记-Kubernetes</title>
+      <link>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-kubernetes/</link>
+      <pubDate>Tue, 18 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-kubernetes/</guid>
+      
+        <description>
+
+&lt;h1 id=&#34;容器的本质&#34;&gt;容器的本质&lt;/h1&gt;
+
+&lt;p&gt;容器实际上是一个Linux Namespace、Linux Cgroups和rootfs三种技术构造出来的进程的隔离环境。&lt;br /&gt;
+1. 容器的静态试图：一组联合挂载在/var/lib/docker/&amp;hellip;上的rootfs，即“容器镜像”Container Image。&lt;br /&gt;
+2. 容器的动态试图：一个由Namespace和Cgroup构成的隔离环境，即“容器运行时”Container Runtime。&lt;/p&gt;
+
+&lt;p&gt;作为一个开发者，不关心运行时，容器镜像才是真正承载容器信息进程传递的。容器编排由此出现，容器走向容器云。&lt;/p&gt;
+
+&lt;h1 id=&#34;kubernetes的本质&#34;&gt;Kubernetes的本质&lt;/h1&gt;
+
+&lt;h2 id=&#34;kubernetes-架构&#34;&gt;kubernetes 架构&lt;/h2&gt;
+
+&lt;p&gt;Kubernetes项目的理论基础要比工程实践走得靠前很多，归功于Google2015年4越发布的Borg论文。&lt;br /&gt;
+Borg承载了Google公司整个基础设施的核心依赖，在整个基础设施技术栈的最底层。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://zhiweiyin318.github.io/images/borg.png&#34; alt=&#34;image&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;图片来源：&lt;a href=&#34;http://malteschwarzkopf.de/research/assets/google-stack.pdf&#34;&gt;http://malteschwarzkopf.de/research/assets/google-stack.pdf&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://zhiweiyin318.github.io/images/Kubernetes.png&#34; alt=&#34;image&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Kubernetes跟Borg非常相似，由Master+Node组成。&lt;br /&gt;
+Master控制节点：&lt;br /&gt;
+1. kube-apiserver 负责API服务&lt;br /&gt;
+2. kube-scheduler 负责调度
+3. kube-controller-manager 负责容器编排&lt;/p&gt;
+
+&lt;p&gt;整个集群数据持久化由kube-apiserver处理后保存在Etcd中。&lt;/p&gt;
+
+&lt;p&gt;Node计算节点最核心组件kubelet，负责同容器运行时（比如docker项目）打交道。&lt;br /&gt;
+1. CRI （Container Runtime Interface）定义了容器运行时各种核心操作，比如启动一个容器需要的所有参数等。只要符合这个容器运行时能够运行标准的容器镜像，都可以通过CRI接入到Kubernetes项目。&lt;br /&gt;
+2. OCI 容器运行时规范同底层的Linux操作系统进行交互，把CRI 请求翻译成Linux 操作系统的调用（操作Namespace和Cgroups等）&lt;br /&gt;
+3. CNI （Container Networking Interface） 网络插件。&lt;br /&gt;
+4. CSI （Container Storage Interface） 存储插件。&lt;br /&gt;
+5. Kubelet通过gRPC协议同一个Device Plugin的插件进行交互，这个插件时Kubernetes项目用来管理GPU等宿主机物理设备的主要组件，也是基于Kubernetes项目进行机器学习等工作关注的功能。&lt;/p&gt;
+
+&lt;h2 id=&#34;kubernetes-概念&#34;&gt;Kubernetes 概念&lt;/h2&gt;
+
+&lt;p&gt;Docker Swarm + Compose项目是通过“link”，来解决多个容器的关联关系的。 Docker会在不同容器内以环境变量注入的方式传递IP，端口信息来实现多个容器的关联。&lt;/p&gt;
+
+&lt;p&gt;Kubernetes是用“Pod”来共享Network Namespace、同一组数据卷，从而达到高效交互信息的目的。通过“Service”的服务来给应用提供访问入口。&lt;/p&gt;
+
+&lt;p&gt;Pod 绑定 Service服务，Service服务声明IP地址等信息，作为Pod的代理入口Portal，替代Pod对外暴露一个固定的网络地址。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://zhiweiyin318.github.io/images/pod.png&#34; alt=&#34;image&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Kubernetes围绕Pod不断扩展：
+1. Deployment Pod的多实例管理器。&lt;br /&gt;
+2. Secret Credential信息以Secret的方式存入Etcd，启动Pod时挂载进容器。&lt;br /&gt;
+3. Job 只运行一次性的Pod。&lt;br /&gt;
+4. DaemonSet 每个宿主机只能运行一个副本的守护进程服务。&lt;br /&gt;
+5. CronJob 定时任务。&lt;/p&gt;
+
+&lt;p&gt;Kubernetes项目中，推崇使用“声明式API”的方式：&lt;br /&gt;
+* 通过一个编排对象，比如Pod，Job等来描述管理的应用。&lt;br /&gt;
+* 通过服务对象，比如Service，Secret等负责具体平台级功能。&lt;/p&gt;
+
+&lt;p&gt;编排对象和服务对象都是API对象。&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
       <title>Python jinja2</title>
       <link>https://zhiweiyin318.github.io/post/python-jinja2/</link>
       <pubDate>Fri, 14 Sep 2018 00:00:00 +0000</pubDate>

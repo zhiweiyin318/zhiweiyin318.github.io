@@ -32,7 +32,7 @@
     <item>
       <title>Docker</title>
       <link>https://zhiweiyin318.github.io/tags/docker/</link>
-      <pubDate>Wed, 12 Sep 2018 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 18 Sep 2018 00:00:00 +0000</pubDate>
       
       <guid>https://zhiweiyin318.github.io/tags/docker/</guid>
       <description></description>
@@ -84,9 +84,18 @@
     </item>
     
     <item>
+      <title>Kolla</title>
+      <link>https://zhiweiyin318.github.io/tags/kolla/</link>
+      <pubDate>Tue, 18 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhiweiyin318.github.io/tags/kolla/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Kubernetes</title>
       <link>https://zhiweiyin318.github.io/tags/kubernetes/</link>
-      <pubDate>Wed, 12 Sep 2018 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 18 Sep 2018 00:00:00 +0000</pubDate>
       
       <guid>https://zhiweiyin318.github.io/tags/kubernetes/</guid>
       <description></description>
@@ -98,6 +107,15 @@
       <pubDate>Mon, 10 Sep 2018 00:00:00 +0000</pubDate>
       
       <guid>https://zhiweiyin318.github.io/tags/namespace/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Openstack</title>
+      <link>https://zhiweiyin318.github.io/tags/openstack/</link>
+      <pubDate>Tue, 18 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhiweiyin318.github.io/tags/openstack/</guid>
       <description></description>
     </item>
     

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Openstack on Zhiwei Yin&#39;s Blog</title>
+    <link>https://zhiweiyin318.github.io/tags/openstack/</link>
+    <description>Recent content in Openstack on Zhiwei Yin&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 18 Sep 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://zhiweiyin318.github.io/tags/openstack/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>kolla源码走读</title>
+      <link>https://zhiweiyin318.github.io/post/kolla%E6%BA%90%E7%A0%81%E8%B5%B0%E8%AF%BB/</link>
+      <pubDate>Tue, 18 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhiweiyin318.github.io/post/kolla%E6%BA%90%E7%A0%81%E8%B5%B0%E8%AF%BB/</guid>
+      <description>代码路径：https://github.com/openstack/kolla 代码版本: origin/stable/pike branch 文档: https://docs.openstack.org/kolla/latest/ 概述 kolla项目主要是把容器化的ope</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Python jinja2 - Zhiwei Yin&#39;s Blog</title>
+  <title>kolla源码走读 - Zhiwei Yin&#39;s Blog</title>
   <link rel="alternate" hreflang="en" href="https://zhiweiyin318.github.io" />
 
 <meta name="renderer" content="webkit" />
@@ -25,7 +25,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 
 <meta name="author" content="Zhiwei Yin" />
-  <meta name="description" content="jinja2是啥 python的模板引擎，也是Flask的模板引擎，能根据模板字符串替换，有自己的语法规则。 官网: http://docs.jinkan.org/docs/jinja2/ 使用 安装 1 $ pip install jinja2 语法定义" />
+  <meta name="description" content="代码路径：https://github.com/openstack/kolla 代码版本: origin/stable/pike branch 文档: https://docs.openstack.org/kolla/latest/ 概述 kolla项目主要是把容器化的ope" />
 
   <meta name="keywords" content="Golang, Kubernetes, Docker" />
 
@@ -37,7 +37,7 @@
 <meta name="generator" content="Hugo 0.45.1" />
 
 
-<link rel="canonical" href="https://zhiweiyin318.github.io/post/python-jinja2/" />
+<link rel="canonical" href="https://zhiweiyin318.github.io/post/kolla%E6%BA%90%E7%A0%81%E8%B5%B0%E8%AF%BB/" />
 
 
 
@@ -57,20 +57,16 @@
 
 
 
-<meta property="og:title" content="Python jinja2" />
-<meta property="og:description" content="jinja2是啥 python的模板引擎，也是Flask的模板引擎，能根据模板字符串替换，有自己的语法规则。 官网: http://docs.jinkan.org/docs/jinja2/ 使用 安装 1 $ pip install jinja2 语法定义" />
+<meta property="og:title" content="kolla源码走读" />
+<meta property="og:description" content="代码路径：https://github.com/openstack/kolla 代码版本: origin/stable/pike branch 文档: https://docs.openstack.org/kolla/latest/ 概述 kolla项目主要是把容器化的ope" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://zhiweiyin318.github.io/post/python-jinja2/" />
+<meta property="og:url" content="https://zhiweiyin318.github.io/post/kolla%E6%BA%90%E7%A0%81%E8%B5%B0%E8%AF%BB/" />
 
 
 
-<meta property="article:published_time" content="2018-09-14T00:00:00&#43;00:00"/>
+<meta property="article:published_time" content="2018-09-18T00:00:00&#43;00:00"/>
 
-<meta property="article:modified_time" content="2018-09-14T00:00:00&#43;00:00"/>
-
-
-
-
+<meta property="article:modified_time" content="2018-09-18T00:00:00&#43;00:00"/>
 
 
 
@@ -78,20 +74,24 @@
 
 
 
-<meta itemprop="name" content="Python jinja2">
-<meta itemprop="description" content="jinja2是啥 python的模板引擎，也是Flask的模板引擎，能根据模板字符串替换，有自己的语法规则。 官网: http://docs.jinkan.org/docs/jinja2/ 使用 安装 1 $ pip install jinja2 语法定义">
-
-
-<meta itemprop="datePublished" content="2018-09-14T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2018-09-14T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="833">
 
 
 
-<meta itemprop="keywords" content="python,code,jinja2," />
+
+<meta itemprop="name" content="kolla源码走读">
+<meta itemprop="description" content="代码路径：https://github.com/openstack/kolla 代码版本: origin/stable/pike branch 文档: https://docs.openstack.org/kolla/latest/ 概述 kolla项目主要是把容器化的ope">
+
+
+<meta itemprop="datePublished" content="2018-09-18T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2018-09-18T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1574">
+
+
+
+<meta itemprop="keywords" content="kolla,openstack," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Python jinja2"/>
-<meta name="twitter:description" content="jinja2是啥 python的模板引擎，也是Flask的模板引擎，能根据模板字符串替换，有自己的语法规则。 官网: http://docs.jinkan.org/docs/jinja2/ 使用 安装 1 $ pip install jinja2 语法定义"/>
+<meta name="twitter:title" content="kolla源码走读"/>
+<meta name="twitter:description" content="代码路径：https://github.com/openstack/kolla 代码版本: origin/stable/pike branch 文档: https://docs.openstack.org/kolla/latest/ 概述 kolla项目主要是把容器化的ope"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -302,16 +302,16 @@
           <article class="post bg-white">
     
     <header class="post-header">
-      <h1 class="post-title">Python jinja2</h1>
+      <h1 class="post-title">kolla源码走读</h1>
       
       <div class="post-meta">
-        <span class="post-time"> 2018-09-14 </span>
+        <span class="post-time"> 2018-09-18 </span>
         <div class="post-category">
-            <a href="https://zhiweiyin318.github.io/categories/python/"> python </a>
+            <a href="https://zhiweiyin318.github.io/categories/openstack/"> openstack </a>
             
           </div>
-        <span class="more-meta"> 833 words </span>
-        <span class="more-meta"> 2 min read </span>
+        <span class="more-meta"> 1574 words </span>
+        <span class="more-meta"> 4 min read </span>
       </div>
     </header>
 
@@ -322,17 +322,17 @@
   <div class="post-toc-content">
     <nav id="TableOfContents">
 <ul>
-<li><a href="#jinja2是啥">jinja2是啥</a></li>
-<li><a href="#使用">使用</a>
+<li><a href="#概述">概述</a></li>
+<li><a href="#项目目录结构">项目目录结构</a></li>
+<li><a href="#源码">源码</a>
 <ul>
-<li><a href="#安装">安装</a></li>
-<li><a href="#语法定义">语法定义</a>
+<li><a href="#源码目录">源码目录</a></li>
+<li><a href="#用到的主要库">用到的主要库</a>
 <ul>
-<li><a href="#变量">变量</a></li>
-<li><a href="#控制语句">控制语句</a></li>
-<li><a href="#空白控制">空白控制</a></li>
-<li><a href="#程序">程序</a></li>
-<li><a href="#demo">demo</a></li>
+<li><a href="#oslo-config">oslo_config</a></li>
+<li><a href="#jinja2">jinja2</a></li>
+<li><a href="#dokcer-client">dokcer-client</a></li>
+<li><a href="#代码流程">代码流程</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -344,123 +344,22 @@
     <div class="post-content">
       
 
-<h1 id="jinja2是啥">jinja2是啥</h1>
+<blockquote>
+<p>代码路径：<a href="https://github.com/openstack/kolla">https://github.com/openstack/kolla</a><br />
+代码版本: origin/stable/pike branch<br />
+文档: <a href="https://docs.openstack.org/kolla/latest/">https://docs.openstack.org/kolla/latest/</a></p>
+</blockquote>
 
-<p>python的模板引擎，也是Flask的模板引擎，能根据模板字符串替换，有自己的语法规则。<br />
-官网: <a href="http://docs.jinkan.org/docs/jinja2/">http://docs.jinkan.org/docs/jinja2/</a></p>
+<h1 id="概述">概述</h1>
 
-<h1 id="使用">使用</h1>
+<p>kolla项目主要是把容器化的openstack的各个组件的容器编译出来的，实现很简单：<br />
+1. 定义Dockerfile.j2模板<br />
+2. 通过jinja2根据参数渲染模板生成Dockerfile<br />
+3. 调用docker的python接口build镜像</p>
 
-<h2 id="安装">安装</h2>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">$ pip install jinja2</pre></td></tr></table>
-</div>
-</div>
-<h2 id="语法定义">语法定义</h2>
+<p><strong>kolla 项目的难点不在项目的实现上，在各个组件编译的依赖上，rpm，pip安装相关组件的依赖上。</strong></p>
 
-<p>jinja的语法很灵活，也很丰富，下面就列举几个常用到的，详细见官网文档介绍。</p>
-
-<ul>
-<li>{% &hellip; %} 语句（Statements）</li>
-<li>{{ &hellip; }} 打印模板输出的表达式（Expressions）</li>
-<li>{# &hellip; #} 注释</li>
-<li>#&hellip; ## 行语句（Line Statements）</li>
-</ul>
-
-<h3 id="变量">变量</h3>
-
-<p>除了普通的字符串变量，Jinja2还支持列表、字典和对象。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">{{ mydict[&#39;key&#39;] }}
-{{ mylist[3] }}
-{{ mylist[myintvar] }}
-{{ myobj.somemethod() }}</pre></td></tr></table>
-</div>
-</div>
-<p>获取一个变量的属性的两种方式：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span><span class="lnt">2
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">{{ foo.bar }}
-{{ foo[&#39;bar&#39;] }}</pre></td></tr></table>
-</div>
-</div>
-<h3 id="控制语句">控制语句</h3>
-
-<ul>
-<li>if<br /></li>
-</ul>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">{% if xxx %}
-   xxx
-{% elif %}
-    xxx
-{% else %}
-    xxx
-{% endif %}</pre></td></tr></table>
-</div>
-</div>
-<ul>
-<li>for<br /></li>
-</ul>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">{% for x in xx %}
-  xxx
-{% endfor %}</pre></td></tr></table>
-</div>
-</div>
-<h3 id="空白控制">空白控制</h3>
-
-<p>默认配置中，不会对空白做进一步修改，每个空白（空格，制表符，换行符等等）都会原封不动的返回，注释也会占一行。<br />
-可以在注释，for，if或者变量表达式的开始或者结束放一个&rsquo;-&lsquo;，可以移除块前或者后的空白。<br />
-标签和&rsquo;-&lsquo;之间不能有空格</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">{% for item in [1,2,3,4,5,6,7,8,9]] -%}
-    {{ item }}
-{%- endfor %}
-
-# 输出结果123456789</pre></td></tr></table>
-</div>
-</div>
-<h3 id="程序">程序</h3>
+<h1 id="项目目录结构">项目目录结构</h1>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><span class="lnt"> 1
@@ -487,39 +386,226 @@
 </span><span class="lnt">22
 </span><span class="lnt">23
 </span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
 </span></pre></td>
 <td class="lntd">
-<pre class="chroma">import jinja2
-# 传递的参数
-values = {&#39;base_distro&#39;: &#39;centos&#39;,
-              &#39;base_distro_tag&#39;: &#39;7&#39;,
-              &#39;base_image&#39;: &#39;centos&#39;,
-              &#39;namespace&#39;: &#39;test&#39;,
-              &#39;tag&#39;: &#39;latest&#39;,
-              &#39;maintainer&#39;: &#39;zhiwei yin&#39;,
-              &#39;version&#39;: &#39;v1.0.0&#39;,
-              &#39;image_name&#39;: &#39;demo&#39;,
-              &#39;build_date&#39;: datetime.datetime.fromtimestamp(time.time()).strftime(&#39;%Y%m%d&#39;)}
-    
-    # 模板放置目录
-    path = &#39;./template&#39;
-    
-    # 创建一个loader，jinja2会从这个path加载文件
-    # 用loader创建一个环境，有了它才能读取模板
-    env = jinja2.Environment(loader=jinja2.FileSystemLoader(path))
-    
-    #加载模板并返回
-    template = env.get_template(&#39;Dockerfile.j2&#39;)
-    
-    # 完成渲染模板
-    content = template.render(values)</pre></td></tr></table>
+<pre class="chroma">[root@yzw kolla]# tree -L 2
+.
+├── bindep.txt
+├── contrib
+├── doc
+├── docker
+│...
+│   ├── base
+│   │   ├── aarch64-cbs.repo
+│   │   ├── ...
+│   │   ├── Dockerfile.j2
+│...
+├── etc
+│   ├── kolla
+│   │   └── kolla-build.conf
+│   └── oslo-config-generator
+├── HACKING.rst
+├── kolla
+│   ├── cmd
+│   ├── common
+│   ├── exception.py
+│   ├── exception.pyc
+│   ├── hacking
+│   ├── image
+│   ├── __init__.py
+│   ├── __init__.pyc
+│   ├── opts.py
+│   ├── opts.pyc
+│   ├── template
+│   ├── tests
+│   ├── version.py
+│   └── version.pyc
+├── kolla.egg-info
+├── LICENSE
+├── README.rst
+├── releasenotes
+├── requirements.txt
+├── setup.cfg
+├── setup.py
+├── specs
+├── test-requirements.txt
+├── tests
+├── tools
+│   ├── build.py -&gt; ../kolla/cmd/build.py
+│   ├── cleanup-images
+└── tox.ini</pre></td></tr></table>
 </div>
 </div>
-<h3 id="demo">demo</h3>
+<p>主要目录介绍：<br />
+* docker目录</p>
 
-<p>demo 地址：<a href="https://github.com/zhiweiyin318/yzw.python.demo/tree/master/jinja2">https://github.com/zhiweiyin318/yzw.python.demo/tree/master/jinja2</a></p>
+<p>容器目录，包含了所有容器的Dockerfile模板Dockerfile.j2文件，和其他需要打包的一堆文件。</p>
 
-<p>模板：</p>
+<p>base目录是所有基础容器镜像目录，其他容器都是From这个镜像的。</p>
+
+<ul>
+<li>kolla目录<br /></li>
+</ul>
+
+<p>放的源码，后面详细说。</p>
+
+<ul>
+<li>tools目录<br /></li>
+</ul>
+
+<p>一些工具，最主要的就是*build.py<em>，是</em>/kolla/cmd/build.py*的软链接，就是项目命令行工具的入口。</p>
+
+<ul>
+<li>etc目录<br /></li>
+</ul>
+
+<p>放的是配置文件kolla-build.conf，项目所有配置项都在里面，有一部分是跟命令行重合的，如果命令行配置了，就覆盖掉配置文件的配置了。</p>
+
+<h1 id="源码">源码</h1>
+
+<h2 id="源码目录">源码目录</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">[root@yzw kolla]# tree -L 3
+.
+├── cmd
+│   ├── build.py
+├── common
+│   ├── config.py
+│   ├── task.py
+├── exception.py
+├── hacking
+├── image
+│   ├── build.py
+├── opts.py
+├── template
+│   ├── filters.py
+│   ├── filters.pyc
+│   ├── methods.py
+│   └── methods.pyc
+├── tests
+├── version.py
+└── version.pyc</pre></td></tr></table>
+</div>
+</div>
+<p>目录介绍：</p>
+
+<ul>
+<li>cmd<br /></li>
+</ul>
+
+<p>build.py是命令行入口</p>
+
+<ul>
+<li>common<br /></li>
+</ul>
+
+<p>config.py是命令行和配置文件相关的定义和设置。所有参数都在这定义的。</p>
+
+<ul>
+<li>image<br /></li>
+</ul>
+
+<p>build.py是build镜像的相关的流程。</p>
+
+<ul>
+<li>template<br /></li>
+</ul>
+
+<p>给模板渲染时增加过滤和函数（属于jinja2的机制），替换字符串之类的操作。</p>
+
+<ul>
+<li>tests</li>
+</ul>
+
+<p>ut相关的东西。</p>
+
+<h2 id="用到的主要库">用到的主要库</h2>
+
+<h3 id="oslo-config">oslo_config</h3>
+
+<p>oslo作为OpenStack的通用组件，在每一个项目中都有用到，oslo.config主要用于命令行和配置项解析。</p>
+
+<p>写了一个简单的使用介绍和domo，放到了github上：</p>
+
+<ul>
+<li>介绍：<br />
+<a href="https://zhiweiyin318.github.io/post/olso_config/">https://zhiweiyin318.github.io/post/olso_config/</a><br /></li>
+<li>demo:<br />
+<a href="https://github.com/zhiweiyin318/yzw.python.demo/tree/master/oslo_config">https://github.com/zhiweiyin318/yzw.python.demo/tree/master/oslo_config</a><br /></li>
+</ul>
+
+<h3 id="jinja2">jinja2</h3>
+
+<p>python的模板引擎，也是Flask的模板引擎，能根据模板字符串替换，有自己的语法规则。就是定义自己的模板，然后根据配置生成想要的内容。</p>
+
+<p>写的简单的使用介绍和domo，放到了github上：</p>
+
+<ul>
+<li>介绍：<br />
+<a href="https://zhiweiyin318.github.io/post/python-jinja2/">https://zhiweiyin318.github.io/post/python-jinja2/</a><br /></li>
+<li>demo：<br />
+<a href="https://github.com/zhiweiyin318/yzw.python.demo/tree/master/jinja2">https://github.com/zhiweiyin318/yzw.python.demo/tree/master/jinja2</a><br /></li>
+</ul>
+
+<h3 id="dokcer-client">dokcer-client</h3>
+
+<p>python的docker client的库，直接调用跟命令行一样使用docker。</p>
+
+<p>写的简单的使用介绍和domo，放到了github上：</p>
+
+<ul>
+<li>介绍:<br />
+<a href="https://zhiweiyin318.github.io/post/python-docker-client/">https://zhiweiyin318.github.io/post/python-docker-client/</a><br /></li>
+<li>demo:<br />
+<a href="https://github.com/zhiweiyin318/yzw.python.demo/tree/master/dockerclient">https://github.com/zhiweiyin318/yzw.python.demo/tree/master/dockerclient</a><br /></li>
+</ul>
+
+<h3 id="代码流程">代码流程</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><span class="lnt"> 1
@@ -543,74 +629,33 @@ values = {&#39;base_distro&#39;: &#39;centos&#39;,
 </span><span class="lnt">19
 </span><span class="lnt">20
 </span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
 </span></pre></td>
 <td class="lntd">
-<pre class="chroma">{# This is a dome file #}
-FROM {{ base_image }}:{{ base_distro_tag }}
-LABEL maintainer=&#34;{{ maintainer }}&#34; name=&#34;{{ image_name }}&#34; build-date=&#34;{{ build_date }}&#34;
-
-LABEL version=&#34;{{ version }}&#34;
-
-{% if base_image in [&#39;ubuntu&#39;, &#39;debian&#39;] %}
-    {% set work_dir = &#39;ubuntu&#39; %}
-{% else %}
-    {% set work_dir = &#39;centos&#39; %}
-{% endif %}
-
-WORKDIR /{{ work_dir }}
-
-
-{% for file in [&#39;a&#39;,&#39;b&#39;] %}
-COPY {{ file }} /{{ work_dir }}
-{% endfor %}
-
-RUN{% for item in [&#39;yum&#39;,&#39;install&#39;,&#39;python&#39;, &#39;-y&#39;] %} {{ item }}
-{%- endfor %}</pre></td></tr></table>
-</div>
-</div>
-<p>渲染后的文件：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">FROM centos:7
-LABEL maintainer=&#34;zhiwei yin&#34; name=&#34;demo&#34; build-date=&#34;20180914&#34;
-
-LABEL version=&#34;v1.0.0&#34;
-
-
+<pre class="chroma">cmd/build.py main()  ## 入口
+  -&gt; image/build.py build.run_build()
+    -&gt; common/config.py common_config.parse(...) ## 命令行，配置文件参数的定义配置注册。
+    -&gt; KollaWorker()  ## build的任务对象,把命令行，配置文件的参数拿出来给对象。
+      -&gt; docker.APIClient() ## 创建docker api client 用于调用docker 接口
+    -&gt; kolla.setup_working_dir() ## 新建个放dockerfile和构建的工作目录，把docker目录的文件拷贝过来
+    -&gt; kolla.find_dockerfiles() ## 检查下工作目录下的dokerfile.j2文件
+    -&gt; kolla.create_dockerfiles() ## 做镜像文件
+      -&gt; jinja2.Environment() ## jinja2的使用流程 见jinja2 介绍
+      -&gt; jinja2.FileSystemLoader() 
+      -&gt; template.render() ## 所有的*j2模板重新渲染，后面写入新建dockerfie文件
+    -&gt; kolla.build_queue() ## 创建多队列来执行build操作
+     -&gt; queue.put(BuildTask(self.conf, image, push_queue))
     
-
-
-WORKDIR /centos
-
-
-
-COPY a /centos
-
-COPY b /centos
-
-
-RUN yum install python -y</pre></td></tr></table>
+      -&gt; task.run()       
+        -&gt; BuildTask.run
+          -&gt; self.builder()
+            -&gt; self.dc.build  ## 调用 docker api 创建image
+        
+            -&gt; PushTask.run
+              -&gt; self.push_image(image)
+                -&gt; self.dc.push  ## 调用 docker api push image到仓库
+    </pre></td></tr></table>
 </div>
 </div>
     </div>
@@ -624,7 +669,7 @@ RUN yum install python -y</pre></td></tr></table>
   </p>
   <p class="copyright-item">
     <span class="item-title">LastMod</span>
-    <span class="item-content">2018-09-14</span>
+    <span class="item-content">2018-09-18</span>
   </p>
   
   <p class="copyright-item">
@@ -638,23 +683,17 @@ RUN yum install python -y</pre></td></tr></table>
 
     <footer class="post-footer">
       <div class="post-tags">
-          <a href="https://zhiweiyin318.github.io/tags/python/">python</a>
-          <a href="https://zhiweiyin318.github.io/tags/code/">code</a>
-          <a href="https://zhiweiyin318.github.io/tags/jinja2/">jinja2</a>
+          <a href="https://zhiweiyin318.github.io/tags/kolla/">kolla</a>
+          <a href="https://zhiweiyin318.github.io/tags/openstack/">openstack</a>
           
         </div>
 
       
       <nav class="post-nav">
         
-          <a class="prev" href="/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-kubernetes/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">《深入剖析Kubernetes》-学习笔记-Kubernetes</span>
-            <span class="prev-text nav-mobile">Prev</span>
-          </a>
         
-          <a class="next" href="/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-image/">
-            <span class="next-text nav-default">《深入剖析Kubernetes》-学习笔记-Image</span>
+          <a class="next" href="/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-kubernetes/">
+            <span class="next-text nav-default">《深入剖析Kubernetes》-学习笔记-Kubernetes</span>
             <span class="prev-text nav-mobile">Next</span>
             <i class="iconfont icon-right"></i>
           </a>

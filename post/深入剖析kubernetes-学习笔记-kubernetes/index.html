@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>《深入剖析Kubernetes》-学习笔记-Kubernetes - Zhiwei Yin&#39;s Blog</title>
+  <link rel="alternate" hreflang="en" href="https://zhiweiyin318.github.io" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Zhiwei Yin" />
+  <meta name="description" content="容器的本质 容器实际上是一个Linux Namespace、Linux Cgroups和rootfs三种技术构造出来的进程的隔离环境。 1. 容器的静态" />
+
+  <meta name="keywords" content="Golang, Kubernetes, Docker" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.45.1" />
+
+
+<link rel="canonical" href="https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-kubernetes/" />
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="《深入剖析Kubernetes》-学习笔记-Kubernetes" />
+<meta property="og:description" content="容器的本质 容器实际上是一个Linux Namespace、Linux Cgroups和rootfs三种技术构造出来的进程的隔离环境。 1. 容器的静态" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-kubernetes/" />
+
+
+
+<meta property="article:published_time" content="2018-09-18T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2018-09-18T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="《深入剖析Kubernetes》-学习笔记-Kubernetes">
+<meta itemprop="description" content="容器的本质 容器实际上是一个Linux Namespace、Linux Cgroups和rootfs三种技术构造出来的进程的隔离环境。 1. 容器的静态">
+
+
+<meta itemprop="datePublished" content="2018-09-18T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2018-09-18T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1375">
+
+
+
+<meta itemprop="keywords" content="docker,kubernetes," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="《深入剖析Kubernetes》-学习笔记-Kubernetes"/>
+<meta name="twitter:description" content="容器的本质 容器实际上是一个Linux Namespace、Linux Cgroups和rootfs三种技术构造出来的进程的隔离环境。 1. 容器的静态"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Zhiwei Yin</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/">Home</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/post/">Archives</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/tags/">Tags</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/categories/">Categories</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/about/">About</a>
+          
+        
+      </li>
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Zhiwei Yin
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/">Home</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/post/">Archives</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/tags/">Tags</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/categories/">Categories</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://zhiweiyin318.github.io/about/">About</a>
+          
+
+        
+
+      </li>
+    
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">《深入剖析Kubernetes》-学习笔记-Kubernetes</h1>
+      
+      <div class="post-meta">
+        <span class="post-time"> 2018-09-18 </span>
+        <div class="post-category">
+            <a href="https://zhiweiyin318.github.io/categories/kubernetes/"> kubernetes </a>
+            
+          </div>
+        <span class="more-meta"> 1375 words </span>
+        <span class="more-meta"> 3 min read </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Table of Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#容器的本质">容器的本质</a></li>
+<li><a href="#kubernetes的本质">Kubernetes的本质</a>
+<ul>
+<li><a href="#kubernetes-架构">kubernetes 架构</a></li>
+<li><a href="#kubernetes-概念">Kubernetes 概念</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h1 id="容器的本质">容器的本质</h1>
+
+<p>容器实际上是一个Linux Namespace、Linux Cgroups和rootfs三种技术构造出来的进程的隔离环境。<br />
+1. 容器的静态试图：一组联合挂载在/var/lib/docker/&hellip;上的rootfs，即“容器镜像”Container Image。<br />
+2. 容器的动态试图：一个由Namespace和Cgroup构成的隔离环境，即“容器运行时”Container Runtime。</p>
+
+<p>作为一个开发者，不关心运行时，容器镜像才是真正承载容器信息进程传递的。容器编排由此出现，容器走向容器云。</p>
+
+<h1 id="kubernetes的本质">Kubernetes的本质</h1>
+
+<h2 id="kubernetes-架构">kubernetes 架构</h2>
+
+<p>Kubernetes项目的理论基础要比工程实践走得靠前很多，归功于Google2015年4越发布的Borg论文。<br />
+Borg承载了Google公司整个基础设施的核心依赖，在整个基础设施技术栈的最底层。</p>
+
+<p><img src="/images/borg.png" alt="image" /></p>
+
+<p>图片来源：<a href="http://malteschwarzkopf.de/research/assets/google-stack.pdf">http://malteschwarzkopf.de/research/assets/google-stack.pdf</a></p>
+
+<p><img src="/images/Kubernetes.png" alt="image" /></p>
+
+<p>Kubernetes跟Borg非常相似，由Master+Node组成。<br />
+Master控制节点：<br />
+1. kube-apiserver 负责API服务<br />
+2. kube-scheduler 负责调度
+3. kube-controller-manager 负责容器编排</p>
+
+<p>整个集群数据持久化由kube-apiserver处理后保存在Etcd中。</p>
+
+<p>Node计算节点最核心组件kubelet，负责同容器运行时（比如docker项目）打交道。<br />
+1. CRI （Container Runtime Interface）定义了容器运行时各种核心操作，比如启动一个容器需要的所有参数等。只要符合这个容器运行时能够运行标准的容器镜像，都可以通过CRI接入到Kubernetes项目。<br />
+2. OCI 容器运行时规范同底层的Linux操作系统进行交互，把CRI 请求翻译成Linux 操作系统的调用（操作Namespace和Cgroups等）<br />
+3. CNI （Container Networking Interface） 网络插件。<br />
+4. CSI （Container Storage Interface） 存储插件。<br />
+5. Kubelet通过gRPC协议同一个Device Plugin的插件进行交互，这个插件时Kubernetes项目用来管理GPU等宿主机物理设备的主要组件，也是基于Kubernetes项目进行机器学习等工作关注的功能。</p>
+
+<h2 id="kubernetes-概念">Kubernetes 概念</h2>
+
+<p>Docker Swarm + Compose项目是通过“link”，来解决多个容器的关联关系的。 Docker会在不同容器内以环境变量注入的方式传递IP，端口信息来实现多个容器的关联。</p>
+
+<p>Kubernetes是用“Pod”来共享Network Namespace、同一组数据卷，从而达到高效交互信息的目的。通过“Service”的服务来给应用提供访问入口。</p>
+
+<p>Pod 绑定 Service服务，Service服务声明IP地址等信息，作为Pod的代理入口Portal，替代Pod对外暴露一个固定的网络地址。</p>
+
+<p><img src="/images/pod.png" alt="image" /></p>
+
+<p>Kubernetes围绕Pod不断扩展：
+1. Deployment Pod的多实例管理器。<br />
+2. Secret Credential信息以Secret的方式存入Etcd，启动Pod时挂载进容器。<br />
+3. Job 只运行一次性的Pod。<br />
+4. DaemonSet 每个宿主机只能运行一个副本的守护进程服务。<br />
+5. CronJob 定时任务。</p>
+
+<p>Kubernetes项目中，推崇使用“声明式API”的方式：<br />
+* 通过一个编排对象，比如Pod，Job等来描述管理的应用。<br />
+* 通过服务对象，比如Service，Secret等负责具体平台级功能。</p>
+
+<p>编排对象和服务对象都是API对象。</p>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Zhiwei Yin</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2018-09-18</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://zhiweiyin318.github.io/tags/docker/">docker</a>
+          <a href="https://zhiweiyin318.github.io/tags/kubernetes/">kubernetes</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/kolla%E6%BA%90%E7%A0%81%E8%B5%B0%E8%AF%BB/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">kolla源码走读</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        
+          <a class="next" href="/post/python-jinja2/">
+            <span class="next-text nav-default">Python jinja2</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="zhiweiyin@hotmail.com" rel="me noopener" class="iconfont icon-email"
+        title="email" target="_blank">
+      </a>
+      <a href="https://github.com/zhiweiyin318" rel="me noopener" class="iconfont icon-github"
+        title="github" target="_blank">
+      </a>
+  <a href="https://zhiweiyin318.github.io/index.xml" rel="noopener alternate" type="application/rss&#43;xml" class="iconfont icon-rss"
+    title="rss" target="_blank">
+  </a>
+  </div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span><span class="author">Zhiwei Yin</span></span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+</body>
+</html>
