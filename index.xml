@@ -426,7 +426,7 @@
 &lt;/div&gt;
 &lt;h2 id=&#34;kolla-build-conf-配置参数说明&#34;&gt;kolla-build.conf 配置参数说明&lt;/h2&gt;
 
-&lt;p&gt;&lt;strong&gt;DEFAULT&lt;/strong&gt;
+&lt;p&gt;&lt;strong&gt;DEFAULT&lt;/strong&gt;&lt;br /&gt;
 * &lt;strong&gt;skip_parents：&lt;/strong&gt; 编译跳过父镜像（FROM的镜像），如果夫镜像没有，就报错了。&lt;br /&gt;
 * &lt;strong&gt;skip_existing：&lt;/strong&gt;  编译跳过已经存在的镜像。&lt;br /&gt;
 * &lt;strong&gt;list_dependencies：&lt;/strong&gt; 打印本次编译的镜像的依赖关系。&lt;br /&gt;
