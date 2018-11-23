@@ -66,7 +66,7 @@
 
 <meta property="article:published_time" content="2018-09-18T00:00:00&#43;00:00"/>
 
-<meta property="article:modified_time" content="2018-09-18T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2018-11-23T00:00:00&#43;00:00"/>
 
 
 
@@ -84,7 +84,7 @@
 
 <meta itemprop="datePublished" content="2018-09-18T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2018-09-18T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1574">
+<meta itemprop="wordCount" content="2098">
 
 
 
@@ -310,8 +310,8 @@
             <a href="https://zhiweiyin318.github.io/categories/openstack/"> openstack </a>
             
           </div>
-        <span class="more-meta"> 1574 words </span>
-        <span class="more-meta"> 4 min read </span>
+        <span class="more-meta"> 2098 words </span>
+        <span class="more-meta"> 5 min read </span>
       </div>
     </header>
 
@@ -334,6 +334,7 @@
 <li><a href="#dokcer-client">dokcer-client</a></li>
 <li><a href="#代码流程">代码流程</a></li>
 </ul></li>
+<li><a href="#kolla-build-conf-配置参数说明">kolla-build.conf 配置参数说明</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -631,6 +632,10 @@
 </span><span class="lnt">21
 </span><span class="lnt">22
 </span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
 </span></pre></td>
 <td class="lntd">
 <pre class="chroma">cmd/build.py main()  ## 入口
@@ -645,19 +650,38 @@
       -&gt; jinja2.FileSystemLoader() 
       -&gt; template.render() ## 所有的*j2模板重新渲染，后面写入新建dockerfie文件
     -&gt; kolla.build_queue() ## 创建多队列来执行build操作
-     -&gt; queue.put(BuildTask(self.conf, image, push_queue))
+      -&gt; self.build_image_list() ## 根据配置生成所有image列表，已经依赖关系
+      -&gt; self.find_parents() ## 整理出image的父image
+      -&gt; self.filter_images() ## 根据配置的regex和profile生成需要编译的iamge列表
+      -&gt; queue.put(BuildTask(self.conf, image, push_queue))
     
       -&gt; task.run()       
         -&gt; BuildTask.run
           -&gt; self.builder()
+            -&gt; make_an_archive ## 需要下载plugin和addition
             -&gt; self.dc.build  ## 调用 docker api 创建image
-        
+
             -&gt; PushTask.run
               -&gt; self.push_image(image)
                 -&gt; self.dc.push  ## 调用 docker api push image到仓库
     </pre></td></tr></table>
 </div>
 </div>
+<h2 id="kolla-build-conf-配置参数说明">kolla-build.conf 配置参数说明</h2>
+
+<p><strong>DEFAULT</strong>
+* <strong>skip_parents：</strong> 编译跳过父镜像（FROM的镜像），如果夫镜像没有，就报错了。<br />
+* <strong>skip_existing：</strong>  编译跳过已经存在的镜像。<br />
+* <strong>list_dependencies：</strong> 打印本次编译的镜像的依赖关系。<br />
+* <strong>save_dependency：</strong> 保存镜像的依赖关系为Graphviz dot 格式，后面跟保存的文件名路径。<br />
+* <strong>profile：</strong> 本次编译的组件组。<br />
+* <strong>regex：</strong> 本次只编译的组件的正则表达式，这个参数设置后就不会编profile的镜像了。<br />
+* <strong>template-only：</strong>  只生成dockerfile文件不build。<br />
+* <strong>base_image：</strong> 没有配置，默认给centos。<br />
+* <strong>base_tag：</strong> 没有配置，默认给latest。<br />
+* <strong>registry：</strong> 配了，镜像的namespace就是 registry的地址/namespace的内容；没有配置，镜像的namespace就是 namespace的内容。<br />
+* <strong>namespace：</strong> 默认为kolla。</p>
+
     </div>
 
     
@@ -669,7 +693,7 @@
   </p>
   <p class="copyright-item">
     <span class="item-title">LastMod</span>
-    <span class="item-content">2018-09-18</span>
+    <span class="item-content">2018-11-23</span>
   </p>
   
   <p class="copyright-item">
