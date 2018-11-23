@@ -50,7 +50,7 @@
 
 &lt;p&gt;交付工作本身就是唯一的。应用软件，组织，部署环境和团队的每次组合都有唯一的上下文。我们认识到每个团队都需要能理解这个唯一性的交付和自动化。我们认为自动化所有可重复的任务很重要，因为持续交付对满足业务需求是不可或缺的。&lt;/p&gt;
 
-&lt;p&gt;我们用加速应用软件开发的方法来加速我们的自动化：使用现代架构和编程语言，以及通用功能的框架，库和服务。&lt;/p&gt;
+&lt;p&gt;我们用加速应用软件开发的方法来加速我们的自动化：使用现代架构和具有通用功能的框架，库和服务的编程语言。&lt;/p&gt;
 
 &lt;p&gt;交付的基础设施现在是可编程的了，让我们对它编程吧。&lt;/p&gt;
 
@@ -81,7 +81,7 @@
 
 &lt;p&gt;&lt;strong&gt;监控：&lt;/strong&gt;  用来监控和解决在生产环境交付环节出现问题的通用手段。&lt;br /&gt;
 * &lt;strong&gt;追踪：&lt;/strong&gt; 在系统中的监控活动，和追踪这些活动的关系。&lt;br /&gt;
-* &lt;strong&gt;调试：&lt;/strong&gt; 交互，检查和交付流程。&lt;br /&gt;
+* &lt;strong&gt;调试：&lt;/strong&gt; 响应和检查交付流程。&lt;br /&gt;
 * &lt;strong&gt;度量：&lt;/strong&gt; 从整个交付流程中获取活动的度量数据。&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;作者：&lt;/strong&gt;  (按照姓的首字母排序): Kenny Bastani, Marc Holmes, Rod Johnson, Jessica Kerr, Mik Kersten, Russ Miles, Erin Schnabel, Matt Stine. With the help and refinement of many members in the community.&lt;/p&gt;
