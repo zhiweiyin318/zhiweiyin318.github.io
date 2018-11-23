@@ -3408,5 +3408,74 @@ git clone https://github.com/xianmin/hugo-theme-jane.git themes/jane&lt;/pre&gt;
       
     </item>
     
+    <item>
+      <title></title>
+      <link>https://zhiweiyin318.github.io/post/%E8%BD%AF%E4%BB%B6%E5%AE%9A%E4%B9%89%E4%BA%A4%E4%BB%98%E5%AE%A3%E8%A8%80/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhiweiyin318.github.io/post/%E8%BD%AF%E4%BB%B6%E5%AE%9A%E4%B9%89%E4%BA%A4%E4%BB%98%E5%AE%A3%E8%A8%80/</guid>
+      
+        <description>
+
+&lt;blockquote&gt;
+&lt;p&gt;宣言原文地址：  &lt;a href=&#34;https://sdd-manifesto.org/?from=timeline&#34;&gt;https://sdd-manifesto.org/?from=timeline&lt;/a&gt;&lt;br /&gt;
+宣言github地址: &lt;a href=&#34;https://github.com/sdd-manifesto/manifesto&#34;&gt;https://github.com/sdd-manifesto/manifesto&lt;/a&gt;&lt;br /&gt;
+翻译：Zhiwei Yin&lt;br /&gt;
+时间：2018-11-23&lt;br /&gt;
+翻译github地址：&lt;a href=&#34;https://github.com/zhiweiyin318/yzw.translation&#34;&gt;https://github.com/zhiweiyin318/yzw.translation&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;软件定义交付宣言&#34;&gt;软件定义交付宣言&lt;/h1&gt;
+
+&lt;p&gt;我们认识到交付可用的软件改变着我们的世界。我们认识到代码是阐述精确活动的最佳方式。我们认识到代码只在我们交付的时候有用。&lt;/p&gt;
+
+&lt;p&gt;交付是我们的工作，不是细节。现在是时候把核心技能应用到我们自己的工作中了。现在是时候“设计”我们的交付了。我们把工作划分为我们的和计算机的：我们来负责决策，计算机来负责自动化完成任务。&lt;/p&gt;
+
+&lt;p&gt;交付工作本身就是唯一的。应用软件，组织，部署环境和团队的每次组合都有唯一的上下文。我们认识到每个团队都需要能理解这个唯一性的交付和自动化。我们认为自动化所有可重复的任务很重要，因为持续交付对满足业务需求是不可或缺的。&lt;/p&gt;
+
+&lt;p&gt;我们用加速应用软件开发的方法来加速我们的自动化：使用现代架构和编程语言，以及通用功能的框架，库和服务。&lt;/p&gt;
+
+&lt;p&gt;交付的基础设施现在是可编程的了，让我们对它编程吧。&lt;/p&gt;
+
+&lt;h2 id=&#34;软件定义交付是&#34;&gt;软件定义交付是：&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;核心：&lt;/strong&gt;  交付对每个软件团队和组织来说是最基本的战略能力。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;一流的：&lt;/strong&gt; 交付的代码就是产品代码。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;战略的：&lt;/strong&gt; 在团队和组织层面做决策；并用代码轻松准确的实现它。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;持续的：&lt;/strong&gt; 随着不断学习，我们持续改进我们的交付。&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;设计：&lt;/strong&gt;
+* &lt;strong&gt;现代软件架构：&lt;/strong&gt; 事件驱动和可扩展性。
+* &lt;strong&gt;现代编程语言：&lt;/strong&gt; 逻辑最好在代码中展现，而不是图或者界面。脚本不要太多。
+* &lt;strong&gt;基础模型：&lt;/strong&gt; 使用一种软件领域模型，使用可理解的代码。
+* &lt;strong&gt;可测试：&lt;/strong&gt; 在产品发布前，确保在短时间内定位错误。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;合作：&lt;/strong&gt;
+* &lt;strong&gt;开发者：&lt;/strong&gt; 每个人通过代码表达自己的专业技术，让所有人从中获益。&lt;br /&gt;
+* &lt;strong&gt;软件：&lt;/strong&gt; 虽然我们都使用最好的工具，但是我们使用这些工具的方式是唯一的。&lt;br /&gt;
+*  &lt;strong&gt;开发者和软件：&lt;/strong&gt; 协作的自动化方式可用提高我们的感知和实现我们的决策。它会把信息和执行的操作传递给我们，并让我们更好的理解自动化的行为。通过代码，我们可以区分团队共享的交付对象以及他们的实现。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;加速：&lt;/strong&gt;
+* &lt;strong&gt;通过自动化：&lt;/strong&gt; 我们通过自动化执行重复的任务来加速我们的工作，并且规避错误。
+* &lt;strong&gt;通过复用：&lt;/strong&gt; 开发人员，团队和组织之间共享通用的功能模块。
+*&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;监控：&lt;/strong&gt;  用来监控和解决在生产环境交付环节出现问题的通用手段。
+* &lt;strong&gt;追踪：&lt;/strong&gt; 在系统中的监控活动，和追踪这些活动的关系。
+* &lt;strong&gt;调试：&lt;/strong&gt; 交互，检查和交付流程。
+* &lt;strong&gt;度量：&lt;/strong&gt; 从整个交付流程中获取活动的度量数据。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;作者：&lt;/strong&gt;  (按照姓的首字母排序): Kenny Bastani, Marc Holmes, Rod Johnson, Jessica Kerr, Mik Kersten, Russ Miles, Erin Schnabel, Matt Stine. With the help and refinement of many members in the community.&lt;/p&gt;
+
+&lt;p&gt;© 2018, the above authors, this declaration may be freely copied in any form, but only in its entirety through this notice.&lt;/p&gt;
+
+&lt;p&gt;翻译中出现的一切问题都以原文为准。&lt;/p&gt;
+</description>
+      
+    </item>
+    
   </channel>
 </rss>
