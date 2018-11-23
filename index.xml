@@ -64,7 +64,7 @@
 &lt;li&gt;&lt;strong&gt;持续的：&lt;/strong&gt; 随着不断学习，我们持续改进我们的交付。&lt;br /&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;strong&gt;设计：&lt;/strong&gt;&lt;br /&gt;
+&lt;p&gt;&lt;strong&gt;设计：&lt;/strong&gt;  健壮的可测试的代码。 70年代的脚本语言是低效的。&lt;br /&gt;
 * &lt;strong&gt;现代软件架构：&lt;/strong&gt; 事件驱动和可扩展性。&lt;br /&gt;
 * &lt;strong&gt;现代编程语言：&lt;/strong&gt; 逻辑最好在代码中展现，而不是图或者界面。脚本不要太多。&lt;br /&gt;
 * &lt;strong&gt;基础模型：&lt;/strong&gt; 使用一种软件领域模型，使用可理解的代码。&lt;br /&gt;
