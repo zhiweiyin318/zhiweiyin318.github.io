@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>《深入剖析Kubernetes》-学习笔记-Cgroups-Namespace - Zhiwei Yin</title>
+  <meta property="og:title" content="《深入剖析Kubernetes》-学习笔记-Cgroups-Namespace" />
+  <meta name="twitter:title" content="《深入剖析Kubernetes》-学习笔记-Cgroups-Namespace" />
+  <meta name="description" content="概述 容器其实就是一种沙盒技术的，沙盒就像集装箱一样，把应用装起来，应用于应用之间，有了边界，互不干扰，而且方便被搬来搬去，这就是PaaS最理">
+  <meta property="og:description" content="概述 容器其实就是一种沙盒技术的，沙盒就像集装箱一样，把应用装起来，应用于应用之间，有了边界，互不干扰，而且方便被搬来搬去，这就是PaaS最理">
+  <meta name="twitter:description" content="概述 容器其实就是一种沙盒技术的，沙盒就像集装箱一样，把应用装起来，应用于应用之间，有了边界，互不干扰，而且方便被搬来搬去，这就是PaaS最理">
+  <meta name="author" content="Zhiwei Yin"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Zhiwei Yin",
+    
+    "url": "https://zhiweiyin318.github.io"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https://zhiweiyin318.github.io"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https://zhiweiyin318.github.io",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https://zhiweiyin318.github.io/post/2018-09-10-kubernetes-note-cgroups-namepspace/",
+          "name": "《深入剖析 kubernetes》 学习笔记 cgroups namespace"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Zhiwei Yin"
+  },
+  "headline": "《深入剖析Kubernetes》-学习笔记-Cgroups-Namespace",
+  "description" : "概述 容器其实就是一种沙盒技术的，沙盒就像集装箱一样，把应用装起来，应用于应用之间，有了边界，互不干扰，而且方便被搬来搬去，这就是PaaS最理",
+  "inLanguage" : "en",
+  "wordCount": 3150,
+  "datePublished" : "2018-09-10T00:00:00",
+  "dateModified" : "2018-09-10T00:00:00",
+  "image" : "https://zhiweiyin318.github.io/images/avatar-icon.png",
+  "keywords" : [ "docker, kubernetes, cgroups, namespace" ],
+  "mainEntityOfPage" : "https://zhiweiyin318.github.io/post/2018-09-10-kubernetes-note-cgroups-namepspace/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https://zhiweiyin318.github.io",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https://zhiweiyin318.github.io/images/avatar-icon.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="《深入剖析Kubernetes》-学习笔记-Cgroups-Namespace" />
+<meta property="og:description" content="概述 容器其实就是一种沙盒技术的，沙盒就像集装箱一样，把应用装起来，应用于应用之间，有了边界，互不干扰，而且方便被搬来搬去，这就是PaaS最理">
+<meta property="og:image" content="https://zhiweiyin318.github.io/images/avatar-icon.png" />
+<meta property="og:url" content="https://zhiweiyin318.github.io/post/2018-09-10-kubernetes-note-cgroups-namepspace/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Zhiwei Yin" />
+  <meta name="twitter:title" content="《深入剖析Kubernetes》-学习笔记-Cgroups-Namespace" />
+  <meta name="twitter:description" content="概述 容器其实就是一种沙盒技术的，沙盒就像集装箱一样，把应用装起来，应用于应用之间，有了边界，互不干扰，而且方便被搬来搬去，这就是PaaS最理">
+  <meta name="twitter:image" content="https://zhiweiyin318.github.io/images/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <link href='https://zhiweiyin318.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://zhiweiyin318.github.io/images/avatar-icon.png" />
+  <meta name="twitter:image" content="https://zhiweiyin318.github.io/images/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://zhiweiyin318.github.io/post/2018-09-10-kubernetes-note-cgroups-namepspace/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Zhiwei Yin" />
+
+  <meta name="generator" content="Hugo 0.51" />
+  <link rel="alternate" href="https://zhiweiyin318.github.io/index.xml" type="application/rss+xml" title="Zhiwei Yin">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://zhiweiyin318.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://zhiweiyin318.github.io/css/syntax.css" /><link rel="stylesheet" href="https://zhiweiyin318.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://zhiweiyin318.github.io">Zhiwei Yin</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="home" href="/">home</a>
+            </li>
+          
+        
+          
+            <li class="navlinks-container">
+              <a class="navlinks-parent">categories</a>
+              <div class="navlinks-children">
+                
+                  <a href="/categories/kubernetes">kubernetes</a>
+                
+                  <a href="/categories/golang">golang</a>
+                
+                  <a href="/categories/python">python</a>
+                
+                  <a href="/categories/quant">quant</a>
+                
+                  <a href="/categories/translation">translation</a>
+                
+                  <a href="/tags">tags</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li>
+              <a title="archives" href="/post">archives</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="notes" href="/">notes</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="porjects" href="/">porjects</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="about" href="/about">about</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Zhiwei Yin" href="https://zhiweiyin318.github.io">
+            <img class="avatar-img" src="https://zhiweiyin318.github.io/images/avatar-icon.png" alt="Zhiwei Yin" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1 align="center">《深入剖析Kubernetes》-学习笔记-Cgroups-Namespace</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on Mon Sep 10, 2018
+  
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;3150&nbsp;words
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Zhiwei Yin
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+          
+          <div class="blog-tags">
+            
+              <a href="https://zhiweiyin318.github.io/tags/docker/">docker</a>&nbsp;
+            
+              <a href="https://zhiweiyin318.github.io/tags/kubernetes/">kubernetes</a>&nbsp;
+            
+              <a href="https://zhiweiyin318.github.io/tags/cgroups/">cgroups</a>&nbsp;
+            
+              <a href="https://zhiweiyin318.github.io/tags/namespace/">namespace</a>&nbsp;
+            
+          </div>
+          
+        
+
+<h1 id="概述">概述</h1>
+
+<p>容器其实就是一种沙盒技术的，沙盒就像集装箱一样，把应用装起来，应用于应用之间，有了边界，互不干扰，而且方便被搬来搬去，这就是PaaS最理想的状态。</p>
+
+<p>程序在操作系统的表现就是进程，容器技术的核心功能就是通过约束和修改进程的动态表现，创造出一个“边界”。Linux操作系统中，Cgroups技术是用来制造约束的手段，Namespace技术是用来修改进程视图的主要方法。</p>
+
+<h2 id="隔离技术-namespace">隔离技术（Namespace）</h2>
+
+<p>举个例子：<br />
+运行busybox容器，执行/bin/sh，在跑个sleep。</p>
+
+<pre><code>$ docker run -it busybox /bin/sh
+/ #
+/ # ps
+PID   USER     TIME  COMMAND
+    1 root      0:00 /bin/sh
+    7 root      0:00 ps
+/ # 
+/ # sleep 100 &amp;
+/ # ps
+PID   USER     TIME  COMMAND
+    1 root      0:00 /bin/sh
+    9 root      0:00 sleep 100
+   10 root      0:00 ps
+/ # 
+
+</code></pre>
+
+<p>宿主机上的进程</p>
+
+<pre><code>[root@yzw zhiweiyin]# ps auxf
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root      1122  0.3  1.7 729148 66444 ?        Ssl  08:14   0:10 /usr/bin/dockerd
+root      1318  0.5  0.7 574660 30976 ?        Ssl  08:14   0:16  \_ docker-containerd --config /var/run/docker/containerd/containerd.toml
+root      4511  0.0  0.0   7488  3156 ?        Sl   08:58   0:00      \_ docker-containerd-shim -namespace moby -workdir /var/lib/docker/containerd/daemon/io.containerd.runtime.v1.linux/moby
+root      4529  0.0  0.0   1252   264 pts/0    Ss   08:58   0:00          \_ /bin/sh
+root      4671  0.0  0.0   1232     4 pts/0    S+   09:01   0:00              \_ sleep 100
+
+</code></pre>
+
+<p>容器里面sh的进程号是1，但是在宿主机上进程号是4529，且是docker-containerd-shim的子进程，sleep也是类似，这就是Namespace机制，容器里面屏蔽掉了其他进程和进程号。</p>
+
+<p>Linux上创建线程是用clone,返回一个PID号。</p>
+
+<pre><code>int pid = clone(main_function,stack_size,SIGCHID,NULL)
+</code></pre>
+
+<p>当我们加上CLONE_NEWPID参数后，新创建的这个进程就会“看到”是一个全新的进程空间，在这个进程空间里PID是1。但是在主机上仍然是另外的PID号。多次执行clone会创建多个PID Namespace出来，每个进程里面PID都为1，看不到真正的宿主机上的PID，也看不到其他PID Namespace里的情况。</p>
+
+<pre><code> int pid = clone(main_function,stack_size,CLONE_NEWPID|SIGCHID,NULL)
+</code></pre>
+
+<p>Mount Namespace 用于被隔离进程只看到当前Namespace里的挂载点信息。<br />
+ Network Namespace 用于被隔离进程只看到当前Namespace里面的网络设备和配置。</p>
+
+<p><strong>这就是Linux容器实现的原理。创建容器进程时，指定了这个进程所需要启动的一组Namespace参数，这样容器就只能“看”到当前容器Namespace所限定的资源、文件、设置、状态、或者配置了，对于宿主机和其他不相干的进程都看不到了。容器其实是一种特殊的进程而已。</strong></p>
+
+<h2 id="虚拟机-vs-容器">虚拟机 vs. 容器</h2>
+
+<p>先看两张图：<br />
+<img src="/images/VM-Docker.png" alt="image" /></p>
+
+<p>左边是虚拟机的工作原理，Hypervisor的软件通过硬件的虚拟化功能，模拟出了运行一个操作系统所以需要的各种硬件，然后在模拟的硬件上按照一个操作系统 Guest OS，软件进程跑在这个Guest OS里，也就只能看到这个OS里面的文件和目录，以及虚拟设备。所以虚拟机也能隔离作用，但是开销太大，太重了，一个最小的CentOS KVM虚机启动后差不多需要100-200M内存，所有对资源的使用都得经过序集合软件，又是一层损耗。</p>
+
+<p>右边是容器的工作原理，Docker的位置是个应用一个级别的，和宿主机上其他应用进程是相同级别的，由宿主机统一管理，只不过被隔离的进程，额外设置了Namespace参数，Docker扮演的角色是辅助和管理，和Hypervisor完全不同。容器相对于虚机机来说几乎无损耗，也无需单独的Guest OS。但是容器也有弊端，所有容器之间隔离的不彻底，所有容器共用操作系统内核，内核有很多资源是不能被Namespace化的，比如时间。虚机机里面就可以随便这套了。所有应用容器化后什么可以做什么不可以做是需要考虑的一个问题，特别是对系统调用的使用上。</p>
+
+<h2 id="资源限制技术-cgroups">资源限制技术 Cgroups</h2>
+
+<p>通过Namespace技术虽然实现了容器的资源隔离，但是这个进程还是在宿主机上跑的，和其他进程共享CPU和内存的，有可能把宿主机上的CPU和内存吃完，Cgroups就是用来对进程设置资源限制的主要功能。</p>
+
+<p>Linux Cgroups 全称 Linux Control Group，限制一个进程使用的资源上限，包括CPU，内存，磁盘，网络带宽等。还可以对进程进行优先级设置，审计，将进程挂起和恢复等操作。</p>
+
+<p>Cgroups 给用户暴露出来的操作接口是文件系统，在/sys/fs/cgroup路径下，包括了各种限制资源类。</p>
+
+<pre><code>[root@yzw ~]# mount -t cgroup
+cgroup on /sys/fs/cgroup/systemd type cgroup (rw,nosuid,nodev,noexec,relatime,seclabel,xattr,release_agent=/usr/lib/systemd/systemd-cgroups-agent,name=systemd)
+cgroup on /sys/fs/cgroup/hugetlb type cgroup (rw,nosuid,nodev,noexec,relatime,seclabel,hugetlb)
+cgroup on /sys/fs/cgroup/freezer type cgroup (rw,nosuid,nodev,noexec,relatime,seclabel,freezer)
+cgroup on /sys/fs/cgroup/pids type cgroup (rw,nosuid,nodev,noexec,relatime,seclabel,pids)
+cgroup on /sys/fs/cgroup/cpu,cpuacct type cgroup (rw,nosuid,nodev,noexec,relatime,seclabel,cpuacct,cpu)
+cgroup on /sys/fs/cgroup/blkio type cgroup (rw,nosuid,nodev,noexec,relatime,seclabel,blkio)
+cgroup on /sys/fs/cgroup/devices type cgroup (rw,nosuid,nodev,noexec,relatime,seclabel,devices)
+cgroup on /sys/fs/cgroup/cpuset type cgroup (rw,nosuid,nodev,noexec,relatime,seclabel,cpuset)
+cgroup on /sys/fs/cgroup/net_cls,net_prio type cgroup (rw,nosuid,nodev,noexec,relatime,seclabel,net_prio,net_cls)
+cgroup on /sys/fs/cgroup/memory type cgroup (rw,nosuid,nodev,noexec,relatime,seclabel,memory)
+cgroup on /sys/fs/cgroup/perf_event type cgroup (rw,nosuid,nodev,noexec,relatime,seclabel,perf_event)
+[root@yzw cgroup]# ll /sys/fs/cgroup/
+total 0
+drwxr-xr-x. 5 root root  0 Sep 10 22:48 blkio
+lrwxrwxrwx. 1 root root 11 Sep 10 22:48 cpu -&gt; cpu,cpuacct
+lrwxrwxrwx. 1 root root 11 Sep 10 22:48 cpuacct -&gt; cpu,cpuacct
+drwxr-xr-x. 5 root root  0 Sep 10 22:48 cpu,cpuacct
+drwxr-xr-x. 3 root root  0 Sep 10 22:48 cpuset
+drwxr-xr-x. 5 root root  0 Sep 10 22:48 devices
+drwxr-xr-x. 3 root root  0 Sep 10 22:48 freezer
+drwxr-xr-x. 3 root root  0 Sep 10 22:48 hugetlb
+drwxr-xr-x. 5 root root  0 Sep 10 22:48 memory
+lrwxrwxrwx. 1 root root 16 Sep 10 22:48 net_cls -&gt; net_cls,net_prio
+drwxr-xr-x. 3 root root  0 Sep 10 22:48 net_cls,net_prio
+lrwxrwxrwx. 1 root root 16 Sep 10 22:48 net_prio -&gt; net_cls,net_prio
+drwxr-xr-x. 3 root root  0 Sep 10 22:48 perf_event
+drwxr-xr-x. 5 root root  0 Sep 10 22:48 pids
+drwxr-xr-x. 5 root root  0 Sep 10 22:48 systemd
+</code></pre>
+
+<p>举个例子：<br />
+cfs_period和cfs_quota组合使用，限制进程在cfs_period的一段时间内，只能被分到总量为cfs_quota的CPU时间。<br />
+在/sys/fs/cgroup/cpu目录下创建container文件夹，系统自动创建了一堆资源限制文件。这个目录就成为一个“控制组”。</p>
+
+<pre><code>[root@yzw cpu]# mkdir container
+[root@yzw cpu]# ls container/
+cgroup.clone_children  cgroup.procs  cpuacct.usage         cpu.cfs_period_us  cpu.rt_period_us   cpu.shares  notify_on_release
+cgroup.event_control   cpuacct.stat  cpuacct.usage_percpu  cpu.cfs_quota_us   cpu.rt_runtime_us  cpu.stat    tasks
+</code></pre>
+
+<p>我们后台执行个死循环,top发现CPU1被吃完了，container控制组quota没有限制，period是100ms（100000us）。<br />
+我们修改配置，quota写入20ms就是说100ms该控制组的进程只能使用20ms的CPU，这个进程只使用20%的CPU带宽，我们把限制的进程PID写入该控制组。<br />
+再次top发现CPU1的使用率降下来了。</p>
+
+<pre><code>[root@yzw cpu]# while :; do : ;done &amp;
+[1] 3592
+
+[root@yzw cpu]# top
+%Cpu1  :100.0 us,  0.0 sy,  0.0 ni,  0.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+
+[root@yzw container]# cat cpu.cfs_period_us 
+100000
+[root@yzw container]# cat cpu.cfs_quota_us 
+-1
+
+[root@yzw container]# echo 20000 &gt; cpu.cfs_quota_us 
+[root@yzw container]# echo 3592 &gt; tasks 
+[root@yzw container]# top
+%Cpu1  : 17.4 us,  0.0 sy,  0.0 ni, 82.6 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+</code></pre>
+
+<p>Cgroups的设计比较简单粗暴，就是一个子系统目录加上一组资源限制文件的组合。Docker等容器项目来说就是在各个子系统下，为每个容器创建一个控制组（就是新建个目录），然后启动容器进程后，把容器进程的PID写入对应控制组的tasks文件中就可以了。</p>
+
+<pre><code>[root@yzw docker]# docker run -it --cpu-period=100000 --cpu-quota=20000 centos:7 /bin/bash
+[root@90c9fd20daf8 /]# 
+
+[root@yzw ~]# cd /sys/fs/cgroup/cpu/docker/90c9fd20daf8f4f9ad384d349d37ca1542490d78daf4e3fe6b79f3ad6d7179bd/
+[root@yzw 90c9fd20daf8f4f9ad384d349d37ca1542490d78daf4e3fe6b79f3ad6d7179bd]# cat cpu.cfs_quota_us 
+20000
+[root@yzw 90c9fd20daf8f4f9ad384d349d37ca1542490d78daf4e3fe6b79f3ad6d7179bd]# cat cpu.cfs_period_us 
+100000
+[root@yzw 90c9fd20daf8f4f9ad384d349d37ca1542490d78daf4e3fe6b79f3ad6d7179bd]# 
+</code></pre>
+
+<h1 id="总结">总结</h1>
+
+<p>容器就是一个启动了多个Namespace的应用进程，这个进程能够使用的资源量，通过Cgroups配置限制。
+<strong>容器技术中一个非常重要的概念，容器是一个单进程模型。</strong> 用户的应用进程就是容器里面PID=1的进程，其他后续创建的进程都是这个进程的子进程，意味着你没法运行两个不同的应用，除非找到一个公共的PID=1的程序来充当两个不同程序的父进程。好多人使用systemd或者superviord来充当容器的启动进程。 容器的设计希望容器和进程应用同生命周期，对后续编排很重要，如果容器是正常运行的，里面的应用挂了，处理起来就很麻烦。</p>
+
+<h1 id="issue">issue</h1>
+
+<p>跟Namespace一样，Cgroups也有缺陷，提起最多的就是/proc文件系统的问题。/proc存储的是内核运行状态的一系列特殊文件，用户可以访问这些文件查看当前运行的进程的状态，比如CPU使用情况，内存使用情况，这些是top的主要数据来源。但是/proc不了解Cgroups的存在，就是容器里面读取的CPU核数，内存状态其实是宿主机的，会带来很多困惑和风险。<br />
+lxcfs可以增强docker资源的可见性，可解决这个问题。做法是把宿主机的 /var/lib/lxcfs/proc/memoinfo 文件挂载到Docker容器的/proc/meminfo位置后。容器中进程读取相应文件内容时，LXCFS的FUSE实现会从容器对应的Cgroup中读取正确的内存限制。从而使得应用获得正确的资源约束设定。kubernetes环境下，也能用，以ds 方式运行 lxcfs ，自动给容器注入争取的 proc 信息。</p>
+
+<p>/proc文件系统的问题我好像遇到过这个坑..当时在容器上运行的java应用，由于当时jvm参数没正确配置上，就用默认的，而容器设置的内存为4g，最后oom了，当时用命令查看容器的内存占用情况，竟然发现内存竟然有60多g。 那应该显示的是宿主机的内存了，jvm按照宿主机内存大小分配的默认内存应该大于4g 所以还没full gc 就oom了</p>
+
+
+        
+
+        
+          
+          
+          <h4 class="see-also">See also</h4>
+          <ul>
+          
+            <li><a href="/post/2018-09-09-kubernetes-note-history/">《深入剖析Kubernetes》-学习笔记-History</a></li>
+          
+          </ul>
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://zhiweiyin318.github.io/post/2018-09-09-kubernetes-note-history/" data-toggle="tooltip" data-placement="top" title="《深入剖析Kubernetes》-学习笔记-History">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://zhiweiyin318.github.io/post/2018-09-10-olso_config/" data-toggle="tooltip" data-placement="top" title="OpenStack olso_config">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "zhiweiyin" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+          
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:zhiweiyin@hotmail.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/zhiweiyin318" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://weibo.com/yzw517318" title="Weibo">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://zhiweiyin318.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="https://zhiweiyin318.github.io">Zhiwei Yin</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2018
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://zhiweiyin318.github.io">Zhiwei Yin</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.51</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://zhiweiyin318.github.io/js/main.js"></script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://zhiweiyin318.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>
+

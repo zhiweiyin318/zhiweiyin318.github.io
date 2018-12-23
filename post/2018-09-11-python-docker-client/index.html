@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Python docker-client - Zhiwei Yin</title>
+  <meta property="og:title" content="Python docker-client" />
+  <meta name="twitter:title" content="Python docker-client" />
+  <meta name="description" content="简单记录哈python的docker client的使用。 &gt; 官方文档： &gt; https://docker-py.readthedocs.io/en/stable/client.html &gt; https://docs.docker.com/develop/sdk/examples/ &gt; demo地址： &gt; https://github.com/zhiweiyin318/yzw.python.demo/tree/master/dockerclient 安装 $ pip install docker 使用 client 初始化 需要先创建一个Doc">
+  <meta property="og:description" content="简单记录哈python的docker client的使用。 &gt; 官方文档： &gt; https://docker-py.readthedocs.io/en/stable/client.html &gt; https://docs.docker.com/develop/sdk/examples/ &gt; demo地址： &gt; https://github.com/zhiweiyin318/yzw.python.demo/tree/master/dockerclient 安装 $ pip install docker 使用 client 初始化 需要先创建一个Doc">
+  <meta name="twitter:description" content="简单记录哈python的docker client的使用。 &gt; 官方文档： &gt; https://docker-py.readthedocs.io/en/stable/client.html &gt; https://docs.docker.com/develop/sdk/examples/ &gt; demo地址： &gt; …">
+  <meta name="author" content="Zhiwei Yin"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Zhiwei Yin",
+    
+    "url": "https://zhiweiyin318.github.io"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https://zhiweiyin318.github.io"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https://zhiweiyin318.github.io",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https://zhiweiyin318.github.io/post/2018-09-11-python-docker-client/",
+          "name": "Python docker client"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Zhiwei Yin"
+  },
+  "headline": "Python docker-client",
+  "description" : "简单记录哈python的docker client的使用。 &amp;gt; 官方文档： &amp;gt; https://docker-py.readthedocs.io/en/stable/client.html &amp;gt; https://docs.docker.com/develop/sdk/examples/ &amp;gt; demo地址： &amp;gt; https://github.com/zhiweiyin318/yzw.python.demo/tree/master/dockerclient 安装 $ pip install docker 使用 client 初始化 需要先创建一个Doc",
+  "inLanguage" : "en",
+  "wordCount": 556,
+  "datePublished" : "2018-09-11T00:00:00",
+  "dateModified" : "2018-09-11T00:00:00",
+  "image" : "https://zhiweiyin318.github.io/images/avatar-icon.png",
+  "keywords" : [ "python, code, docker" ],
+  "mainEntityOfPage" : "https://zhiweiyin318.github.io/post/2018-09-11-python-docker-client/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https://zhiweiyin318.github.io",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https://zhiweiyin318.github.io/images/avatar-icon.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="Python docker-client" />
+<meta property="og:description" content="简单记录哈python的docker client的使用。 &gt; 官方文档： &gt; https://docker-py.readthedocs.io/en/stable/client.html &gt; https://docs.docker.com/develop/sdk/examples/ &gt; demo地址： &gt; https://github.com/zhiweiyin318/yzw.python.demo/tree/master/dockerclient 安装 $ pip install docker 使用 client 初始化 需要先创建一个Doc">
+<meta property="og:image" content="https://zhiweiyin318.github.io/images/avatar-icon.png" />
+<meta property="og:url" content="https://zhiweiyin318.github.io/post/2018-09-11-python-docker-client/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Zhiwei Yin" />
+  <meta name="twitter:title" content="Python docker-client" />
+  <meta name="twitter:description" content="简单记录哈python的docker client的使用。 &gt; 官方文档： &gt; https://docker-py.readthedocs.io/en/stable/client.html &gt; https://docs.docker.com/develop/sdk/examples/ &gt; demo地址： &gt; …">
+  <meta name="twitter:image" content="https://zhiweiyin318.github.io/images/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <link href='https://zhiweiyin318.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://zhiweiyin318.github.io/images/avatar-icon.png" />
+  <meta name="twitter:image" content="https://zhiweiyin318.github.io/images/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://zhiweiyin318.github.io/post/2018-09-11-python-docker-client/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Zhiwei Yin" />
+
+  <meta name="generator" content="Hugo 0.51" />
+  <link rel="alternate" href="https://zhiweiyin318.github.io/index.xml" type="application/rss+xml" title="Zhiwei Yin">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://zhiweiyin318.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://zhiweiyin318.github.io/css/syntax.css" /><link rel="stylesheet" href="https://zhiweiyin318.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://zhiweiyin318.github.io">Zhiwei Yin</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="home" href="/">home</a>
+            </li>
+          
+        
+          
+            <li class="navlinks-container">
+              <a class="navlinks-parent">categories</a>
+              <div class="navlinks-children">
+                
+                  <a href="/categories/kubernetes">kubernetes</a>
+                
+                  <a href="/categories/golang">golang</a>
+                
+                  <a href="/categories/python">python</a>
+                
+                  <a href="/categories/quant">quant</a>
+                
+                  <a href="/categories/translation">translation</a>
+                
+                  <a href="/tags">tags</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li>
+              <a title="archives" href="/post">archives</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="notes" href="/">notes</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="porjects" href="/">porjects</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="about" href="/about">about</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Zhiwei Yin" href="https://zhiweiyin318.github.io">
+            <img class="avatar-img" src="https://zhiweiyin318.github.io/images/avatar-icon.png" alt="Zhiwei Yin" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1 align="center">Python docker-client</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on Tue Sep 11, 2018
+  
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;556&nbsp;words
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Zhiwei Yin
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+          
+          <div class="blog-tags">
+            
+              <a href="https://zhiweiyin318.github.io/tags/python/">python</a>&nbsp;
+            
+              <a href="https://zhiweiyin318.github.io/tags/code/">code</a>&nbsp;
+            
+              <a href="https://zhiweiyin318.github.io/tags/docker/">docker</a>&nbsp;
+            
+          </div>
+          
+        
+
+<p>简单记录哈python的docker client的使用。<br />
+&gt; 官方文档：<br />
+&gt; <a href="https://docker-py.readthedocs.io/en/stable/client.html">https://docker-py.readthedocs.io/en/stable/client.html</a><br />
+&gt; <a href="https://docs.docker.com/develop/sdk/examples/">https://docs.docker.com/develop/sdk/examples/</a><br />
+&gt; demo地址：<br />
+&gt; <a href="https://github.com/zhiweiyin318/yzw.python.demo/tree/master/dockerclient">https://github.com/zhiweiyin318/yzw.python.demo/tree/master/dockerclient</a></p>
+
+<h1 id="安装">安装</h1>
+
+<pre><code>$ pip install docker
+</code></pre>
+
+<h1 id="使用">使用</h1>
+
+<h2 id="client-初始化">client 初始化</h2>
+
+<p>需要先创建一个DockerClient类的对象，相当于本地的docker client端。有三种方式：</p>
+
+<pre><code>import docker
+
+# 方式1 base_url 可以是socket或者tcp方式，还有version，timeout等参数
+dc = docker.APIClient(base_url='unix://var/run/docker.sock',timeout=5)
+# 方式2
+docker_kwargs = docker.utils.kwargs_from_env()
+dc = docker.APIClient(version='auto', **docker_kwargs)
+# 方式3 这是上面2个的子集
+dc = docker.from_env()
+</code></pre>
+
+<h2 id="client-的方法">client 的方法</h2>
+
+<p>client对象的有一些方法：</p>
+
+<pre><code>dc.configs
+dc.containers
+dc.images
+dc.networks
+dc.nodes
+dc.plugins
+dc.volumes
+dc.services
+dc.events
+...
+</code></pre>
+
+<h3 id="运行-查询-停止-删除-一个容器">运行，查询，停止，删除 一个容器</h3>
+
+<pre><code>&gt;&gt;&gt; import docker
+&gt;&gt;&gt; dc = docker.from_env()
+&gt;&gt;&gt; dc.containers.run(&quot;busybox&quot;,'echo hello world')
+'hello world\n'
+&gt;&gt;&gt; 
+</code></pre>
+
+<pre><code>import docker
+dc = docker.from_env()
+container = dc.containers.run(&quot;busybox&quot;, name='test', command='echo hello world', detach=True, tty=True,
+                                stdin_open=True)
+print container.logs()
+print &quot;containers: {}&quot;.format(dc.containers.list())
+print &quot;container {} status is {}&quot;.format(container.name, container.status)
+container.stop()
+container.remove()
+print &quot;container {} status is {}&quot;.format(container.name, container.status)
+print &quot;containers: {}&quot;.format(dc.containers.list())
+</code></pre>
+
+<h3 id="list-pull-image">list/pull image</h3>
+
+<pre><code>import docker
+dc = docker.from_env()
+for i in dc.images.list():
+    print &quot;image ID:{}, tag:{}&quot;.format(i.short_id, i.tags)
+    for t in i.tags:
+        if t == &quot;busybox:latest&quot;:
+            print &quot;remove image {}&quot;.format(t)
+            dc.images.remove('busybox:latest')
+
+# if no tag is specified all tags from the repo will be pulled.
+image = dc.images.pull('busybox:latest')
+print &quot;pull busybox image, id:{},tag:{}&quot;.format(image.short_id, image.tags)
+</code></pre>
+
+<h2 id="low-level-api">Low-level API</h2>
+
+<p>The main object-orientated API is built on top of APIClient. Each method on APIClient maps one-to-one with a REST API endpoint, and returns the response that the API responds with.</p>
+
+<p>It’s possible to use APIClient directly. Some basic things (e.g. running a container) consist of several API calls and are complex to do with the low-level API, but it’s useful if you need extra flexibility and power.</p>
+
+<pre><code>import docker
+dc = docker.APIClient(base_url='unix://var/run/docker.sock')
+    print dc.version()
+dc.containers()
+</code></pre>
+
+<p>等同于：</p>
+
+<pre><code>import docker
+dc = docker.from_env()
+dc.api.containers()
+
+</code></pre>
+
+<p>输出结果是json结构的map</p>
+
+<pre><code>[{u'Status': u'Up Less than a second', u'Created': 1536673589, u'Image': u'busybox', u'Labels': {}, u'NetworkSettings': {u'Networks': {u'bridge': {u'NetworkID': u'754e02dfae9aa61b96e78ca6dfa743f121177c2985cd3179641e8650032180b4', u'MacAddress': u'02:42:ac:11:00:03', u'GlobalIPv6PrefixLen': 0, u'Links': None, u'GlobalIPv6Address': u'', u'IPv6Gateway': u'', u'DriverOpts': None, u'IPAMConfig': None, u'EndpointID': u'06443f233bfac60c83c9835172c9d076a9df406bd84a350e1e713fd274caf5d3', u'IPPrefixLen': 16, u'IPAddress': u'172.17.0.3', u'Gateway': u'172.17.0.1', u'Aliases': None}}}, u'HostConfig': {u'NetworkMode': u'default'}, u'ImageID': u'sha256:e1ddd7948a1c31709a23cc5b7dfe96e55fc364f90e1cebcde0773a1b5a30dcda', u'State': u'running', u'Command': u'/bin/sh', u'Names': [u'/cranky_lichterman'], u'Mounts': [], u'Id': u'ededc6515049f2d13b8ee79df0729bf9f8f4d92940e6012c4f1e23ccc055c0f7', u'Ports': []}, {u'Status': u'Up About a minute', u'Created': 1536673521, u'Image': u'busybox', u'Labels': {}, u'NetworkSettings': {u'Networks': {u'bridge': {u'NetworkID': u'754e02dfae9aa61b96e78ca6dfa743f121177c2985cd3179641e8650032180b4', u'MacAddress': u'02:42:ac:11:00:02', u'GlobalIPv6PrefixLen': 0, u'Links': None, u'GlobalIPv6Address': u'', u'IPv6Gateway': u'', u'DriverOpts': None, u'IPAMConfig': None, u'EndpointID': u'2a3d90402db5b9c26583a5bb4bad5c4561fb263cd2858d0e01774ab7fa5cc336', u'IPPrefixLen': 16, u'IPAddress': u'172.17.0.2', u'Gateway': u'172.17.0.1', u'Aliases': None}}}, u'HostConfig': {u'NetworkMode': u'default'}, u'ImageID': u'sha256:e1ddd7948a1c31709a23cc5b7dfe96e55fc364f90e1cebcde0773a1b5a30dcda', u'State': u'running', u'Command': u'/bin/sh', u'Names': [u'/loving_wright'], u'Mounts': [], u'Id': u'6721f996af1e9d04237fef0a1cb3f50e9e564173e8ff25056cdc475e8a985de5', u'Ports': []}]
+
+</code></pre>
+
+
+        
+
+        
+          
+          
+          <h4 class="see-also">See also</h4>
+          <ul>
+          
+            <li><a href="/post/2018-09-10-olso_config/">OpenStack olso_config</a></li>
+          
+            <li><a href="/post/2018-09-10-kubernetes-note-cgroups-namepspace/">《深入剖析Kubernetes》-学习笔记-Cgroups-Namespace</a></li>
+          
+            <li><a href="/post/2018-09-09-kubernetes-note-history/">《深入剖析Kubernetes》-学习笔记-History</a></li>
+          
+          </ul>
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://zhiweiyin318.github.io/post/2018-09-10-olso_config/" data-toggle="tooltip" data-placement="top" title="OpenStack olso_config">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://zhiweiyin318.github.io/post/2018-09-12-kubernetes-note-exec-volume/" data-toggle="tooltip" data-placement="top" title="《深入剖析Kubernetes》-学习笔记-exec-volume">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "zhiweiyin" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+          
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:zhiweiyin@hotmail.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/zhiweiyin318" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://weibo.com/yzw517318" title="Weibo">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://zhiweiyin318.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="https://zhiweiyin318.github.io">Zhiwei Yin</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2018
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://zhiweiyin318.github.io">Zhiwei Yin</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.51</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://zhiweiyin318.github.io/js/main.js"></script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://zhiweiyin318.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>
+

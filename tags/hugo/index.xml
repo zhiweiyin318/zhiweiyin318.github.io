@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Hugo on Zhiwei Yin&#39;s Blog</title>
+    <title>Hugo on Zhiwei Yin</title>
     <link>https://zhiweiyin318.github.io/tags/hugo/</link>
-    <description>Recent content in Hugo on Zhiwei Yin&#39;s Blog</description>
+    <description>Recent content in Hugo on Zhiwei Yin</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <managingEditor>zhiweiyin@hotmail.com (Zhiwei Yin)</managingEditor>
+    <webMaster>zhiweiyin@hotmail.com (Zhiwei Yin)</webMaster>
     <lastBuildDate>Tue, 31 Jul 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://zhiweiyin318.github.io/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
@@ -13,10 +14,10 @@
     
     <item>
       <title>Hugo</title>
-      <link>https://zhiweiyin318.github.io/post/hugo/</link>
+      <link>https://zhiweiyin318.github.io/post/2018-07-31-hugo/</link>
       <pubDate>Tue, 31 Jul 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhiweiyin318.github.io/post/hugo/</guid>
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
+      <guid>https://zhiweiyin318.github.io/post/2018-07-31-hugo/</guid>
       <description>为啥搞blog 之前在sina写过复盘日记，后来也没坚持下来；之前在github上用其他框架搭过blog，太繁琐了，也放弃了。 最近在有道云上记</description>
     </item>
     

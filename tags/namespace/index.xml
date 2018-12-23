@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Namespace on Zhiwei Yin&#39;s Blog</title>
+    <title>Namespace on Zhiwei Yin</title>
     <link>https://zhiweiyin318.github.io/tags/namespace/</link>
-    <description>Recent content in Namespace on Zhiwei Yin&#39;s Blog</description>
+    <description>Recent content in Namespace on Zhiwei Yin</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <managingEditor>zhiweiyin@hotmail.com (Zhiwei Yin)</managingEditor>
+    <webMaster>zhiweiyin@hotmail.com (Zhiwei Yin)</webMaster>
     <lastBuildDate>Mon, 10 Sep 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://zhiweiyin318.github.io/tags/namespace/index.xml" rel="self" type="application/rss+xml" />
@@ -13,10 +14,10 @@
     
     <item>
       <title>《深入剖析Kubernetes》-学习笔记-Cgroups-Namespace</title>
-      <link>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-cgroups-namepspace/</link>
+      <link>https://zhiweiyin318.github.io/post/2018-09-10-kubernetes-note-cgroups-namepspace/</link>
       <pubDate>Mon, 10 Sep 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-cgroups-namepspace/</guid>
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
+      <guid>https://zhiweiyin318.github.io/post/2018-09-10-kubernetes-note-cgroups-namepspace/</guid>
       <description>概述 容器其实就是一种沙盒技术的，沙盒就像集装箱一样，把应用装起来，应用于应用之间，有了边界，互不干扰，而且方便被搬来搬去，这就是PaaS最理</description>
     </item>
     

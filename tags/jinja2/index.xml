@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Jinja2 on Zhiwei Yin&#39;s Blog</title>
+    <title>Jinja2 on Zhiwei Yin</title>
     <link>https://zhiweiyin318.github.io/tags/jinja2/</link>
-    <description>Recent content in Jinja2 on Zhiwei Yin&#39;s Blog</description>
+    <description>Recent content in Jinja2 on Zhiwei Yin</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <managingEditor>zhiweiyin@hotmail.com (Zhiwei Yin)</managingEditor>
+    <webMaster>zhiweiyin@hotmail.com (Zhiwei Yin)</webMaster>
     <lastBuildDate>Fri, 14 Sep 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://zhiweiyin318.github.io/tags/jinja2/index.xml" rel="self" type="application/rss+xml" />
@@ -13,11 +14,11 @@
     
     <item>
       <title>Python jinja2</title>
-      <link>https://zhiweiyin318.github.io/post/python-jinja2/</link>
+      <link>https://zhiweiyin318.github.io/post/2018-09-14-python-jinja2/</link>
       <pubDate>Fri, 14 Sep 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhiweiyin318.github.io/post/python-jinja2/</guid>
-      <description>jinja2是啥 python的模板引擎，也是Flask的模板引擎，能根据模板字符串替换，有自己的语法规则。 官网: http://docs.jinkan.org/docs/jinja2/ 使用 安装 1 $ pip install jinja2 语法定义</description>
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
+      <guid>https://zhiweiyin318.github.io/post/2018-09-14-python-jinja2/</guid>
+      <description>jinja2是啥 python的模板引擎，也是Flask的模板引擎，能根据模板字符串替换，有自己的语法规则。 官网: http://docs.jinkan.org/docs/jinja2/ 使用 安装 $ pip install jinja2 语法定义 j</description>
     </item>
     
   </channel>

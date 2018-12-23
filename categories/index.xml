@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on Zhiwei Yin&#39;s Blog</title>
+    <title>Categories on Zhiwei Yin</title>
     <link>https://zhiweiyin318.github.io/categories/</link>
-    <description>Recent content in Categories on Zhiwei Yin&#39;s Blog</description>
+    <description>Recent content in Categories on Zhiwei Yin</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <managingEditor>zhiweiyin@hotmail.com (Zhiwei Yin)</managingEditor>
+    <webMaster>zhiweiyin@hotmail.com (Zhiwei Yin)</webMaster>
     
 	<atom:link href="https://zhiweiyin318.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +15,7 @@
       <title>Golang</title>
       <link>https://zhiweiyin318.github.io/categories/golang/</link>
       <pubDate>Mon, 03 Sep 2018 00:00:00 +0000</pubDate>
-      
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
       <guid>https://zhiweiyin318.github.io/categories/golang/</guid>
       <description></description>
     </item>
@@ -23,7 +24,7 @@
       <title>Kubernetes</title>
       <link>https://zhiweiyin318.github.io/categories/kubernetes/</link>
       <pubDate>Tue, 18 Sep 2018 00:00:00 +0000</pubDate>
-      
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
       <guid>https://zhiweiyin318.github.io/categories/kubernetes/</guid>
       <description></description>
     </item>
@@ -32,7 +33,7 @@
       <title>Openstack</title>
       <link>https://zhiweiyin318.github.io/categories/openstack/</link>
       <pubDate>Tue, 18 Sep 2018 00:00:00 +0000</pubDate>
-      
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
       <guid>https://zhiweiyin318.github.io/categories/openstack/</guid>
       <description></description>
     </item>
@@ -41,7 +42,7 @@
       <title>Python</title>
       <link>https://zhiweiyin318.github.io/categories/python/</link>
       <pubDate>Fri, 14 Sep 2018 00:00:00 +0000</pubDate>
-      
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
       <guid>https://zhiweiyin318.github.io/categories/python/</guid>
       <description></description>
     </item>
@@ -50,7 +51,7 @@
       <title>Translation</title>
       <link>https://zhiweiyin318.github.io/categories/translation/</link>
       <pubDate>Fri, 23 Nov 2018 00:00:00 +0000</pubDate>
-      
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
       <guid>https://zhiweiyin318.github.io/categories/translation/</guid>
       <description></description>
     </item>

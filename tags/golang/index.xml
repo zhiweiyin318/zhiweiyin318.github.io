@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Golang on Zhiwei Yin&#39;s Blog</title>
+    <title>Golang on Zhiwei Yin</title>
     <link>https://zhiweiyin318.github.io/tags/golang/</link>
-    <description>Recent content in Golang on Zhiwei Yin&#39;s Blog</description>
+    <description>Recent content in Golang on Zhiwei Yin</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <managingEditor>zhiweiyin@hotmail.com (Zhiwei Yin)</managingEditor>
+    <webMaster>zhiweiyin@hotmail.com (Zhiwei Yin)</webMaster>
     <lastBuildDate>Mon, 03 Sep 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://zhiweiyin318.github.io/tags/golang/index.xml" rel="self" type="application/rss+xml" />
@@ -13,28 +14,34 @@
     
     <item>
       <title>golang rand生成随机数</title>
-      <link>https://zhiweiyin318.github.io/post/golang-rand%E7%94%9F%E6%88%90%E9%9A%8F%E6%9C%BA%E6%95%B0/</link>
+      <link>https://zhiweiyin318.github.io/post/2018-09-03-golang-rand/</link>
       <pubDate>Mon, 03 Sep 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhiweiyin318.github.io/post/golang-rand%E7%94%9F%E6%88%90%E9%9A%8F%E6%9C%BA%E6%95%B0/</guid>
-      <description>简介 math/rand package实现了伪随机数字生成器。 随机数字是通过Source生成的，rand.Seed会初始化默认全局的Source，如果不调用r</description>
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
+      <guid>https://zhiweiyin318.github.io/post/2018-09-03-golang-rand/</guid>
+      <description>&lt;h3 id=&#34;简介&#34;&gt;简介&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;math/rand package实现了伪随机数字生成器。&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;随机数字是通过Source生成的，rand.Seed会初始化默认全局的Source，如果不调用rand.Seed就会使用默认的Source。所生成的随机数字是固定顺序生成的，每次运行程序如果seed相同的话，生成随机数是相同的。&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;默认的Source是线程安全的，自己通过New生成的不是。&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
     </item>
     
     <item>
       <title>golang的测试框架</title>
-      <link>https://zhiweiyin318.github.io/post/golang%E7%9A%84%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6/</link>
+      <link>https://zhiweiyin318.github.io/post/2018-08-09-golang-test-framework/</link>
       <pubDate>Thu, 09 Aug 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhiweiyin318.github.io/post/golang%E7%9A%84%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6/</guid>
-      <description>golang 测试框架 本文主要介绍golang 测试的集中常见的框架。 go test 文件名称位xx_test.go 测试函数Testxxx(t *testing.T) 1 go test -v GoConvey 可以管理和运</description>
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
+      <guid>https://zhiweiyin318.github.io/post/2018-08-09-golang-test-framework/</guid>
+      <description>golang 测试框架 本文主要介绍golang 测试的集中常见的框架。 go test 文件名称位xx_test.go 测试函数Testxxx(t *testing.T) go test -v GoConvey 可以管理和运行</description>
     </item>
     
     <item>
       <title>Hugo</title>
-      <link>https://zhiweiyin318.github.io/post/hugo/</link>
+      <link>https://zhiweiyin318.github.io/post/2018-07-31-hugo/</link>
       <pubDate>Tue, 31 Jul 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhiweiyin318.github.io/post/hugo/</guid>
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
+      <guid>https://zhiweiyin318.github.io/post/2018-07-31-hugo/</guid>
       <description>为啥搞blog 之前在sina写过复盘日记，后来也没坚持下来；之前在github上用其他框架搭过blog，太繁琐了，也放弃了。 最近在有道云上记</description>
     </item>
     

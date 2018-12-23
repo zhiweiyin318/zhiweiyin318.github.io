@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Volume on Zhiwei Yin&#39;s Blog</title>
+    <title>Volume on Zhiwei Yin</title>
     <link>https://zhiweiyin318.github.io/tags/volume/</link>
-    <description>Recent content in Volume on Zhiwei Yin&#39;s Blog</description>
+    <description>Recent content in Volume on Zhiwei Yin</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <managingEditor>zhiweiyin@hotmail.com (Zhiwei Yin)</managingEditor>
+    <webMaster>zhiweiyin@hotmail.com (Zhiwei Yin)</webMaster>
     <lastBuildDate>Wed, 12 Sep 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://zhiweiyin318.github.io/tags/volume/index.xml" rel="self" type="application/rss+xml" />
@@ -13,10 +14,10 @@
     
     <item>
       <title>《深入剖析Kubernetes》-学习笔记-exec-volume</title>
-      <link>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-exec-volume/</link>
+      <link>https://zhiweiyin318.github.io/post/2018-09-12-kubernetes-note-exec-volume/</link>
       <pubDate>Wed, 12 Sep 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-exec-volume/</guid>
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
+      <guid>https://zhiweiyin318.github.io/post/2018-09-12-kubernetes-note-exec-volume/</guid>
       <description>docker exec 是怎么进入容器的？ 容器进程python2，docker exec又重新拉起来了进程跟python2进程都是docker-container</description>
     </item>
     

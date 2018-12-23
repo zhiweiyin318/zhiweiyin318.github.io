@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Translation on Zhiwei Yin&#39;s Blog</title>
+    <title>Translation on Zhiwei Yin</title>
     <link>https://zhiweiyin318.github.io/categories/translation/</link>
-    <description>Recent content in Translation on Zhiwei Yin&#39;s Blog</description>
+    <description>Recent content in Translation on Zhiwei Yin</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <managingEditor>zhiweiyin@hotmail.com (Zhiwei Yin)</managingEditor>
+    <webMaster>zhiweiyin@hotmail.com (Zhiwei Yin)</webMaster>
     <lastBuildDate>Fri, 23 Nov 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://zhiweiyin318.github.io/categories/translation/index.xml" rel="self" type="application/rss+xml" />
@@ -13,10 +14,10 @@
     
     <item>
       <title>软件定义交付宣言</title>
-      <link>https://zhiweiyin318.github.io/post/%E8%BD%AF%E4%BB%B6%E5%AE%9A%E4%B9%89%E4%BA%A4%E4%BB%98%E5%AE%A3%E8%A8%80/</link>
+      <link>https://zhiweiyin318.github.io/post/2018-11-23-sdd/</link>
       <pubDate>Fri, 23 Nov 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhiweiyin318.github.io/post/%E8%BD%AF%E4%BB%B6%E5%AE%9A%E4%B9%89%E4%BA%A4%E4%BB%98%E5%AE%A3%E8%A8%80/</guid>
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
+      <guid>https://zhiweiyin318.github.io/post/2018-11-23-sdd/</guid>
       <description>宣言原文地址： https://sdd-manifesto.org/?from=timeline 宣言github地址: https://github.com/sdd-manifesto/manifesto 最后更新时间：11/22/2018 (bb7b94f) 翻译：Zhiwei Yin 翻译时间：11/23/2018 翻译githu</description>
     </item>
     

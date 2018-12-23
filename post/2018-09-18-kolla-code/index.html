@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>kolla源码走读 - Zhiwei Yin</title>
+  <meta property="og:title" content="kolla源码走读" />
+  <meta name="twitter:title" content="kolla源码走读" />
+  <meta name="description" content="代码路径：https://github.com/openstack/kolla 代码版本: origin/stable/pike branch 文档: https://docs.openstack.org/kolla/latest/ 概述 kolla项目主要是把容器化的ope">
+  <meta property="og:description" content="代码路径：https://github.com/openstack/kolla 代码版本: origin/stable/pike branch 文档: https://docs.openstack.org/kolla/latest/ 概述 kolla项目主要是把容器化的ope">
+  <meta name="twitter:description" content="代码路径：https://github.com/openstack/kolla 代码版本: origin/stable/pike branch 文档: https://docs.openstack.org/kolla/latest/ 概述 kolla项目主要是把容器化的ope">
+  <meta name="author" content="Zhiwei Yin"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Zhiwei Yin",
+    
+    "url": "https://zhiweiyin318.github.io"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https://zhiweiyin318.github.io"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https://zhiweiyin318.github.io",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https://zhiweiyin318.github.io/post/2018-09-18-kolla-code/",
+          "name": "Kolla源码走读"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Zhiwei Yin"
+  },
+  "headline": "kolla源码走读",
+  "description" : "代码路径：https://github.com/openstack/kolla 代码版本: origin/stable/pike branch 文档: https://docs.openstack.org/kolla/latest/ 概述 kolla项目主要是把容器化的ope",
+  "inLanguage" : "en",
+  "wordCount": 1994,
+  "datePublished" : "2018-09-18T00:00:00",
+  "dateModified" : "2018-09-18T00:00:00",
+  "image" : "https://zhiweiyin318.github.io/images/avatar-icon.png",
+  "keywords" : [ "kolla, openstack" ],
+  "mainEntityOfPage" : "https://zhiweiyin318.github.io/post/2018-09-18-kolla-code/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https://zhiweiyin318.github.io",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https://zhiweiyin318.github.io/images/avatar-icon.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="kolla源码走读" />
+<meta property="og:description" content="代码路径：https://github.com/openstack/kolla 代码版本: origin/stable/pike branch 文档: https://docs.openstack.org/kolla/latest/ 概述 kolla项目主要是把容器化的ope">
+<meta property="og:image" content="https://zhiweiyin318.github.io/images/avatar-icon.png" />
+<meta property="og:url" content="https://zhiweiyin318.github.io/post/2018-09-18-kolla-code/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Zhiwei Yin" />
+  <meta name="twitter:title" content="kolla源码走读" />
+  <meta name="twitter:description" content="代码路径：https://github.com/openstack/kolla 代码版本: origin/stable/pike branch 文档: https://docs.openstack.org/kolla/latest/ 概述 kolla项目主要是把容器化的ope">
+  <meta name="twitter:image" content="https://zhiweiyin318.github.io/images/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <link href='https://zhiweiyin318.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://zhiweiyin318.github.io/images/avatar-icon.png" />
+  <meta name="twitter:image" content="https://zhiweiyin318.github.io/images/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://zhiweiyin318.github.io/post/2018-09-18-kolla-code/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Zhiwei Yin" />
+
+  <meta name="generator" content="Hugo 0.51" />
+  <link rel="alternate" href="https://zhiweiyin318.github.io/index.xml" type="application/rss+xml" title="Zhiwei Yin">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://zhiweiyin318.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://zhiweiyin318.github.io/css/syntax.css" /><link rel="stylesheet" href="https://zhiweiyin318.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://zhiweiyin318.github.io">Zhiwei Yin</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="home" href="/">home</a>
+            </li>
+          
+        
+          
+            <li class="navlinks-container">
+              <a class="navlinks-parent">categories</a>
+              <div class="navlinks-children">
+                
+                  <a href="/categories/kubernetes">kubernetes</a>
+                
+                  <a href="/categories/golang">golang</a>
+                
+                  <a href="/categories/python">python</a>
+                
+                  <a href="/categories/quant">quant</a>
+                
+                  <a href="/categories/translation">translation</a>
+                
+                  <a href="/tags">tags</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li>
+              <a title="archives" href="/post">archives</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="notes" href="/">notes</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="porjects" href="/">porjects</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="about" href="/about">about</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Zhiwei Yin" href="https://zhiweiyin318.github.io">
+            <img class="avatar-img" src="https://zhiweiyin318.github.io/images/avatar-icon.png" alt="Zhiwei Yin" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1 align="center">kolla源码走读</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on Tue Sep 18, 2018
+  
+    &nbsp;(Last modified on Fri Nov 23, 2018)
+  
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;1994&nbsp;words
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Zhiwei Yin
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+          
+          <div class="blog-tags">
+            
+              <a href="https://zhiweiyin318.github.io/tags/kolla/">kolla</a>&nbsp;
+            
+              <a href="https://zhiweiyin318.github.io/tags/openstack/">openstack</a>&nbsp;
+            
+          </div>
+          
+        
+
+<blockquote>
+<p>代码路径：<a href="https://github.com/openstack/kolla">https://github.com/openstack/kolla</a><br />
+代码版本: origin/stable/pike branch<br />
+文档: <a href="https://docs.openstack.org/kolla/latest/">https://docs.openstack.org/kolla/latest/</a></p>
+</blockquote>
+
+<h1 id="概述">概述</h1>
+
+<p>kolla项目主要是把容器化的openstack的各个组件的容器编译出来的，实现很简单：<br />
+1. 定义Dockerfile.j2模板<br />
+2. 通过jinja2根据参数渲染模板生成Dockerfile<br />
+3. 调用docker的python接口build镜像</p>
+
+<p><strong>kolla 项目的难点不在项目的实现上，在各个组件编译的依赖上，rpm，pip安装相关组件的依赖上。</strong></p>
+
+<h1 id="项目目录结构">项目目录结构</h1>
+
+<pre><code>[root@yzw kolla]# tree -L 2
+.
+├── bindep.txt
+├── contrib
+├── doc
+├── docker
+│...
+│   ├── base
+│   │   ├── aarch64-cbs.repo
+│   │   ├── ...
+│   │   ├── Dockerfile.j2
+│...
+├── etc
+│   ├── kolla
+│   │   └── kolla-build.conf
+│   └── oslo-config-generator
+├── HACKING.rst
+├── kolla
+│   ├── cmd
+│   ├── common
+│   ├── exception.py
+│   ├── exception.pyc
+│   ├── hacking
+│   ├── image
+│   ├── __init__.py
+│   ├── __init__.pyc
+│   ├── opts.py
+│   ├── opts.pyc
+│   ├── template
+│   ├── tests
+│   ├── version.py
+│   └── version.pyc
+├── kolla.egg-info
+├── LICENSE
+├── README.rst
+├── releasenotes
+├── requirements.txt
+├── setup.cfg
+├── setup.py
+├── specs
+├── test-requirements.txt
+├── tests
+├── tools
+│   ├── build.py -&gt; ../kolla/cmd/build.py
+│   ├── cleanup-images
+└── tox.ini
+</code></pre>
+
+<p>主要目录介绍：<br />
+* docker目录</p>
+
+<p>容器目录，包含了所有容器的Dockerfile模板Dockerfile.j2文件，和其他需要打包的一堆文件。</p>
+
+<p>base目录是所有基础容器镜像目录，其他容器都是From这个镜像的。</p>
+
+<ul>
+<li>kolla目录<br /></li>
+</ul>
+
+<p>放的源码，后面详细说。</p>
+
+<ul>
+<li>tools目录<br /></li>
+</ul>
+
+<p>一些工具，最主要的就是*build.py<em>，是</em>/kolla/cmd/build.py*的软链接，就是项目命令行工具的入口。</p>
+
+<ul>
+<li>etc目录<br /></li>
+</ul>
+
+<p>放的是配置文件kolla-build.conf，项目所有配置项都在里面，有一部分是跟命令行重合的，如果命令行配置了，就覆盖掉配置文件的配置了。</p>
+
+<h1 id="源码">源码</h1>
+
+<h2 id="源码目录">源码目录</h2>
+
+<pre><code>[root@yzw kolla]# tree -L 3
+.
+├── cmd
+│   ├── build.py
+├── common
+│   ├── config.py
+│   ├── task.py
+├── exception.py
+├── hacking
+├── image
+│   ├── build.py
+├── opts.py
+├── template
+│   ├── filters.py
+│   ├── filters.pyc
+│   ├── methods.py
+│   └── methods.pyc
+├── tests
+├── version.py
+└── version.pyc
+
+</code></pre>
+
+<p>目录介绍：</p>
+
+<ul>
+<li>cmd<br /></li>
+</ul>
+
+<p>build.py是命令行入口</p>
+
+<ul>
+<li>common<br /></li>
+</ul>
+
+<p>config.py是命令行和配置文件相关的定义和设置。所有参数都在这定义的。</p>
+
+<ul>
+<li>image<br /></li>
+</ul>
+
+<p>build.py是build镜像的相关的流程。</p>
+
+<ul>
+<li>template<br /></li>
+</ul>
+
+<p>给模板渲染时增加过滤和函数（属于jinja2的机制），替换字符串之类的操作。</p>
+
+<ul>
+<li>tests</li>
+</ul>
+
+<p>ut相关的东西。</p>
+
+<h2 id="用到的主要库">用到的主要库</h2>
+
+<h3 id="oslo-config">oslo_config</h3>
+
+<p>oslo作为OpenStack的通用组件，在每一个项目中都有用到，oslo.config主要用于命令行和配置项解析。</p>
+
+<p>写了一个简单的使用介绍和domo，放到了github上：</p>
+
+<ul>
+<li>介绍：<br />
+<a href="https://zhiweiyin318.github.io/post/olso_config/">https://zhiweiyin318.github.io/post/olso_config/</a><br /></li>
+<li>demo:<br />
+<a href="https://github.com/zhiweiyin318/yzw.python.demo/tree/master/oslo_config">https://github.com/zhiweiyin318/yzw.python.demo/tree/master/oslo_config</a><br /></li>
+</ul>
+
+<h3 id="jinja2">jinja2</h3>
+
+<p>python的模板引擎，也是Flask的模板引擎，能根据模板字符串替换，有自己的语法规则。就是定义自己的模板，然后根据配置生成想要的内容。</p>
+
+<p>写的简单的使用介绍和domo，放到了github上：</p>
+
+<ul>
+<li>介绍：<br />
+<a href="https://zhiweiyin318.github.io/post/python-jinja2/">https://zhiweiyin318.github.io/post/python-jinja2/</a><br /></li>
+<li>demo：<br />
+<a href="https://github.com/zhiweiyin318/yzw.python.demo/tree/master/jinja2">https://github.com/zhiweiyin318/yzw.python.demo/tree/master/jinja2</a><br /></li>
+</ul>
+
+<h3 id="dokcer-client">dokcer-client</h3>
+
+<p>python的docker client的库，直接调用跟命令行一样使用docker。</p>
+
+<p>写的简单的使用介绍和domo，放到了github上：</p>
+
+<ul>
+<li>介绍:<br />
+<a href="https://zhiweiyin318.github.io/post/python-docker-client/">https://zhiweiyin318.github.io/post/python-docker-client/</a><br /></li>
+<li>demo:<br />
+<a href="https://github.com/zhiweiyin318/yzw.python.demo/tree/master/dockerclient">https://github.com/zhiweiyin318/yzw.python.demo/tree/master/dockerclient</a><br /></li>
+</ul>
+
+<h3 id="代码流程">代码流程</h3>
+
+<pre><code>cmd/build.py main()  ## 入口
+  -&gt; image/build.py build.run_build()
+    -&gt; common/config.py common_config.parse(...) ## 命令行，配置文件参数的定义配置注册。
+    -&gt; KollaWorker()  ## build的任务对象,把命令行，配置文件的参数拿出来给对象。
+      -&gt; docker.APIClient() ## 创建docker api client 用于调用docker 接口
+    -&gt; kolla.setup_working_dir() ## 新建个放dockerfile和构建的工作目录，把docker目录的文件拷贝过来
+    -&gt; kolla.find_dockerfiles() ## 检查下工作目录下的dokerfile.j2文件
+    -&gt; kolla.create_dockerfiles() ## 做镜像文件
+      -&gt; jinja2.Environment() ## jinja2的使用流程 见jinja2 介绍
+      -&gt; jinja2.FileSystemLoader() 
+      -&gt; template.render() ## 所有的*j2模板重新渲染，后面写入新建dockerfie文件
+    -&gt; kolla.build_queue() ## 创建多队列来执行build操作
+      -&gt; self.build_image_list() ## 根据配置生成所有image列表，已经依赖关系
+      -&gt; self.find_parents() ## 整理出image的父image
+      -&gt; self.filter_images() ## 根据配置的regex和profile生成需要编译的iamge列表
+      -&gt; queue.put(BuildTask(self.conf, image, push_queue))
+    
+      -&gt; task.run()       
+        -&gt; BuildTask.run
+          -&gt; self.builder()
+            -&gt; make_an_archive ## 需要下载plugin和addition
+            -&gt; self.dc.build  ## 调用 docker api 创建image
+
+            -&gt; PushTask.run
+              -&gt; self.push_image(image)
+                -&gt; self.dc.push  ## 调用 docker api push image到仓库
+    
+</code></pre>
+
+<h2 id="kolla-build-conf-配置参数说明">kolla-build.conf 配置参数说明</h2>
+
+<p><strong>DEFAULT</strong></p>
+
+<ul>
+<li><strong>skip_parents：</strong> 编译跳过父镜像（FROM的镜像），如果夫镜像没有，就报错了。<br /></li>
+<li><strong>skip_existing：</strong>  编译跳过已经存在的镜像。<br /></li>
+<li><strong>list_dependencies：</strong> 打印本次编译的镜像的依赖关系。<br /></li>
+<li><strong>save_dependency：</strong> 保存镜像的依赖关系为Graphviz dot 格式，后面跟保存的文件名路径。<br /></li>
+<li><strong>profile：</strong> 本次编译的组件组。<br /></li>
+<li><strong>regex：</strong> 本次只编译的组件的正则表达式，这个参数设置后就不会编profile的镜像了。<br /></li>
+<li><strong>template-only：</strong>  只生成dockerfile文件不build。<br /></li>
+<li><strong>base_image：</strong> 没有配置，默认给centos。<br /></li>
+<li><strong>base_tag：</strong> 没有配置，默认给latest。<br /></li>
+<li><strong>registry：</strong> 配了，镜像的namespace就是 registry的地址/namespace的内容；没有配置，镜像的namespace就是 namespace的内容。<br /></li>
+<li><strong>namespace：</strong> 默认为kolla。<br /></li>
+</ul>
+
+
+        
+
+        
+          
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://zhiweiyin318.github.io/post/2018-09-18-kubernetes-note-kubernetes/" data-toggle="tooltip" data-placement="top" title="《深入剖析Kubernetes》-学习笔记-Kubernetes">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://zhiweiyin318.github.io/post/2018-11-23-sdd/" data-toggle="tooltip" data-placement="top" title="软件定义交付宣言">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "zhiweiyin" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+          
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:zhiweiyin@hotmail.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/zhiweiyin318" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://weibo.com/yzw517318" title="Weibo">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://zhiweiyin318.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="https://zhiweiyin318.github.io">Zhiwei Yin</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2018
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://zhiweiyin318.github.io">Zhiwei Yin</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.51</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://zhiweiyin318.github.io/js/main.js"></script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://zhiweiyin318.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>
+

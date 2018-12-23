@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>OpenStack olso_config - Zhiwei Yin</title>
+  <meta property="og:title" content="OpenStack olso_config" />
+  <meta name="twitter:title" content="OpenStack olso_config" />
+  <meta name="description" content="oslo oslo作为OpenStack的通用组件，在每一个项目中都有用到，oslo.config主要用于命令行和配置项解析。 参考: * https://gtcsq.readthedocs.io/en/latest/openstack/oslo_cfg.html * https://blog.csdn.net/zhangyifei216/article/details/50434980 * https://blog.csdn.net/hobertony_7/article/details/79206297 * https://www.programcreek.com/python/example/106149/oslo_config.cfg.ConfigOpts">
+  <meta property="og:description" content="oslo oslo作为OpenStack的通用组件，在每一个项目中都有用到，oslo.config主要用于命令行和配置项解析。 参考: * https://gtcsq.readthedocs.io/en/latest/openstack/oslo_cfg.html * https://blog.csdn.net/zhangyifei216/article/details/50434980 * https://blog.csdn.net/hobertony_7/article/details/79206297 * https://www.programcreek.com/python/example/106149/oslo_config.cfg.ConfigOpts">
+  <meta name="twitter:description" content="oslo oslo作为OpenStack的通用组件，在每一个项目中都有用到，oslo.config主要用于命令行和配置项解析。 参考: * https://gtcsq.readthedocs.io/en/latest/openstack/oslo_cfg.html * https://blog.csdn.net/zhangyifei216/article/details/50434980 * …">
+  <meta name="author" content="Zhiwei Yin"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Zhiwei Yin",
+    
+    "url": "https://zhiweiyin318.github.io"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https://zhiweiyin318.github.io"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https://zhiweiyin318.github.io",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https://zhiweiyin318.github.io/post/2018-09-10-olso_config/",
+          "name": "Open stack olso config"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Zhiwei Yin"
+  },
+  "headline": "OpenStack olso_config",
+  "description" : "oslo oslo作为OpenStack的通用组件，在每一个项目中都有用到，oslo.config主要用于命令行和配置项解析。 参考: * https://gtcsq.readthedocs.io/en/latest/openstack/oslo_cfg.html * https://blog.csdn.net/zhangyifei216/article/details/50434980 * https://blog.csdn.net/hobertony_7/article/details/79206297 * https://www.programcreek.com/python/example/106149/oslo_config.cfg.ConfigOpts",
+  "inLanguage" : "en",
+  "wordCount": 402,
+  "datePublished" : "2018-09-10T00:00:00",
+  "dateModified" : "2018-09-10T00:00:00",
+  "image" : "https://zhiweiyin318.github.io/images/avatar-icon.png",
+  "keywords" : [ "python, code" ],
+  "mainEntityOfPage" : "https://zhiweiyin318.github.io/post/2018-09-10-olso_config/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https://zhiweiyin318.github.io",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https://zhiweiyin318.github.io/images/avatar-icon.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="OpenStack olso_config" />
+<meta property="og:description" content="oslo oslo作为OpenStack的通用组件，在每一个项目中都有用到，oslo.config主要用于命令行和配置项解析。 参考: * https://gtcsq.readthedocs.io/en/latest/openstack/oslo_cfg.html * https://blog.csdn.net/zhangyifei216/article/details/50434980 * https://blog.csdn.net/hobertony_7/article/details/79206297 * https://www.programcreek.com/python/example/106149/oslo_config.cfg.ConfigOpts">
+<meta property="og:image" content="https://zhiweiyin318.github.io/images/avatar-icon.png" />
+<meta property="og:url" content="https://zhiweiyin318.github.io/post/2018-09-10-olso_config/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Zhiwei Yin" />
+  <meta name="twitter:title" content="OpenStack olso_config" />
+  <meta name="twitter:description" content="oslo oslo作为OpenStack的通用组件，在每一个项目中都有用到，oslo.config主要用于命令行和配置项解析。 参考: * https://gtcsq.readthedocs.io/en/latest/openstack/oslo_cfg.html * https://blog.csdn.net/zhangyifei216/article/details/50434980 * …">
+  <meta name="twitter:image" content="https://zhiweiyin318.github.io/images/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <link href='https://zhiweiyin318.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://zhiweiyin318.github.io/images/avatar-icon.png" />
+  <meta name="twitter:image" content="https://zhiweiyin318.github.io/images/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://zhiweiyin318.github.io/post/2018-09-10-olso_config/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Zhiwei Yin" />
+
+  <meta name="generator" content="Hugo 0.51" />
+  <link rel="alternate" href="https://zhiweiyin318.github.io/index.xml" type="application/rss+xml" title="Zhiwei Yin">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://zhiweiyin318.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://zhiweiyin318.github.io/css/syntax.css" /><link rel="stylesheet" href="https://zhiweiyin318.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://zhiweiyin318.github.io">Zhiwei Yin</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="home" href="/">home</a>
+            </li>
+          
+        
+          
+            <li class="navlinks-container">
+              <a class="navlinks-parent">categories</a>
+              <div class="navlinks-children">
+                
+                  <a href="/categories/kubernetes">kubernetes</a>
+                
+                  <a href="/categories/golang">golang</a>
+                
+                  <a href="/categories/python">python</a>
+                
+                  <a href="/categories/quant">quant</a>
+                
+                  <a href="/categories/translation">translation</a>
+                
+                  <a href="/tags">tags</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li>
+              <a title="archives" href="/post">archives</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="notes" href="/">notes</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="porjects" href="/">porjects</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="about" href="/about">about</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Zhiwei Yin" href="https://zhiweiyin318.github.io">
+            <img class="avatar-img" src="https://zhiweiyin318.github.io/images/avatar-icon.png" alt="Zhiwei Yin" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1 align="center">OpenStack olso_config</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on Mon Sep 10, 2018
+  
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;402&nbsp;words
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Zhiwei Yin
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+          
+          <div class="blog-tags">
+            
+              <a href="https://zhiweiyin318.github.io/tags/python/">python</a>&nbsp;
+            
+              <a href="https://zhiweiyin318.github.io/tags/code/">code</a>&nbsp;
+            
+          </div>
+          
+        
+
+<h1 id="oslo">oslo</h1>
+
+<p>oslo作为OpenStack的通用组件，在每一个项目中都有用到，oslo.config主要用于命令行和配置项解析。  </p>
+
+<blockquote>
+<p><strong>参考:</strong><br />
+* <a href="https://gtcsq.readthedocs.io/en/latest/openstack/oslo_cfg.html">https://gtcsq.readthedocs.io/en/latest/openstack/oslo_cfg.html</a><br />
+* <a href="https://blog.csdn.net/zhangyifei216/article/details/50434980">https://blog.csdn.net/zhangyifei216/article/details/50434980</a><br />
+* <a href="https://blog.csdn.net/hobertony_7/article/details/79206297">https://blog.csdn.net/hobertony_7/article/details/79206297</a><br />
+* <a href="https://www.programcreek.com/python/example/106149/oslo_config.cfg.ConfigOpts">https://www.programcreek.com/python/example/106149/oslo_config.cfg.ConfigOpts</a></p>
+</blockquote>
+
+<h1 id="使用说明">使用说明</h1>
+
+<p>demo的代码归档：<br />
+<a href="https://github.com/zhiweiyin318/yzw.python.demo/tree/master/oslo_config">https://github.com/zhiweiyin318/yzw.python.demo/tree/master/oslo_config</a></p>
+
+<pre><code>#!/usr/bin/env python
+
+# reference:
+# https://gtcsq.readthedocs.io/en/latest/openstack/oslo_cfg.html
+# https://blog.csdn.net/zhangyifei216/article/details/50434980
+# https://blog.csdn.net/hobertony_7/article/details/79206297
+# https://www.programcreek.com/python/example/106149/oslo_config.cfg.ConfigOpts
+
+
+from oslo_config import cfg
+from oslo_config import types
+import sys
+
+BASE_OS_DISTRO = ['centos', 'rhel', 'ubuntu', 'oraclelinux', 'debian']
+# 命令行参数定义
+_CLI_OPTS = [
+    cfg.StrOpt('os', short='o', default='centos',
+               choices=BASE_OS_DISTRO,
+               help='The system OS '
+                    'are ' + ', '.join(BASE_OS_DISTRO)),
+    cfg.IntOpt('cpu', short='c', default=1, min=1,
+               help='The number of CPU')
+]
+
+#配置参数定义
+_CFG_OPTS = [
+    cfg.StrOpt(&quot;host&quot;, default=&quot;0.0.0.0&quot;,
+               help=&quot;the host ip addr&quot;),
+    cfg.Opt(&quot;port&quot;, default=5999,
+            type=types.Integer(1000, 6000),
+            help=&quot;the port number&quot;)
+]
+
+_DEBUG_OPTS = [
+    cfg.BoolOpt(&quot;debug&quot;, default=False,
+                help=&quot;debug config True or False&quot;)
+]
+
+
+def main():
+
+    # 定义configOpts实例还可以通过  conf = cfg.ConfigOpts()
+    conf = cfg.CONF
+    
+    # 注册 命令和配置项
+    conf.register_cli_opts(_CLI_OPTS)
+    conf.register_opts(_DEBUG_OPTS)
+
+    # 配置分组定义
+    # DEFAULT是一个默认组，默认情况下Opt定义的选项都是属于这个组的，cfg Module给配置选项提供了组的概念，不同的组配置选项是可以重复的。
+    ip_group = cfg.OptGroup(name=&quot;IP&quot;, title=&quot;ip cfg&quot;)
+    conf.register_group(ip_group)
+
+    # 待分组的配置项
+    conf.register_opts(_CFG_OPTS, ip_group)
+
+    # 获取参数，默认配置也可以通过--config-file来指定
+    conf(args=sys.argv[1:],
+         default_config_files=['test.conf'])
+
+    print &quot;System OS is &quot;, conf.os
+    print &quot;The number of CPU is &quot;, conf.cpu
+    print &quot;The debug: &quot;, conf.debug
+    print &quot;Host IP: &quot;, conf.IP.host
+    print &quot;Port number: &quot;, conf.IP.port
+
+
+if __name__ == '__main__':
+    main()
+
+</code></pre>
+
+<p>配置文件定义</p>
+
+<pre><code>[DEFAULT]
+debug = true
+
+[IP]
+host = 8.8.8.8
+port = 4555
+</code></pre>
+
+
+        
+
+        
+          
+          
+          <h4 class="see-also">See also</h4>
+          <ul>
+          
+            <li><a href="/post/2018-09-03-golang-rand/">golang rand生成随机数</a></li>
+          
+            <li><a href="/post/2018-08-09-golang-test-framework/">golang的测试框架</a></li>
+          
+          </ul>
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://zhiweiyin318.github.io/post/2018-09-10-kubernetes-note-cgroups-namepspace/" data-toggle="tooltip" data-placement="top" title="《深入剖析Kubernetes》-学习笔记-Cgroups-Namespace">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://zhiweiyin318.github.io/post/2018-09-11-python-docker-client/" data-toggle="tooltip" data-placement="top" title="Python docker-client">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "zhiweiyin" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+          
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:zhiweiyin@hotmail.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/zhiweiyin318" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://weibo.com/yzw517318" title="Weibo">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://zhiweiyin318.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="https://zhiweiyin318.github.io">Zhiwei Yin</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2018
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://zhiweiyin318.github.io">Zhiwei Yin</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.51</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://zhiweiyin318.github.io/js/main.js"></script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://zhiweiyin318.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>
+

@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>golang的测试框架 - Zhiwei Yin</title>
+  <meta property="og:title" content="golang的测试框架" />
+  <meta name="twitter:title" content="golang的测试框架" />
+  <meta name="description" content="golang 测试框架 本文主要介绍golang 测试的集中常见的框架。 go test 文件名称位xx_test.go 测试函数Testxxx(t *testing.T) go test -v GoConvey 可以管理和运行">
+  <meta property="og:description" content="golang 测试框架 本文主要介绍golang 测试的集中常见的框架。 go test 文件名称位xx_test.go 测试函数Testxxx(t *testing.T) go test -v GoConvey 可以管理和运行">
+  <meta name="twitter:description" content="golang 测试框架 本文主要介绍golang 测试的集中常见的框架。 go test 文件名称位xx_test.go 测试函数Testxxx(t *testing.T) go test -v GoConvey 可以管理和运行">
+  <meta name="author" content="Zhiwei Yin"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Zhiwei Yin",
+    
+    "url": "https://zhiweiyin318.github.io"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https://zhiweiyin318.github.io"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https://zhiweiyin318.github.io",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https://zhiweiyin318.github.io/post/2018-08-09-golang-test-framework/",
+          "name": "Golang的测试框架"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Zhiwei Yin"
+  },
+  "headline": "golang的测试框架",
+  "description" : "golang 测试框架 本文主要介绍golang 测试的集中常见的框架。 go test 文件名称位xx_test.go 测试函数Testxxx(t *testing.T) go test -v GoConvey 可以管理和运行",
+  "inLanguage" : "en",
+  "wordCount": 1117,
+  "datePublished" : "2018-08-09T00:00:00",
+  "dateModified" : "2018-08-09T00:00:00",
+  "image" : "https://zhiweiyin318.github.io/images/avatar-icon.png",
+  "keywords" : [ "golang, code" ],
+  "mainEntityOfPage" : "https://zhiweiyin318.github.io/post/2018-08-09-golang-test-framework/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https://zhiweiyin318.github.io",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https://zhiweiyin318.github.io/images/avatar-icon.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="golang的测试框架" />
+<meta property="og:description" content="golang 测试框架 本文主要介绍golang 测试的集中常见的框架。 go test 文件名称位xx_test.go 测试函数Testxxx(t *testing.T) go test -v GoConvey 可以管理和运行">
+<meta property="og:image" content="https://zhiweiyin318.github.io/images/avatar-icon.png" />
+<meta property="og:url" content="https://zhiweiyin318.github.io/post/2018-08-09-golang-test-framework/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Zhiwei Yin" />
+  <meta name="twitter:title" content="golang的测试框架" />
+  <meta name="twitter:description" content="golang 测试框架 本文主要介绍golang 测试的集中常见的框架。 go test 文件名称位xx_test.go 测试函数Testxxx(t *testing.T) go test -v GoConvey 可以管理和运行">
+  <meta name="twitter:image" content="https://zhiweiyin318.github.io/images/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <link href='https://zhiweiyin318.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://zhiweiyin318.github.io/images/avatar-icon.png" />
+  <meta name="twitter:image" content="https://zhiweiyin318.github.io/images/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://zhiweiyin318.github.io/post/2018-08-09-golang-test-framework/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Zhiwei Yin" />
+
+  <meta name="generator" content="Hugo 0.51" />
+  <link rel="alternate" href="https://zhiweiyin318.github.io/index.xml" type="application/rss+xml" title="Zhiwei Yin">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://zhiweiyin318.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://zhiweiyin318.github.io/css/syntax.css" /><link rel="stylesheet" href="https://zhiweiyin318.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://zhiweiyin318.github.io">Zhiwei Yin</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="home" href="/">home</a>
+            </li>
+          
+        
+          
+            <li class="navlinks-container">
+              <a class="navlinks-parent">categories</a>
+              <div class="navlinks-children">
+                
+                  <a href="/categories/kubernetes">kubernetes</a>
+                
+                  <a href="/categories/golang">golang</a>
+                
+                  <a href="/categories/python">python</a>
+                
+                  <a href="/categories/quant">quant</a>
+                
+                  <a href="/categories/translation">translation</a>
+                
+                  <a href="/tags">tags</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li>
+              <a title="archives" href="/post">archives</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="notes" href="/">notes</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="porjects" href="/">porjects</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="about" href="/about">about</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Zhiwei Yin" href="https://zhiweiyin318.github.io">
+            <img class="avatar-img" src="https://zhiweiyin318.github.io/images/avatar-icon.png" alt="Zhiwei Yin" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1 align="center">golang的测试框架</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on Thu Aug 9, 2018
+  
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;1117&nbsp;words
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Zhiwei Yin
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+          
+          <div class="blog-tags">
+            
+              <a href="https://zhiweiyin318.github.io/tags/golang/">golang</a>&nbsp;
+            
+              <a href="https://zhiweiyin318.github.io/tags/code/">code</a>&nbsp;
+            
+          </div>
+          
+        
+
+<h1 id="golang-测试框架">golang 测试框架</h1>
+
+<p>本文主要介绍golang 测试的集中常见的框架。</p>
+
+<h2 id="go-test">go test</h2>
+
+<ul>
+<li>文件名称位xx_test.go</li>
+<li>测试函数Testxxx(t *testing.T)</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-command" data-lang="command">go test -v</code></pre></div>
+<h2 id="goconvey">GoConvey</h2>
+
+<p>可以管理和运行测试用例，同时提供了丰富的断言函数，并支持很多 Web 界面特性，集成go test。</p>
+
+<p>Write behavioral tests in your editor. Get live results in your browser.</p>
+
+<ul>
+<li>项目：<code>https://github.com/smartystreets/goconvey</code></li>
+<li>官网：<code>http://goconvey.co/</code></li>
+<li>介绍：<code>https://www.jianshu.com/p/e3b2b1194830</code></li>
+</ul>
+
+<h4 id="安装">安装</h4>
+<div class="highlight"><pre class="chroma"><code class="language-command" data-lang="command">go get github.com/smartystreets/goconvey </code></pre></div>
+<ol>
+<li>在$GOPATH/src目录下新增了github.com子目录，该子目录里包含了GoConvey框架的库代码</li>
+<li>在$GOPATH/bin目录下新增了GoConvey框架的可执行程序goconvey</li>
+</ol>
+
+<h4 id="使用">使用</h4>
+
+<ul>
+<li>web显示结果，在测试目录下执行goconvoy就可以</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-code" data-lang="code">import (
+    . &#34;github.com/smartystreets/goconvey/convey&#34;
+    &#34;testing&#34;
+)
+
+func Test_ServerRun(t *testing.T) {
+    Convey(&#34;Test ServerRun &#34;, t, func() {
+        Convey(&#34;Case 1 port &gt; 10000:&#34;, func(){
+            port := 100000
+            So(ServerRun(port), ShouldBeError)
+        })
+        Convey(&#34;Case 2 port &lt;= 10000:&#34;, func() {
+            port := 1000
+            So(ServerRun(port), ShouldBeNil)
+        })
+    })
+}</code></pre></div>
+<h2 id="gostub">GoStub</h2>
+
+<p>主要用来给全局变量打桩，也可以给函数打桩，无法给方法接口打桩。
+* 项目：<code>https://github.com/prashantv/gostub</code>
+* 介绍：<code>https://www.jianshu.com/p/70a93a9ed186</code></p>
+
+<h4 id="安装-1">安装</h4>
+<div class="highlight"><pre class="chroma"><code class="language-command" data-lang="command">go get github.com/prashantv/gostub</code></pre></div>
+<h4 id="使用-1">使用</h4>
+<div class="highlight"><pre class="chroma"><code class="language-code" data-lang="code">import (
+    &#34;testing&#34;
+    . &#34;github.com/prashantv/gostub&#34;
+)
+func Test_ServerRun_Case3(t *testing.T){
+    Convey(&#34;Test ServerRun &#34;,t,func(){
+        Convey(&#34;Case 1 IP is not local IP:&#34;,func(){
+            stubs :=Stub(&amp;localIP,&#34;192.168.1.1&#34;)
+            defer stubs.Reset()
+            So(ServerRun(8080), ShouldBeError)
+        })
+    })
+}</code></pre></div>
+<h2 id="monkey">Monkey</h2>
+
+<p>可以给函数，方法打桩</p>
+
+<ul>
+<li>项目：<code>https://github.com/bouk/monkey</code></li>
+<li>官网：<code>https://bou.ke/</code></li>
+<li>介绍：<code>https://www.jianshu.com/p/2f675d5e334e</code></li>
+</ul>
+
+<h4 id="安装-2">安装</h4>
+<div class="highlight"><pre class="chroma"><code class="language-command" data-lang="command">go get github.com/bouk/monkey</code></pre></div>
+<h4 id="使用-2">使用</h4>
+
+<ul>
+<li>inline 函数打桩无效</li>
+<li>方法的首字母大小写，只能给首大写字母的方法打桩</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-code" data-lang="code">import (
+    &#34;github.com/bouk/monkey&#34;
+    . &#34;github.com/smartystreets/goconvey/convey&#34;
+    &#34;reflect&#34;
+    &#34;testing&#34;
+    &#34;errors&#34;
+)
+func Test_ServerRun_Monkey(t *testing.T) {
+    Convey(&#34;Test ServerRun &#34;, t, func() {
+        Convey(&#34;Case 1 Listen failed:&#34;, func() {
+            defer monkey.UnpatchAll()
+            monkey.Patch(Listen, func(s *server) error {
+                return errors.New(&#34;fake return fail&#34;)
+            })
+            So(ServerRun(8080), ShouldBeError)
+        })
+
+        Convey(&#34;Case 2 s.GetIP failed:&#34;, func() {
+            var s *server
+            defer monkey.UnpatchAll()
+            monkey.PatchInstanceMethod(reflect.TypeOf(s), &#34;GetIP&#34;, func(_ *server) string {
+                return &#34;192.168.1.1&#34;
+            })
+            So(ServerRun(8080),ShouldBeError)
+        })
+    })
+}</code></pre></div>
+<h2 id="gomock">GoMock</h2>
+
+<p>给接口打桩</p>
+
+<ul>
+<li>项目：<code>https://github.com/golang/mock</code></li>
+<li>文档：<code>https://godoc.org/github.com/golang/mock/gomock</code></li>
+<li>参考：<code>https://www.jianshu.com/p/f4e773a1b11f</code></li>
+</ul>
+
+<h4 id="安装-3">安装</h4>
+<div class="highlight"><pre class="chroma"><code class="language-command" data-lang="command">mkdir $GOPATH/src/golang.org/x/
+cd $GOPATH/src/golang.org/x/
+git clone https://github.com/golang/net.git net 
+go install net
+go get github.com/golang/mock/gomock
+go install github.com/golang/mock/mockgen</code></pre></div>
+<h4 id="使用-3">使用</h4>
+
+<ul>
+<li>生成接口的mock文件</li>
+<li>输出目录需要提起建好</li>
+<li>gomock的代码需放在$GOPATH/src下，mockgen运行时要在这个路径下访问gomock</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-command" data-lang="command">./mockgen -source=/home/yzw/go/src/examples/pkg/common/common.go &gt; /home/yzw/go/src/examples/test/common/mock_common.go</code></pre></div>
+<ul>
+<li>测试代码</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-code" data-lang="code">import (
+    . &#34;github.com/golang/mock/gomock&#34;
+    . &#34;github.com/smartystreets/goconvey/convey&#34;
+    &#34;testing&#34;
+
+    &#34;examples/test/common&#34;
+    &#34;errors&#34;
+    &#34;github.com/bouk/monkey&#34;
+    &#34;examples/pkg/common&#34;
+    &#34;fmt&#34;
+)
+
+func Test_ClientRun_GoMock(t *testing.T) {
+    Convey(&#34;Test ClientRun&#34;, t, func() {
+        ctrl := NewController(t)
+        defer ctrl.Finish()
+        mockOpter := mock_common.NewMockOpter(ctrl)
+        mockOpter.EXPECT().Get(Any()).Return(&#34;mock get data&#34;, errors.New(&#34;mock get error&#34;))
+
+        defer monkey.UnpatchAll()
+        monkey.Patch(NewClient, func() common.Opter {
+            fmt.Println(&#34;fake newclient&#34;)
+            return mockOpter
+        })
+        So(ClientRun(&#34;ip&#34;,&#34;port&#34;,&#34;opt&#34;),ShouldBeError)
+    })
+}</code></pre></div>
+<ul>
+<li>如果mock的接口被调用多次，需要用Times</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-code" data-lang="code">mockOpter.EXPECT().Get(Any()).Return(&#34;mock get data&#34;, errors.New(&#34;mock get error&#34;)).Times(5)</code></pre></div>
+<ul>
+<li>mock的接口有先后顺序的时候，需要同After，InOder来保序</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-code" data-lang="code">getCall := mockOpter.EXPECT().Get(Any()).Return(&#34;mock get data&#34;, errors.New(&#34;mock get error&#34;))
+mockOpter.EXPECT().Post(Any()).Return(errors.New(&#34;mock post error&#34;)).After(getCall)
+InOder(
+    mockOpter.EXPECT().Get(Any()).Return(&#34;mock get data&#34;, errors.New(&#34;mock get error&#34;))
+    mockOpter.EXPECT().Post(Any()).Return(errors.New(&#34;mock post error&#34;))
+)</code></pre></div>
+
+        
+
+        
+          
+          
+          <h4 class="see-also">See also</h4>
+          <ul>
+          
+            <li><a href="/post/2018-07-31-hugo/">Hugo</a></li>
+          
+          </ul>
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://zhiweiyin318.github.io/post/2018-07-31-hugo/" data-toggle="tooltip" data-placement="top" title="Hugo">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://zhiweiyin318.github.io/post/2018-09-03-golang-rand/" data-toggle="tooltip" data-placement="top" title="golang rand生成随机数">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "zhiweiyin" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+          
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:zhiweiyin@hotmail.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/zhiweiyin318" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://weibo.com/yzw517318" title="Weibo">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://zhiweiyin318.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="https://zhiweiyin318.github.io">Zhiwei Yin</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2018
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://zhiweiyin318.github.io">Zhiwei Yin</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.51</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://zhiweiyin318.github.io/js/main.js"></script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://zhiweiyin318.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>
+

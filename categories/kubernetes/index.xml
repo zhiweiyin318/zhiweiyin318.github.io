@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Kubernetes on Zhiwei Yin&#39;s Blog</title>
+    <title>Kubernetes on Zhiwei Yin</title>
     <link>https://zhiweiyin318.github.io/categories/kubernetes/</link>
-    <description>Recent content in Kubernetes on Zhiwei Yin&#39;s Blog</description>
+    <description>Recent content in Kubernetes on Zhiwei Yin</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <managingEditor>zhiweiyin@hotmail.com (Zhiwei Yin)</managingEditor>
+    <webMaster>zhiweiyin@hotmail.com (Zhiwei Yin)</webMaster>
     <lastBuildDate>Tue, 18 Sep 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://zhiweiyin318.github.io/categories/kubernetes/index.xml" rel="self" type="application/rss+xml" />
@@ -13,46 +14,46 @@
     
     <item>
       <title>《深入剖析Kubernetes》-学习笔记-Kubernetes</title>
-      <link>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-kubernetes/</link>
+      <link>https://zhiweiyin318.github.io/post/2018-09-18-kubernetes-note-kubernetes/</link>
       <pubDate>Tue, 18 Sep 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-kubernetes/</guid>
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
+      <guid>https://zhiweiyin318.github.io/post/2018-09-18-kubernetes-note-kubernetes/</guid>
       <description>容器的本质 容器实际上是一个Linux Namespace、Linux Cgroups和rootfs三种技术构造出来的进程的隔离环境。 1. 容器的静态</description>
     </item>
     
     <item>
       <title>《深入剖析Kubernetes》-学习笔记-Image</title>
-      <link>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-image/</link>
+      <link>https://zhiweiyin318.github.io/post/2018-09-12-kubernetes-note-image/</link>
       <pubDate>Wed, 12 Sep 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-image/</guid>
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
+      <guid>https://zhiweiyin318.github.io/post/2018-09-12-kubernetes-note-image/</guid>
       <description>mount namespace “左耳朵耗子” 叔的一篇将docker的Namespace的文章，文章地址：https://coolshell.cn/articles/1</description>
     </item>
     
     <item>
       <title>《深入剖析Kubernetes》-学习笔记-exec-volume</title>
-      <link>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-exec-volume/</link>
+      <link>https://zhiweiyin318.github.io/post/2018-09-12-kubernetes-note-exec-volume/</link>
       <pubDate>Wed, 12 Sep 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-exec-volume/</guid>
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
+      <guid>https://zhiweiyin318.github.io/post/2018-09-12-kubernetes-note-exec-volume/</guid>
       <description>docker exec 是怎么进入容器的？ 容器进程python2，docker exec又重新拉起来了进程跟python2进程都是docker-container</description>
     </item>
     
     <item>
       <title>《深入剖析Kubernetes》-学习笔记-Cgroups-Namespace</title>
-      <link>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-cgroups-namepspace/</link>
+      <link>https://zhiweiyin318.github.io/post/2018-09-10-kubernetes-note-cgroups-namepspace/</link>
       <pubDate>Mon, 10 Sep 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-cgroups-namepspace/</guid>
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
+      <guid>https://zhiweiyin318.github.io/post/2018-09-10-kubernetes-note-cgroups-namepspace/</guid>
       <description>概述 容器其实就是一种沙盒技术的，沙盒就像集装箱一样，把应用装起来，应用于应用之间，有了边界，互不干扰，而且方便被搬来搬去，这就是PaaS最理</description>
     </item>
     
     <item>
       <title>《深入剖析Kubernetes》-学习笔记-History</title>
-      <link>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-history/</link>
+      <link>https://zhiweiyin318.github.io/post/2018-09-09-kubernetes-note-history/</link>
       <pubDate>Sun, 09 Sep 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-history/</guid>
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
+      <guid>https://zhiweiyin318.github.io/post/2018-09-09-kubernetes-note-history/</guid>
       <description>我是2017年误打误撞的掉进了云计算这个坑里，上来就是Docker，Mesos，Kubernetes，现在主要从事Kubernetes相关工</description>
     </item>
     

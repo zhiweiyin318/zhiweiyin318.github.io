@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Zhiwei Yin&#39;s Blog</title>
+    <title>Posts on Zhiwei Yin</title>
     <link>https://zhiweiyin318.github.io/post/</link>
-    <description>Recent content in Posts on Zhiwei Yin&#39;s Blog</description>
+    <description>Recent content in Posts on Zhiwei Yin</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <managingEditor>zhiweiyin@hotmail.com (Zhiwei Yin)</managingEditor>
+    <webMaster>zhiweiyin@hotmail.com (Zhiwei Yin)</webMaster>
     <lastBuildDate>Fri, 23 Nov 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://zhiweiyin318.github.io/post/index.xml" rel="self" type="application/rss+xml" />
@@ -13,118 +14,124 @@
     
     <item>
       <title>软件定义交付宣言</title>
-      <link>https://zhiweiyin318.github.io/post/%E8%BD%AF%E4%BB%B6%E5%AE%9A%E4%B9%89%E4%BA%A4%E4%BB%98%E5%AE%A3%E8%A8%80/</link>
+      <link>https://zhiweiyin318.github.io/post/2018-11-23-sdd/</link>
       <pubDate>Fri, 23 Nov 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhiweiyin318.github.io/post/%E8%BD%AF%E4%BB%B6%E5%AE%9A%E4%B9%89%E4%BA%A4%E4%BB%98%E5%AE%A3%E8%A8%80/</guid>
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
+      <guid>https://zhiweiyin318.github.io/post/2018-11-23-sdd/</guid>
       <description>宣言原文地址： https://sdd-manifesto.org/?from=timeline 宣言github地址: https://github.com/sdd-manifesto/manifesto 最后更新时间：11/22/2018 (bb7b94f) 翻译：Zhiwei Yin 翻译时间：11/23/2018 翻译githu</description>
     </item>
     
     <item>
       <title>kolla源码走读</title>
-      <link>https://zhiweiyin318.github.io/post/kolla%E6%BA%90%E7%A0%81%E8%B5%B0%E8%AF%BB/</link>
+      <link>https://zhiweiyin318.github.io/post/2018-09-18-kolla-code/</link>
       <pubDate>Tue, 18 Sep 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhiweiyin318.github.io/post/kolla%E6%BA%90%E7%A0%81%E8%B5%B0%E8%AF%BB/</guid>
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
+      <guid>https://zhiweiyin318.github.io/post/2018-09-18-kolla-code/</guid>
       <description>代码路径：https://github.com/openstack/kolla 代码版本: origin/stable/pike branch 文档: https://docs.openstack.org/kolla/latest/ 概述 kolla项目主要是把容器化的ope</description>
     </item>
     
     <item>
       <title>《深入剖析Kubernetes》-学习笔记-Kubernetes</title>
-      <link>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-kubernetes/</link>
+      <link>https://zhiweiyin318.github.io/post/2018-09-18-kubernetes-note-kubernetes/</link>
       <pubDate>Tue, 18 Sep 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-kubernetes/</guid>
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
+      <guid>https://zhiweiyin318.github.io/post/2018-09-18-kubernetes-note-kubernetes/</guid>
       <description>容器的本质 容器实际上是一个Linux Namespace、Linux Cgroups和rootfs三种技术构造出来的进程的隔离环境。 1. 容器的静态</description>
     </item>
     
     <item>
       <title>Python jinja2</title>
-      <link>https://zhiweiyin318.github.io/post/python-jinja2/</link>
+      <link>https://zhiweiyin318.github.io/post/2018-09-14-python-jinja2/</link>
       <pubDate>Fri, 14 Sep 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhiweiyin318.github.io/post/python-jinja2/</guid>
-      <description>jinja2是啥 python的模板引擎，也是Flask的模板引擎，能根据模板字符串替换，有自己的语法规则。 官网: http://docs.jinkan.org/docs/jinja2/ 使用 安装 1 $ pip install jinja2 语法定义</description>
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
+      <guid>https://zhiweiyin318.github.io/post/2018-09-14-python-jinja2/</guid>
+      <description>jinja2是啥 python的模板引擎，也是Flask的模板引擎，能根据模板字符串替换，有自己的语法规则。 官网: http://docs.jinkan.org/docs/jinja2/ 使用 安装 $ pip install jinja2 语法定义 j</description>
     </item>
     
     <item>
       <title>《深入剖析Kubernetes》-学习笔记-Image</title>
-      <link>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-image/</link>
+      <link>https://zhiweiyin318.github.io/post/2018-09-12-kubernetes-note-image/</link>
       <pubDate>Wed, 12 Sep 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-image/</guid>
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
+      <guid>https://zhiweiyin318.github.io/post/2018-09-12-kubernetes-note-image/</guid>
       <description>mount namespace “左耳朵耗子” 叔的一篇将docker的Namespace的文章，文章地址：https://coolshell.cn/articles/1</description>
     </item>
     
     <item>
       <title>《深入剖析Kubernetes》-学习笔记-exec-volume</title>
-      <link>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-exec-volume/</link>
+      <link>https://zhiweiyin318.github.io/post/2018-09-12-kubernetes-note-exec-volume/</link>
       <pubDate>Wed, 12 Sep 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-exec-volume/</guid>
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
+      <guid>https://zhiweiyin318.github.io/post/2018-09-12-kubernetes-note-exec-volume/</guid>
       <description>docker exec 是怎么进入容器的？ 容器进程python2，docker exec又重新拉起来了进程跟python2进程都是docker-container</description>
     </item>
     
     <item>
       <title>Python docker-client</title>
-      <link>https://zhiweiyin318.github.io/post/python-docker-client/</link>
+      <link>https://zhiweiyin318.github.io/post/2018-09-11-python-docker-client/</link>
       <pubDate>Tue, 11 Sep 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhiweiyin318.github.io/post/python-docker-client/</guid>
-      <description>简单记录哈python的docker client的使用。 &amp;gt; 官方文档： &amp;gt; https://docker-py.readthedocs.io/en/stable/client.html &amp;gt; https://docs.docker.com/develop/sdk/examples/ &amp;gt; demo地址： &amp;gt; https://github.com/zhiweiyin318/yzw.python.demo/tree/master/dockerclient 安装 1 $ pip install docker 使用 client 初始化 需要先创建一个Do</description>
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
+      <guid>https://zhiweiyin318.github.io/post/2018-09-11-python-docker-client/</guid>
+      <description>简单记录哈python的docker client的使用。 &amp;gt; 官方文档： &amp;gt; https://docker-py.readthedocs.io/en/stable/client.html &amp;gt; https://docs.docker.com/develop/sdk/examples/ &amp;gt; demo地址： &amp;gt; https://github.com/zhiweiyin318/yzw.python.demo/tree/master/dockerclient 安装 $ pip install docker 使用 client 初始化 需要先创建一个Doc</description>
     </item>
     
     <item>
       <title>OpenStack olso_config</title>
-      <link>https://zhiweiyin318.github.io/post/olso_config/</link>
+      <link>https://zhiweiyin318.github.io/post/2018-09-10-olso_config/</link>
       <pubDate>Mon, 10 Sep 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhiweiyin318.github.io/post/olso_config/</guid>
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
+      <guid>https://zhiweiyin318.github.io/post/2018-09-10-olso_config/</guid>
       <description>oslo oslo作为OpenStack的通用组件，在每一个项目中都有用到，oslo.config主要用于命令行和配置项解析。 参考: * https://gtcsq.readthedocs.io/en/latest/openstack/oslo_cfg.html * https://blog.csdn.net/zhangyifei216/article/details/50434980 * https://blog.csdn.net/hobertony_7/article/details/79206297 * https://www.programcreek.com/python/example/106149/oslo_config.cfg.ConfigOpts</description>
     </item>
     
     <item>
       <title>《深入剖析Kubernetes》-学习笔记-Cgroups-Namespace</title>
-      <link>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-cgroups-namepspace/</link>
+      <link>https://zhiweiyin318.github.io/post/2018-09-10-kubernetes-note-cgroups-namepspace/</link>
       <pubDate>Mon, 10 Sep 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-cgroups-namepspace/</guid>
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
+      <guid>https://zhiweiyin318.github.io/post/2018-09-10-kubernetes-note-cgroups-namepspace/</guid>
       <description>概述 容器其实就是一种沙盒技术的，沙盒就像集装箱一样，把应用装起来，应用于应用之间，有了边界，互不干扰，而且方便被搬来搬去，这就是PaaS最理</description>
     </item>
     
     <item>
       <title>《深入剖析Kubernetes》-学习笔记-History</title>
-      <link>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-history/</link>
+      <link>https://zhiweiyin318.github.io/post/2018-09-09-kubernetes-note-history/</link>
       <pubDate>Sun, 09 Sep 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhiweiyin318.github.io/post/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90kubernetes-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-history/</guid>
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
+      <guid>https://zhiweiyin318.github.io/post/2018-09-09-kubernetes-note-history/</guid>
       <description>我是2017年误打误撞的掉进了云计算这个坑里，上来就是Docker，Mesos，Kubernetes，现在主要从事Kubernetes相关工</description>
     </item>
     
     <item>
       <title>golang rand生成随机数</title>
-      <link>https://zhiweiyin318.github.io/post/golang-rand%E7%94%9F%E6%88%90%E9%9A%8F%E6%9C%BA%E6%95%B0/</link>
+      <link>https://zhiweiyin318.github.io/post/2018-09-03-golang-rand/</link>
       <pubDate>Mon, 03 Sep 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhiweiyin318.github.io/post/golang-rand%E7%94%9F%E6%88%90%E9%9A%8F%E6%9C%BA%E6%95%B0/</guid>
-      <description>简介 math/rand package实现了伪随机数字生成器。 随机数字是通过Source生成的，rand.Seed会初始化默认全局的Source，如果不调用r</description>
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
+      <guid>https://zhiweiyin318.github.io/post/2018-09-03-golang-rand/</guid>
+      <description>&lt;h3 id=&#34;简介&#34;&gt;简介&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;math/rand package实现了伪随机数字生成器。&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;随机数字是通过Source生成的，rand.Seed会初始化默认全局的Source，如果不调用rand.Seed就会使用默认的Source。所生成的随机数字是固定顺序生成的，每次运行程序如果seed相同的话，生成随机数是相同的。&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;默认的Source是线程安全的，自己通过New生成的不是。&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
     </item>
     
     <item>
       <title>golang的测试框架</title>
-      <link>https://zhiweiyin318.github.io/post/golang%E7%9A%84%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6/</link>
+      <link>https://zhiweiyin318.github.io/post/2018-08-09-golang-test-framework/</link>
       <pubDate>Thu, 09 Aug 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhiweiyin318.github.io/post/golang%E7%9A%84%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6/</guid>
-      <description>golang 测试框架 本文主要介绍golang 测试的集中常见的框架。 go test 文件名称位xx_test.go 测试函数Testxxx(t *testing.T) 1 go test -v GoConvey 可以管理和运</description>
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
+      <guid>https://zhiweiyin318.github.io/post/2018-08-09-golang-test-framework/</guid>
+      <description>golang 测试框架 本文主要介绍golang 测试的集中常见的框架。 go test 文件名称位xx_test.go 测试函数Testxxx(t *testing.T) go test -v GoConvey 可以管理和运行</description>
     </item>
     
     <item>
       <title>Hugo</title>
-      <link>https://zhiweiyin318.github.io/post/hugo/</link>
+      <link>https://zhiweiyin318.github.io/post/2018-07-31-hugo/</link>
       <pubDate>Tue, 31 Jul 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhiweiyin318.github.io/post/hugo/</guid>
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
+      <guid>https://zhiweiyin318.github.io/post/2018-07-31-hugo/</guid>
       <description>为啥搞blog 之前在sina写过复盘日记，后来也没坚持下来；之前在github上用其他框架搭过blog，太繁琐了，也放弃了。 最近在有道云上记</description>
     </item>
     
