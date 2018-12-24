@@ -304,19 +304,6 @@
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <article role="main" class="blog-post">
-          
-          <div class="blog-tags">
-            
-              <a href="https://zhiweiyin318.github.io/tags/docker/">docker</a>&nbsp;
-            
-              <a href="https://zhiweiyin318.github.io/tags/kubernetes/">kubernetes</a>&nbsp;
-            
-              <a href="https://zhiweiyin318.github.io/tags/cgroups/">cgroups</a>&nbsp;
-            
-              <a href="https://zhiweiyin318.github.io/tags/namespace/">namespace</a>&nbsp;
-            
-          </div>
-          
         
 
 <h1 id="概述">概述</h1>
@@ -480,6 +467,20 @@ lxcfs可以增强docker资源的可见性，可解决这个问题。做法是把
 
 <p>/proc文件系统的问题我好像遇到过这个坑..当时在容器上运行的java应用，由于当时jvm参数没正确配置上，就用默认的，而容器设置的内存为4g，最后oom了，当时用命令查看容器的内存占用情况，竟然发现内存竟然有60多g。 那应该显示的是宿主机的内存了，jvm按照宿主机内存大小分配的默认内存应该大于4g 所以还没full gc 就oom了</p>
 
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://zhiweiyin318.github.io/tags/docker/">docker</a>&nbsp;
+            
+              <a href="https://zhiweiyin318.github.io/tags/kubernetes/">kubernetes</a>&nbsp;
+            
+              <a href="https://zhiweiyin318.github.io/tags/cgroups/">cgroups</a>&nbsp;
+            
+              <a href="https://zhiweiyin318.github.io/tags/namespace/">namespace</a>&nbsp;
+            
+          </div>
+        
 
         
 

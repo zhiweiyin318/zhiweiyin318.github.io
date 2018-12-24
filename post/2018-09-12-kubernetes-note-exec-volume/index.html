@@ -304,19 +304,6 @@
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <article role="main" class="blog-post">
-          
-          <div class="blog-tags">
-            
-              <a href="https://zhiweiyin318.github.io/tags/docker/">docker</a>&nbsp;
-            
-              <a href="https://zhiweiyin318.github.io/tags/kubernetes/">kubernetes</a>&nbsp;
-            
-              <a href="https://zhiweiyin318.github.io/tags/volume/">volume</a>&nbsp;
-            
-              <a href="https://zhiweiyin318.github.io/tags/exec/">exec</a>&nbsp;
-            
-          </div>
-          
         
 
 <h1 id="docker-exec-是怎么进入容器的">docker exec 是怎么进入容器的？</h1>
@@ -443,6 +430,20 @@ $ docker run -v /home:/test ...
 
 <p>这个/test目录的内容，是挂载在容器rootfs的可读写层，是不会被docker commit提交的，以为docker commint是发生在宿主机空间，由于mount namespace的隔离，不知道绑定挂载的存储，所有/test目录会被打包，出现在新的镜像里面的，但是里面是空的。</p>
 
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://zhiweiyin318.github.io/tags/docker/">docker</a>&nbsp;
+            
+              <a href="https://zhiweiyin318.github.io/tags/kubernetes/">kubernetes</a>&nbsp;
+            
+              <a href="https://zhiweiyin318.github.io/tags/volume/">volume</a>&nbsp;
+            
+              <a href="https://zhiweiyin318.github.io/tags/exec/">exec</a>&nbsp;
+            
+          </div>
+        
 
         
 
