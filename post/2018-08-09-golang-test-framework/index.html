@@ -162,14 +162,24 @@
           
         
           
-            <li>
-              <a title="notes" href="/">notes</a>
+            <li class="navlinks-container">
+              <a class="navlinks-parent">notes</a>
+              <div class="navlinks-children">
+                
+                  <a href="/k8s-demo">kubernetes demo</a>
+                
+              </div>
             </li>
           
         
           
-            <li>
-              <a title="porjects" href="/">porjects</a>
+            <li class="navlinks-container">
+              <a class="navlinks-parent">porjects</a>
+              <div class="navlinks-children">
+                
+                  <a href="https://github.com/zhiweiyin318/kquant">Kquant</a>
+                
+              </div>
             </li>
           
         
@@ -316,7 +326,10 @@
 <li>文件名称位xx_test.go</li>
 <li>测试函数Testxxx(t *testing.T)</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-command" data-lang="command">go test -v</code></pre></div>
+
+<pre><code class="language-command">go test -v
+</code></pre>
+
 <h2 id="goconvey">GoConvey</h2>
 
 <p>可以管理和运行测试用例，同时提供了丰富的断言函数，并支持很多 Web 界面特性，集成go test。</p>
@@ -330,7 +343,10 @@
 </ul>
 
 <h4 id="安装">安装</h4>
-<div class="highlight"><pre class="chroma"><code class="language-command" data-lang="command">go get github.com/smartystreets/goconvey </code></pre></div>
+
+<pre><code class="language-command">go get github.com/smartystreets/goconvey 
+</code></pre>
+
 <ol>
 <li>在$GOPATH/src目录下新增了github.com子目录，该子目录里包含了GoConvey框架的库代码</li>
 <li>在$GOPATH/bin目录下新增了GoConvey框架的可执行程序goconvey</li>
@@ -341,23 +357,26 @@
 <ul>
 <li>web显示结果，在测试目录下执行goconvoy就可以</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-code" data-lang="code">import (
-    . &#34;github.com/smartystreets/goconvey/convey&#34;
-    &#34;testing&#34;
+
+<pre><code class="language-code">import (
+    . &quot;github.com/smartystreets/goconvey/convey&quot;
+    &quot;testing&quot;
 )
 
 func Test_ServerRun(t *testing.T) {
-    Convey(&#34;Test ServerRun &#34;, t, func() {
-        Convey(&#34;Case 1 port &gt; 10000:&#34;, func(){
+    Convey(&quot;Test ServerRun &quot;, t, func() {
+        Convey(&quot;Case 1 port &gt; 10000:&quot;, func(){
             port := 100000
             So(ServerRun(port), ShouldBeError)
         })
-        Convey(&#34;Case 2 port &lt;= 10000:&#34;, func() {
+        Convey(&quot;Case 2 port &lt;= 10000:&quot;, func() {
             port := 1000
             So(ServerRun(port), ShouldBeNil)
         })
     })
-}</code></pre></div>
+}
+</code></pre>
+
 <h2 id="gostub">GoStub</h2>
 
 <p>主要用来给全局变量打桩，也可以给函数打桩，无法给方法接口打桩。
@@ -365,21 +384,27 @@ func Test_ServerRun(t *testing.T) {
 * 介绍：<code>https://www.jianshu.com/p/70a93a9ed186</code></p>
 
 <h4 id="安装-1">安装</h4>
-<div class="highlight"><pre class="chroma"><code class="language-command" data-lang="command">go get github.com/prashantv/gostub</code></pre></div>
+
+<pre><code class="language-command">go get github.com/prashantv/gostub
+</code></pre>
+
 <h4 id="使用-1">使用</h4>
-<div class="highlight"><pre class="chroma"><code class="language-code" data-lang="code">import (
-    &#34;testing&#34;
-    . &#34;github.com/prashantv/gostub&#34;
+
+<pre><code class="language-code">import (
+    &quot;testing&quot;
+    . &quot;github.com/prashantv/gostub&quot;
 )
 func Test_ServerRun_Case3(t *testing.T){
-    Convey(&#34;Test ServerRun &#34;,t,func(){
-        Convey(&#34;Case 1 IP is not local IP:&#34;,func(){
-            stubs :=Stub(&amp;localIP,&#34;192.168.1.1&#34;)
+    Convey(&quot;Test ServerRun &quot;,t,func(){
+        Convey(&quot;Case 1 IP is not local IP:&quot;,func(){
+            stubs :=Stub(&amp;localIP,&quot;192.168.1.1&quot;)
             defer stubs.Reset()
             So(ServerRun(8080), ShouldBeError)
         })
     })
-}</code></pre></div>
+}
+</code></pre>
+
 <h2 id="monkey">Monkey</h2>
 
 <p>可以给函数，方法打桩</p>
@@ -391,40 +416,46 @@ func Test_ServerRun_Case3(t *testing.T){
 </ul>
 
 <h4 id="安装-2">安装</h4>
-<div class="highlight"><pre class="chroma"><code class="language-command" data-lang="command">go get github.com/bouk/monkey</code></pre></div>
+
+<pre><code class="language-command">go get github.com/bouk/monkey
+</code></pre>
+
 <h4 id="使用-2">使用</h4>
 
 <ul>
 <li>inline 函数打桩无效</li>
 <li>方法的首字母大小写，只能给首大写字母的方法打桩</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-code" data-lang="code">import (
-    &#34;github.com/bouk/monkey&#34;
-    . &#34;github.com/smartystreets/goconvey/convey&#34;
-    &#34;reflect&#34;
-    &#34;testing&#34;
-    &#34;errors&#34;
+
+<pre><code class="language-code">import (
+    &quot;github.com/bouk/monkey&quot;
+    . &quot;github.com/smartystreets/goconvey/convey&quot;
+    &quot;reflect&quot;
+    &quot;testing&quot;
+    &quot;errors&quot;
 )
 func Test_ServerRun_Monkey(t *testing.T) {
-    Convey(&#34;Test ServerRun &#34;, t, func() {
-        Convey(&#34;Case 1 Listen failed:&#34;, func() {
+    Convey(&quot;Test ServerRun &quot;, t, func() {
+        Convey(&quot;Case 1 Listen failed:&quot;, func() {
             defer monkey.UnpatchAll()
             monkey.Patch(Listen, func(s *server) error {
-                return errors.New(&#34;fake return fail&#34;)
+                return errors.New(&quot;fake return fail&quot;)
             })
             So(ServerRun(8080), ShouldBeError)
         })
 
-        Convey(&#34;Case 2 s.GetIP failed:&#34;, func() {
+        Convey(&quot;Case 2 s.GetIP failed:&quot;, func() {
             var s *server
             defer monkey.UnpatchAll()
-            monkey.PatchInstanceMethod(reflect.TypeOf(s), &#34;GetIP&#34;, func(_ *server) string {
-                return &#34;192.168.1.1&#34;
+            monkey.PatchInstanceMethod(reflect.TypeOf(s), &quot;GetIP&quot;, func(_ *server) string {
+                return &quot;192.168.1.1&quot;
             })
             So(ServerRun(8080),ShouldBeError)
         })
     })
-}</code></pre></div>
+}
+</code></pre>
+
 <h2 id="gomock">GoMock</h2>
 
 <p>给接口打桩</p>
@@ -436,12 +467,15 @@ func Test_ServerRun_Monkey(t *testing.T) {
 </ul>
 
 <h4 id="安装-3">安装</h4>
-<div class="highlight"><pre class="chroma"><code class="language-command" data-lang="command">mkdir $GOPATH/src/golang.org/x/
+
+<pre><code class="language-command">mkdir $GOPATH/src/golang.org/x/
 cd $GOPATH/src/golang.org/x/
 git clone https://github.com/golang/net.git net 
 go install net
 go get github.com/golang/mock/gomock
-go install github.com/golang/mock/mockgen</code></pre></div>
+go install github.com/golang/mock/mockgen
+</code></pre>
+
 <h4 id="使用-3">使用</h4>
 
 <ul>
@@ -449,50 +483,62 @@ go install github.com/golang/mock/mockgen</code></pre></div>
 <li>输出目录需要提起建好</li>
 <li>gomock的代码需放在$GOPATH/src下，mockgen运行时要在这个路径下访问gomock</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-command" data-lang="command">./mockgen -source=/home/yzw/go/src/examples/pkg/common/common.go &gt; /home/yzw/go/src/examples/test/common/mock_common.go</code></pre></div>
+
+<pre><code class="language-command">./mockgen -source=/home/yzw/go/src/examples/pkg/common/common.go &gt; /home/yzw/go/src/examples/test/common/mock_common.go
+</code></pre>
+
 <ul>
 <li>测试代码</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-code" data-lang="code">import (
-    . &#34;github.com/golang/mock/gomock&#34;
-    . &#34;github.com/smartystreets/goconvey/convey&#34;
-    &#34;testing&#34;
 
-    &#34;examples/test/common&#34;
-    &#34;errors&#34;
-    &#34;github.com/bouk/monkey&#34;
-    &#34;examples/pkg/common&#34;
-    &#34;fmt&#34;
+<pre><code class="language-code">import (
+    . &quot;github.com/golang/mock/gomock&quot;
+    . &quot;github.com/smartystreets/goconvey/convey&quot;
+    &quot;testing&quot;
+
+    &quot;examples/test/common&quot;
+    &quot;errors&quot;
+    &quot;github.com/bouk/monkey&quot;
+    &quot;examples/pkg/common&quot;
+    &quot;fmt&quot;
 )
 
 func Test_ClientRun_GoMock(t *testing.T) {
-    Convey(&#34;Test ClientRun&#34;, t, func() {
+    Convey(&quot;Test ClientRun&quot;, t, func() {
         ctrl := NewController(t)
         defer ctrl.Finish()
         mockOpter := mock_common.NewMockOpter(ctrl)
-        mockOpter.EXPECT().Get(Any()).Return(&#34;mock get data&#34;, errors.New(&#34;mock get error&#34;))
+        mockOpter.EXPECT().Get(Any()).Return(&quot;mock get data&quot;, errors.New(&quot;mock get error&quot;))
 
         defer monkey.UnpatchAll()
         monkey.Patch(NewClient, func() common.Opter {
-            fmt.Println(&#34;fake newclient&#34;)
+            fmt.Println(&quot;fake newclient&quot;)
             return mockOpter
         })
-        So(ClientRun(&#34;ip&#34;,&#34;port&#34;,&#34;opt&#34;),ShouldBeError)
+        So(ClientRun(&quot;ip&quot;,&quot;port&quot;,&quot;opt&quot;),ShouldBeError)
     })
-}</code></pre></div>
+}
+</code></pre>
+
 <ul>
 <li>如果mock的接口被调用多次，需要用Times</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-code" data-lang="code">mockOpter.EXPECT().Get(Any()).Return(&#34;mock get data&#34;, errors.New(&#34;mock get error&#34;)).Times(5)</code></pre></div>
+
+<pre><code class="language-code">mockOpter.EXPECT().Get(Any()).Return(&quot;mock get data&quot;, errors.New(&quot;mock get error&quot;)).Times(5)
+</code></pre>
+
 <ul>
 <li>mock的接口有先后顺序的时候，需要同After，InOder来保序</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-code" data-lang="code">getCall := mockOpter.EXPECT().Get(Any()).Return(&#34;mock get data&#34;, errors.New(&#34;mock get error&#34;))
-mockOpter.EXPECT().Post(Any()).Return(errors.New(&#34;mock post error&#34;)).After(getCall)
+
+<pre><code class="language-code">getCall := mockOpter.EXPECT().Get(Any()).Return(&quot;mock get data&quot;, errors.New(&quot;mock get error&quot;))
+mockOpter.EXPECT().Post(Any()).Return(errors.New(&quot;mock post error&quot;)).After(getCall)
 InOder(
-    mockOpter.EXPECT().Get(Any()).Return(&#34;mock get data&#34;, errors.New(&#34;mock get error&#34;))
-    mockOpter.EXPECT().Post(Any()).Return(errors.New(&#34;mock post error&#34;))
-)</code></pre></div>
+    mockOpter.EXPECT().Get(Any()).Return(&quot;mock get data&quot;, errors.New(&quot;mock get error&quot;))
+    mockOpter.EXPECT().Post(Any()).Return(errors.New(&quot;mock post error&quot;))
+)
+</code></pre>
+
 
         
           <div class="blog-tags">
@@ -538,27 +584,16 @@ InOder(
       
         
           
-          <div class="disqus-comments">
+          <div class="disqus-comments">                  
+            <button id="show-comments" class="btn btn-default" type="button">Show <span class="disqus-comment-count" data-disqus-url="https://zhiweiyin318.github.io/post/2018-08-09-golang-test-framework">comments</span></button>
             <div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "zhiweiyin" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+            <script type="text/javascript">
+              var disqus_config = function () {
+              this.page.url = 'https:\/\/zhiweiyin318.github.io\/post\/2018-08-09-golang-test-framework';
+            };
+
+          </script>
           </div>
           
         
@@ -651,6 +686,28 @@ InOder(
 
 
 
+
+
+
+<script type="text/javascript">
+$(function(){
+  $('#show-comments').on('click', function(){
+    var disqus_shortname = 'zhiweiyin';
+      
+    (function() {
+      var disqus = document.createElement('script'); 
+      disqus.type = 'text/javascript'; 
+      disqus.async = true;
+      disqus.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(disqus);
+    })();
+      
+    $(this).hide(); 
+    });
+  });
+      
+</script>
+<script id="dsq-count-scr" src="//zhiweiyin.disqus.com/count.js" async></script>
 
 
 
