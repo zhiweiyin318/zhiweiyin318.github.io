@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>zhiweiyin@hotmail.com (Zhiwei Yin)</managingEditor>
     <webMaster>zhiweiyin@hotmail.com (Zhiwei Yin)</webMaster>
-    <lastBuildDate>Fri, 23 Nov 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 25 Dec 2018 22:40:54 +0800</lastBuildDate>
     
 	<atom:link href="https://zhiweiyin318.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kubernetes 认证: X509客户端证书</title>
+      <link>https://zhiweiyin318.github.io/post/2018-12-15-kubernetes-auth/</link>
+      <pubDate>Tue, 25 Dec 2018 22:40:54 +0800</pubDate>
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
+      <guid>https://zhiweiyin318.github.io/post/2018-12-15-kubernetes-auth/</guid>
+      <description>原文：https://brancz.com/2017/10/16/kubernetes-auth-x509-client-certifica</description>
+    </item>
     
     <item>
       <title>软件定义交付宣言</title>
@@ -18,7 +27,7 @@
       <pubDate>Fri, 23 Nov 2018 00:00:00 +0000</pubDate>
       <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
       <guid>https://zhiweiyin318.github.io/post/2018-11-23-sdd/</guid>
-      <description>宣言原文地址： https://sdd-manifesto.org/?from=timeline 宣言github地址: https://github.com/sdd-manifesto/manifesto 最后更新时间：11/22/2018 (bb7b94f) 翻译：Zhiwei Yin 翻译时间：11/23/2018 翻译githu</description>
+      <description>宣言原文地址： https://sdd-manifesto.org/?from=timeline 宣言github地址: https://github.com/sdd-manifesto/manifesto 最后更新时间：11/22/2018 (bb7b94f) 翻译：Zhiwei Yin 翻译时间：11/23/2018 软件定义交付宣</description>
     </item>
     
     <item>
