@@ -7,19 +7,10 @@
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>zhiweiyin@hotmail.com (Zhiwei Yin)</managingEditor>
     <webMaster>zhiweiyin@hotmail.com (Zhiwei Yin)</webMaster>
-    <lastBuildDate>Mon, 10 Sep 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 14 Sep 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://zhiweiyin318.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Cgroups</title>
-      <link>https://zhiweiyin318.github.io/tags/cgroups/</link>
-      <pubDate>Mon, 10 Sep 2018 00:00:00 +0000</pubDate>
-      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
-      <guid>https://zhiweiyin318.github.io/tags/cgroups/</guid>
-      <description></description>
-    </item>
     
     <item>
       <title>Code</title>
@@ -33,18 +24,9 @@
     <item>
       <title>Docker</title>
       <link>https://zhiweiyin318.github.io/tags/docker/</link>
-      <pubDate>Tue, 18 Sep 2018 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 11 Sep 2018 00:00:00 +0000</pubDate>
       <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
       <guid>https://zhiweiyin318.github.io/tags/docker/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Exec</title>
-      <link>https://zhiweiyin318.github.io/tags/exec/</link>
-      <pubDate>Wed, 12 Sep 2018 00:00:00 +0000</pubDate>
-      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
-      <guid>https://zhiweiyin318.github.io/tags/exec/</guid>
       <description></description>
     </item>
     
@@ -63,15 +45,6 @@
       <pubDate>Tue, 31 Jul 2018 00:00:00 +0000</pubDate>
       <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
       <guid>https://zhiweiyin318.github.io/tags/hugo/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Image</title>
-      <link>https://zhiweiyin318.github.io/tags/image/</link>
-      <pubDate>Wed, 12 Sep 2018 00:00:00 +0000</pubDate>
-      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
-      <guid>https://zhiweiyin318.github.io/tags/image/</guid>
       <description></description>
     </item>
     
@@ -103,15 +76,6 @@
     </item>
     
     <item>
-      <title>Namespace</title>
-      <link>https://zhiweiyin318.github.io/tags/namespace/</link>
-      <pubDate>Mon, 10 Sep 2018 00:00:00 +0000</pubDate>
-      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
-      <guid>https://zhiweiyin318.github.io/tags/namespace/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Openstack</title>
       <link>https://zhiweiyin318.github.io/tags/openstack/</link>
       <pubDate>Tue, 18 Sep 2018 00:00:00 +0000</pubDate>
@@ -135,15 +99,6 @@
       <pubDate>Tue, 25 Dec 2018 22:40:54 +0800</pubDate>
       <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
       <guid>https://zhiweiyin318.github.io/tags/translation/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Volume</title>
-      <link>https://zhiweiyin318.github.io/tags/volume/</link>
-      <pubDate>Wed, 12 Sep 2018 00:00:00 +0000</pubDate>
-      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
-      <guid>https://zhiweiyin318.github.io/tags/volume/</guid>
       <description></description>
     </item>
     
