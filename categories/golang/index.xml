@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>zhiweiyin@hotmail.com (Zhiwei Yin)</managingEditor>
     <webMaster>zhiweiyin@hotmail.com (Zhiwei Yin)</webMaster>
-    <lastBuildDate>Mon, 03 Sep 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 24 Jan 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://zhiweiyin318.github.io/categories/golang/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Go modules</title>
+      <link>https://zhiweiyin318.github.io/post/2019-01024-golang-modules/</link>
+      <pubDate>Thu, 24 Jan 2019 00:00:00 +0000</pubDate>
+      <author>zhiweiyin@hotmail.com (Zhiwei Yin)</author>
+      <guid>https://zhiweiyin318.github.io/post/2019-01024-golang-modules/</guid>
+      <description>Go modules Reference: * https://blog.golang.org/modules2019 * https://tonybai.com/2018/07/15/hello-go-module/ * https://github.com/golang/go/wiki/Modules * https://www.melvinvivas.com/go-version-1-11-modules/ Go 1.11 之前,code必须在GOPATH/src路径下，依赖的package也必须在这个目录下，go get下载的包也在这个</description>
+    </item>
     
     <item>
       <title>golang rand生成随机数</title>

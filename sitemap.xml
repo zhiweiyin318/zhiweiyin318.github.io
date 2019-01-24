@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://zhiweiyin318.github.io/post/2019-01024-golang-modules/</loc>
+    <lastmod>2019-01-24T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://zhiweiyin318.github.io/post/2018-12-15-kubernetes-auth/</loc>
     <lastmod>2018-12-25T22:40:54+08:00</lastmod>
   </url>
@@ -49,7 +54,7 @@
   
   <url>
     <loc>https://zhiweiyin318.github.io/</loc>
-    <lastmod>2018-12-25T22:40:54+08:00</lastmod>
+    <lastmod>2019-01-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -74,14 +79,14 @@
   </url>
   
   <url>
-    <loc>https://zhiweiyin318.github.io/tags/golang/</loc>
-    <lastmod>2018-09-03T00:00:00+00:00</lastmod>
+    <loc>https://zhiweiyin318.github.io/categories/golang/</loc>
+    <lastmod>2019-01-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://zhiweiyin318.github.io/categories/golang/</loc>
-    <lastmod>2018-09-03T00:00:00+00:00</lastmod>
+    <loc>https://zhiweiyin318.github.io/tags/golang/</loc>
+    <lastmod>2019-01-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -104,20 +109,14 @@
   </url>
   
   <url>
-    <loc>https://zhiweiyin318.github.io/tags/kubernetes/</loc>
-    <lastmod>2018-12-25T22:40:54+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://zhiweiyin318.github.io/categories/kubernetes/</loc>
     <lastmod>2018-12-25T22:40:54+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://zhiweiyin318.github.io/tags/openstack/</loc>
-    <lastmod>2018-11-23T00:00:00+00:00</lastmod>
+    <loc>https://zhiweiyin318.github.io/tags/kubernetes/</loc>
+    <lastmod>2018-12-25T22:40:54+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -128,19 +127,25 @@
   </url>
   
   <url>
-    <loc>https://zhiweiyin318.github.io/post/</loc>
-    <lastmod>2018-12-25T22:40:54+08:00</lastmod>
+    <loc>https://zhiweiyin318.github.io/tags/openstack/</loc>
+    <lastmod>2018-11-23T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://zhiweiyin318.github.io/tags/python/</loc>
-    <lastmod>2018-09-14T00:00:00+00:00</lastmod>
+    <loc>https://zhiweiyin318.github.io/post/</loc>
+    <lastmod>2019-01-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://zhiweiyin318.github.io/categories/python/</loc>
+    <lastmod>2018-09-14T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://zhiweiyin318.github.io/tags/python/</loc>
     <lastmod>2018-09-14T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -152,13 +157,13 @@
   </url>
   
   <url>
-    <loc>https://zhiweiyin318.github.io/tags/translation/</loc>
+    <loc>https://zhiweiyin318.github.io/categories/translation/</loc>
     <lastmod>2018-12-25T22:40:54+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://zhiweiyin318.github.io/categories/translation/</loc>
+    <loc>https://zhiweiyin318.github.io/tags/translation/</loc>
     <lastmod>2018-12-25T22:40:54+08:00</lastmod>
     <priority>0</priority>
   </url>
