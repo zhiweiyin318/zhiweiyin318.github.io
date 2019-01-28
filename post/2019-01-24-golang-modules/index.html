@@ -7,12 +7,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <title>Kubernetes 认证: X509客户端证书 - Zhiwei Yin</title>
-  <meta property="og:title" content="Kubernetes 认证: X509客户端证书" />
-  <meta name="twitter:title" content="Kubernetes 认证: X509客户端证书" />
-  <meta name="description" content="Kubernetes auth: X509 client certificates">
-  <meta property="og:description" content="Kubernetes auth: X509 client certificates">
-  <meta name="twitter:description" content="Kubernetes auth: X509 client certificates">
+  <title>Go modules - Zhiwei Yin</title>
+  <meta property="og:title" content="Go modules" />
+  <meta name="twitter:title" content="Go modules" />
+  <meta name="description" content="Go mudules Tutorial">
+  <meta property="og:description" content="Go mudules Tutorial">
+  <meta name="twitter:description" content="Go mudules Tutorial">
   <meta name="author" content="Zhiwei Yin"/><script type="application/ld+json">
 {
     "@context": "http://schema.org",
@@ -48,8 +48,8 @@
         "@type": "ListItem",
         "position": 3,
         "item": {
-          "@id": "https://zhiweiyin318.github.io/post/2018-12-15-kubernetes-auth/",
-          "name": "Kubernetes 认证 x509客户端证书"
+          "@id": "https://zhiweiyin318.github.io/post/2019-01-24-golang-modules/",
+          "name": "Go modules"
         }
     }]
 }
@@ -60,15 +60,15 @@
   "author": {
     "name" : "Zhiwei Yin"
   },
-  "headline": "Kubernetes 认证: X509客户端证书",
-  "description" : "原文：https://brancz.com/2017/10/16/kubernetes-auth-x509-client-certifica",
+  "headline": "Go modules",
+  "description" : "Go modules Reference: * https://blog.golang.org/modules2019 * https://tonybai.com/2018/07/15/hello-go-module/ * https://github.com/golang/go/wiki/Modules * https://www.melvinvivas.com/go-version-1-11-modules/ * https://github.com/golang/go/wiki/Modules Go 1.11 之前,code必须在GOPATH/src路径下，依赖的package也必须在这个目录下，go get下载的包也在",
   "inLanguage" : "en",
-  "wordCount": 1676,
-  "datePublished" : "2018-12-25T22:40:54",
-  "dateModified" : "2018-12-25T22:40:54",
+  "wordCount": 1008,
+  "datePublished" : "2019-01-24T00:00:00",
+  "dateModified" : "2019-01-24T00:00:00",
   "image" : "https://zhiweiyin318.github.io/images/avatar-icon.png",
-  "keywords" : [ "kubernetes, translation" ],
-  "mainEntityOfPage" : "https://zhiweiyin318.github.io/post/2018-12-15-kubernetes-auth/",
+  "keywords" : [ "golang" ],
+  "mainEntityOfPage" : "https://zhiweiyin318.github.io/post/2019-01-24-golang-modules/",
   "publisher" : {
     "@type": "Organization",
     "name" : "https://zhiweiyin318.github.io",
@@ -82,21 +82,21 @@
 }
 </script>
 
-<meta property="og:title" content="Kubernetes 认证: X509客户端证书" />
-<meta property="og:description" content="Kubernetes auth: X509 client certificates">
+<meta property="og:title" content="Go modules" />
+<meta property="og:description" content="Go mudules Tutorial">
 <meta property="og:image" content="https://zhiweiyin318.github.io/images/avatar-icon.png" />
-<meta property="og:url" content="https://zhiweiyin318.github.io/post/2018-12-15-kubernetes-auth/" />
+<meta property="og:url" content="https://zhiweiyin318.github.io/post/2019-01-24-golang-modules/" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Zhiwei Yin" />
-  <meta name="twitter:title" content="Kubernetes 认证: X509客户端证书" />
-  <meta name="twitter:description" content="Kubernetes auth: X509 client certificates">
+  <meta name="twitter:title" content="Go modules" />
+  <meta name="twitter:description" content="Go mudules Tutorial">
   <meta name="twitter:image" content="https://zhiweiyin318.github.io/images/avatar-icon.png" />
   <meta name="twitter:card" content="summary" />
   <link href='https://zhiweiyin318.github.io/images/favicon.ico' rel='icon' type='image/x-icon'/>
   <meta property="og:image" content="https://zhiweiyin318.github.io/images/avatar-icon.png" />
   <meta name="twitter:image" content="https://zhiweiyin318.github.io/images/avatar-icon.png" />
   <meta name="twitter:card" content="summary" />
-  <meta property="og:url" content="https://zhiweiyin318.github.io/post/2018-12-15-kubernetes-auth/" />
+  <meta property="og:url" content="https://zhiweiyin318.github.io/post/2019-01-24-golang-modules/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Zhiwei Yin" />
 
@@ -267,23 +267,25 @@
           <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <div class="post-heading">
               
-                <h1 align="center">Kubernetes 认证: X509客户端证书</h1>
+                <h1 align="center">Go modules</h1>
               
               
               
                 
-                  <h2 class="post-subheading">Kubernetes auth: X509 client certificates</h2>
+                  <h2 class="post-subheading">Go mudules Tutorial</h2>
                 
               
               
                 <span class="post-meta">
   
   
-  <i class="fas fa-calendar"></i>&nbsp;Posted on Tue Dec 25, 2018
+  <i class="fas fa-calendar"></i>&nbsp;Posted on Thu Jan 24, 2019
+  
+    &nbsp;(Last modified on Mon Jan 28, 2019)
   
   
   
-    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;1676&nbsp;words
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;1008&nbsp;words
   
   
     &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Zhiwei Yin
@@ -306,132 +308,185 @@
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <article role="main" class="blog-post">
-        <blockquote>
-<p>原文：<a href="https://brancz.com/2017/10/16/kubernetes-auth-x509-client-certificates/">https://brancz.com/2017/10/16/kubernetes-auth-x509-client-certificates/</a><br />
-作者：Frederic Branczyk<br />
-翻译：Zhiwei Yin</p>
-</blockquote>
+        
 
-<p>Kubernetes支持<a href="https://kubernetes.io/docs/reference/access-authn-authz/authentication/">多种认证方式</a>，比如静态Token文件，静态用密码文件，<a href="https://openid.net/connect/">OIDC（OpenID Connect）</a>这些认证方式已经在文档里详细说明了。但是还有一种常见的认证方式，就是使用<a href="https://en.wikipedia.org/wiki/X.509">X509客户端证书认证</a>。这篇博客我将稍微解释下X509客户端证书认证，展示下怎么在Kubernetes集群中使用这种认证方式。</p>
-
-<p>跟其他认证方式不同，客户端证书认证方式使用公共密钥来代替密码或者token。使用客户端证书认证的好处就是不再需要存储验证密码或者token相关信息了。客户端证书认证是纯加密解密方式，这也是为什么我们可通过证书验证请求是否可信的原因。</p>
+<h1 id="go-modules">Go modules</h1>
 
 <blockquote>
-<p>译者解释：<br />
-密码或者token认证方式，是需要有数据库或者文件来存储合法的用户名密码或者token的，客户端证书认证是不需要单独存储这些信息的，是纯加密解密的方式来验证请求是否合法的。</p>
+<p><strong>Reference:</strong><br />
+* <a href="https://blog.golang.org/modules2019">https://blog.golang.org/modules2019</a><br />
+* <a href="https://tonybai.com/2018/07/15/hello-go-module/">https://tonybai.com/2018/07/15/hello-go-module/</a><br />
+* <a href="https://github.com/golang/go/wiki/Modules">https://github.com/golang/go/wiki/Modules</a><br />
+* <a href="https://www.melvinvivas.com/go-version-1-11-modules/">https://www.melvinvivas.com/go-version-1-11-modules/</a><br />
+* <a href="https://github.com/golang/go/wiki/Modules">https://github.com/golang/go/wiki/Modules</a></p>
 </blockquote>
 
-<p>Kubernetes自己没有存储user信息的，因此user身份必须来自选择的认证方式提供。比如如果你选择使用<a href="https://kubernetes.io/docs/reference/access-authn-authz/authentication/#openid-connect-tokens">Open ID Connect</a>来作为认证方式，则OIDC服务提供方负责存储维护user身份和认证信息，认证请求返回不同user，Kubernetes使用这些user信息进行认证。X509客户端证书完美的解决了这个问题，因为当认证内容被Kubernetes集群的CA证书签名后，Kubernetes apiserver只需要验证签名是否合法就可以了。这意味着被写入证书文件里面的user和group信息只被签名验证的时候使用一次，不需要再存储了。</p>
+<p>Go 1.11 之前,code必须在<code>GOPATH/src</code>路径下，依赖的package也必须在这个目录下，<code>go get</code>下载的包也在这个目录下。Go 1.11开始支持 <strong>go modules</strong>功能，code不需要放到 <code>GOPATH/src</code> 路径下了，可以放到任何地方。</p>
 
-<blockquote>
-<p>译者解释：<br />
-Kubernetes的用户user是个认证授权体系逻辑概念，没有一个叫user的API的。如果使用像OIDC这种认证方式，OIDC认证服务需要存储和维护user信息，当用户发送的请求来了后，需要通过OIDC认证这个user是否合法。正式认证方式直接讲user信息写入证书里面了，只在证书被CA根证书签名的时候使用一次，不需要额外存储维护。</p>
-</blockquote>
+<p>Go modules were initially released with Go1.11. Fixes and improvements in Go1.11.2 and the to-be-released Go1.12 have and will make Go modules even better.</p>
 
-<p>X509客户端证书认证方式，Kubernetes只验证客户端证书被集群的CA证书签名是否合法就可以了。一旦Kubernetes认证客户端证书合法，就会将证书中的“Common Name”作为user的名字，“Organization”作为user的group的名字。通过<a href="https://kubernetes.io/docs/reference/access-authn-authz/rbac/">RBAC</a>可以给user或者group设定相关的权限。下面是个ClusterRole配置信息的例子，这个<code>ClusterRole</code>只有所有Pods和Namespaces的只读权限：</p>
+<p>目前Go 1.11版本默认情况,如果根目录下没有<code>go.mod</code>文件，还是使用<code>GOPATH</code>路径下找依赖包：</p>
 
-<pre><code>apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: ClusterRole
-metadata:
-  name: read-only-user
-rules:
-- apiGroups:
-  - &quot;&quot;
-  resources:
-  - pods
-  - namespaces
-  verbs:
-  - get
-  - list
-  - watch
+<pre><code>yzw@yzw-vm:/media/sf_share/code/hello$ ls
+hello.go
+yzw@yzw-vm:/media/sf_share/code/hello$ go build
+hello.go:5:5: cannot find package &quot;rsc.io/quote&quot; in any of:
+	/usr/local/go/src/rsc.io/quote (from $GOROOT)
+	/home/yzw/go/src/rsc.io/quote (from $GOPATH)
+
 </code></pre>
 
-<p>创建一个<code>ClusterRoleBinding</code>给指定user绑定这些权限。</p>
+<p>需要通过修改环境变量来改变默认build的包管理模式 <code>GO111MODULE=on</code>:</p>
 
-<pre><code>apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: ClusterRoleBinding
-metadata:
-  name: read-only-users
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: read-only-user
-subjects:
-- apiGroup: rbac.authorization.k8s.io
-  kind: User
-  name: brancz
+<pre><code>yzw@yzw-vm:/media/sf_share/code/hello$ export GO111MODULE=on
+yzw@yzw-vm:/media/sf_share/code/hello$ go build
+go: cannot find main module; see 'go help modules'
 </code></pre>
 
-<p>上面<code>ClusterRoleBinding</code>将“brancz” 这个user绑定到了“read-only-user”这个<code>ClusterRole</code>上。</p>
+<p>使用go modules功能，需要通过<code>go mod init</code>命令创建 <code>go.mod</code>文件，或者手动创建该文件：</p>
 
-<p>很简单了。我已经写了个脚本来自动完成这个过程。脚本先生成客户端证书，再用集群的CA证书对客户端证书进行签名，最后生成一个绑定的<code>kubeconfig</code>文件。这个文件可以直接被用来访问Kubernetes集群。最终文件在<code>clients/$USER/</code>目录下。（如果需要手动创建相关目录）</p>
+<pre><code>yzw@yzw-vm:/media/sf_share/code/hello$ cat hello.go 
+package main
 
-<pre><code>#!/usr/bin/env bash
+import (
+    &quot;fmt&quot;
+    &quot;rsc.io/quote&quot;
+)
 
-if [[ &quot;$#&quot; -ne 2 ]]; then
-    echo &quot;Usage: $0 user group&quot;
-    exit 1
-fi
+func main() {
+    fmt.Println(quote.Hello())
+}
 
-USER=$1
-GROUP=$2
-CLUSTERENDPOINT=https://&lt;apiserver-ip&gt;:&lt;apiserver-port&gt;
-CLUSTERNAME=your-kubernetes-cluster-name
-CACERT=cluster/tls/ca.crt
-CAKEY=cluster/tls/ca.key
-CLIENTCERTKEY=clients/$USER/$USER.key
-CLIENTCERTCSR=clients/$USER/$USER.csr
-CLIENTCERTCRT=clients/$USER/$USER.crt
+yzw@yzw-vm:/media/sf_share/code/hello$ go mod init hello
+go: creating new go.mod: module hello
+yzw@yzw-vm:/media/sf_share/code/hello$ ls
+go.mod  hello.go
+yzw@yzw-vm:/media/sf_share/code/hello$ cat go.mod 
+module hello
 
-mkdir -p clients/$USER
+yzw@yzw-vm:/media/sf_share/code/hello$ go build
+yzw@yzw-vm:/media/sf_share/code/hello$ ls
+go.mod  go.sum  hello  hello.go
 
-openssl genrsa -out $CLIENTCERTKEY 4096
-openssl req -new -key $CLIENTCERTKEY -out $CLIENTCERTCSR \
-      -subj &quot;/O=$GROUP/CN=$USER&quot;
-openssl x509 -req -days 365 -sha256 -in $CLIENTCERTCSR -CA $CACERT -CAkey $CAKEY -set_serial 2 -out $CLIENTCERTCRT
+yzw@yzw-vm:/media/sf_share/code/hello$ cat go.mod
+module hello
 
-cat &lt;&lt;-EOF &gt; clients/$USER/kubeconfig
-apiVersion: v1
-kind: Config
-preferences:
-  colors: true
-current-context: $CLUSTERNAME
-clusters:
-- name: $CLUSTERNAME
-  cluster:
-    server: $CLUSTERENDPOINT
-    certificate-authority-data: $(cat $CACERT | base64 --wrap=0)
-contexts:
-- context:
-    cluster: $CLUSTERNAME
-    user: $USER
-  name: $CLUSTERNAME
-users:
-- name: $USER
-  user:
-    client-certificate-data: $(cat $CLIENTCERTCRT | base64 --wrap=0)
-    client-key-data: $(cat $CLIENTCERTKEY | base64 --wrap=0)
-EOF
+require rsc.io/quote v1.5.2
+
+yzw@yzw-vm:/media/sf_share/code/hello$ cat go.sum 
+golang.org/x/text v0.0.0-20170915032832-14c0d48ead0c h1:qgOY6WgZOaTkIIMiVjBQcw93ERBE4m30iBm00nkL0i8=
+golang.org/x/text v0.0.0-20170915032832-14c0d48ead0c/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
+rsc.io/quote v1.5.2 h1:w5fcysjrx7yqtD/aO+QwRjYZOKnaM9Uh2b40tElTs3Y=
+rsc.io/quote v1.5.2/go.mod h1:LzX7hefJvL54yjefDEDHNONDjII0t9xZLPXsUe+TKr0=
+rsc.io/sampler v1.3.0 h1:7uVkIFmeBqHfdjD+gZwtXXI+RODJ2Wc4O7MPEh/QiW4=
+rsc.io/sampler v1.3.0/go.mod h1:T1hPZKmBbMNahiBKFy5HrXp6adAjACjK9JXDnKaTXpA=
+
 </code></pre>
+
+<p><code>go mod init</code>会自动在根目录下创建<code>go.mod</code>文件，当go build的时候，会自动将依赖包的版本加到<code>go.mod</code>文件中，并生成一个<code>go.sum</code>文件，这个文件里面有些依赖和meta信息。依赖的包不会下载到code目录，会在<code>GOPATH/pkg</code>目录下：</p>
+
+<pre><code>yzw@yzw-vm:/media/sf_share/code/hello$ cd ~/go/pkg/
+yzw@yzw-vm:~/go/pkg$ ls
+linux_amd64  mod
+yzw@yzw-vm:~/go/pkg$ cd mod/
+yzw@yzw-vm:~/go/pkg/mod$ ls
+cache  github.com  golang.org  k8s.io  rsc.io
+</code></pre>
+
+<p>因为有墙的缘故，好多第三方包都没法下载，可以通过设置<code>GOPROXY</code> 环境变量来代理，可以使用 <code>https://goproxy.io</code>下载，或者自己搭建proxy:</p>
+
+<pre><code># export GOPROXY=https://goproxy.io
+</code></pre>
+
+<p>关闭<code>GOPROXY</code> 只需将该环节变量置为空即可。详细可参考：</p>
 
 <blockquote>
-<p>备注: 这个脚本是写在Fedora 26上运行的，可能会在其他平台上有小的不兼容。如果CA证书文件路径不同，确保适配正确的路径。本博客内容工作在Kubernetes 1.7.x+版本上。</p>
+<ul>
+<li><a href="https://cloud.tencent.com/developer/news/308442">https://cloud.tencent.com/developer/news/308442</a><br /></li>
+<li><a href="https://tonybai.com/?s=module">https://tonybai.com/?s=module</a></li>
+</ul>
 </blockquote>
 
-<p>有任何问题可以通过<a href="https://twitter.com/fredbrancz">twitter</a>联系作者。</p>
+<p><code>go list -m</code> 命令可以查询当前构建的依赖包极版本信息：</p>
+
+<pre><code>yzw@yzw-vm:/media/sf_share/code/hello$ go list -m -json all
+{
+	&quot;Path&quot;: &quot;hello&quot;,
+	&quot;Main&quot;: true,
+	&quot;Dir&quot;: &quot;/media/sf_share/code/hello&quot;,
+	&quot;GoMod&quot;: &quot;/media/sf_share/code/hello/go.mod&quot;
+}
+{
+	&quot;Path&quot;: &quot;golang.org/x/text&quot;,
+	&quot;Version&quot;: &quot;v0.0.0-20170915032832-14c0d48ead0c&quot;,
+	&quot;Time&quot;: &quot;2017-09-15T03:28:32Z&quot;,
+	&quot;Indirect&quot;: true,
+	&quot;Dir&quot;: &quot;/home/yzw/go/pkg/mod/golang.org/x/text@v0.0.0-20170915032832-14c0d48ead0c&quot;,
+	&quot;GoMod&quot;: &quot;/home/yzw/go/pkg/mod/cache/download/golang.org/x/text/@v/v0.0.0-20170915032832-14c0d48ead0c.mod&quot;
+}
+{
+	&quot;Path&quot;: &quot;rsc.io/quote&quot;,
+	&quot;Version&quot;: &quot;v1.5.2&quot;,
+	&quot;Time&quot;: &quot;2018-02-14T15:44:20Z&quot;,
+	&quot;Dir&quot;: &quot;/home/yzw/go/pkg/mod/rsc.io/quote@v1.5.2&quot;,
+	&quot;GoMod&quot;: &quot;/home/yzw/go/pkg/mod/cache/download/rsc.io/quote/@v/v1.5.2.mod&quot;
+}
+{
+	&quot;Path&quot;: &quot;rsc.io/sampler&quot;,
+	&quot;Version&quot;: &quot;v1.3.0&quot;,
+	&quot;Time&quot;: &quot;2018-02-13T19:05:03Z&quot;,
+	&quot;Indirect&quot;: true,
+	&quot;Dir&quot;: &quot;/home/yzw/go/pkg/mod/rsc.io/sampler@v1.3.0&quot;,
+	&quot;GoMod&quot;: &quot;/home/yzw/go/pkg/mod/cache/download/rsc.io/sampler/@v/v1.3.0.mod&quot;
+}
+
+</code></pre>
+
+<p><code>&quot;main&quot;: true</code> 标识当前module为<strong>main module</strong>,及<code>go build</code>时当前目录所属的module，go会在当前目录，当前目录的父目录，父目录的父目录&hellip;去找<code>go.mod</code>文件，作为main module。</p>
+
+<p>code目录的子目录也是可以有自己的<code>go.mod</code>的。</p>
+
+<p>为了兼容老版本<code>vendor</code>这种包管理方式，可以通过<code>go mod vendor</code>进行转换:</p>
+
+<pre><code>yzw@yzw-vm:/media/sf_share/code/hello$ go mod vendor
+yzw@yzw-vm:/media/sf_share/code/hello$ ls
+go.mod  go.sum  hello  hello.go  vendor
+
+yzw@yzw-vm:/media/sf_share/code/hello$ ls vendor/
+golang.org  modules.txt  rsc.io
+yzw@yzw-vm:/media/sf_share/code/hello$ 
+
+</code></pre>
+
+<p>Goland 2018.3 版本支持创建go modules的工程：</p>
+
+<p>欢迎界面 <code>New Project</code>：</p>
+
+<p><img src="/images/go-goland-create-modules-project.PNG" alt="Create Goland go module project" /></p>
+
+<p><img src="/images/go-goland-create-modules-project-2.PNG" alt="Goland go module project" /></p>
+
+<p>创建go文件，运行，自动会更新<code>go.mod</code>信息，和管理依赖包：</p>
+
+<p><img src="/images/go-goland-create-modules-project-3.PNG" alt="Run Goland go module project" /></p>
+
+<p>右击<code>go.mod</code>文件选<code>Diagrams | Show Diagram</code>,可以看依赖包的图表形式：</p>
+
+<p><img src="/images/go-goland-create-modules-project-4.PNG" alt="Show Goland go module project diagram" /></p>
+
+<p>详细参考：</p>
 
 <blockquote>
-<p>译者解释：<br />
-脚本和配置在kubernete 1.13.1版本验证OK。</p>
+<ul>
+<li><a href="https://blog.jetbrains.com/go/2019/01/22/working-with-go-modules/">https://blog.jetbrains.com/go/2019/01/22/working-with-go-modules/</a></li>
+</ul>
 </blockquote>
 
 
         
           <div class="blog-tags">
             
-              <a href="https://zhiweiyin318.github.io/tags/kubernetes/">kubernetes</a>&nbsp;
-            
-              <a href="https://zhiweiyin318.github.io/tags/translation/">translation</a>&nbsp;
+              <a href="https://zhiweiyin318.github.io/tags/golang/">golang</a>&nbsp;
             
           </div>
         
@@ -444,7 +499,11 @@ EOF
           <h4 class="see-also">See also</h4>
           <ul>
           
-            <li><a href="/post/2018-11-23-sdd/">软件定义交付宣言</a></li>
+            <li><a href="/post/2018-09-03-golang-rand/">golang rand生成随机数</a></li>
+          
+            <li><a href="/post/2018-08-09-golang-test-framework/">golang的测试框架</a></li>
+          
+            <li><a href="/post/2018-07-31-hugo/">Hugo</a></li>
           
           </ul>
           
@@ -455,12 +514,12 @@ EOF
         <ul class="pager blog-pager">
           
             <li class="previous">
-              <a href="https://zhiweiyin318.github.io/post/2018-11-23-sdd/" data-toggle="tooltip" data-placement="top" title="软件定义交付宣言">&larr; Previous Post</a>
+              <a href="https://zhiweiyin318.github.io/post/2018-12-15-kubernetes-auth/" data-toggle="tooltip" data-placement="top" title="Kubernetes 认证: X509客户端证书">&larr; Previous Post</a>
             </li>
           
           
             <li class="next">
-              <a href="https://zhiweiyin318.github.io/post/2019-01-24-golang-modules/" data-toggle="tooltip" data-placement="top" title="Go modules">Next Post &rarr;</a>
+              <a href="https://zhiweiyin318.github.io/post/2019-01-28-golang-package-management/" data-toggle="tooltip" data-placement="top" title="Go Package Management">Next Post &rarr;</a>
             </li>
           
         </ul>
@@ -471,12 +530,12 @@ EOF
         
           
           <div class="disqus-comments">                  
-            <button id="show-comments" class="btn btn-default" type="button">Show <span class="disqus-comment-count" data-disqus-url="https://zhiweiyin318.github.io/post/2018-12-15-kubernetes-auth">comments</span></button>
+            <button id="show-comments" class="btn btn-default" type="button">Show <span class="disqus-comment-count" data-disqus-url="https://zhiweiyin318.github.io/post/2019-01-24-golang-modules">comments</span></button>
             <div id="disqus_thread"></div>
 
             <script type="text/javascript">
               var disqus_config = function () {
-              this.page.url = 'https:\/\/zhiweiyin318.github.io\/post\/2018-12-15-kubernetes-auth';
+              this.page.url = 'https:\/\/zhiweiyin318.github.io\/post\/2019-01-24-golang-modules';
             };
 
           </script>
