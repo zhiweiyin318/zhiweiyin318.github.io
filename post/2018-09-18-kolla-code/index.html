@@ -305,6 +305,29 @@
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <article role="main" class="blog-post">
         
+        
+<aside class="toc">
+  <h3 class="toc"></h2>Table of Contents</h3>
+     <nav id="TableOfContents">
+<ul>
+<li><a href="#概述">概述</a></li>
+<li><a href="#项目目录结构">项目目录结构</a></li>
+<li><a href="#源码">源码</a>
+<ul>
+<li><a href="#源码目录">源码目录</a></li>
+<li><a href="#用到的主要库">用到的主要库</a>
+<ul>
+<li><a href="#oslo-config">oslo_config</a></li>
+<li><a href="#jinja2">jinja2</a></li>
+<li><a href="#dokcer-client">dokcer-client</a></li>
+<li><a href="#代码流程">代码流程</a></li>
+</ul></li>
+<li><a href="#kolla-build-conf-配置参数说明">kolla-build.conf 配置参数说明</a></li>
+</ul></li>
+</ul>
+</nav>
+</aside>
+        
 
 <blockquote>
 <p>代码路径：<a href="https://github.com/openstack/kolla">https://github.com/openstack/kolla</a><br />
@@ -582,20 +605,26 @@
 
       
         
-          
-          <div class="disqus-comments">                  
-            <button id="show-comments" class="btn btn-default" type="button">Show <span class="disqus-comment-count" data-disqus-url="https://zhiweiyin318.github.io/post/2018-09-18-kolla-code">comments</span></button>
-            <div id="disqus_thread"></div>
+           
+<div id="disqus_thread"></div>
+<script type="text/javascript">
 
-            <script type="text/javascript">
-              var disqus_config = function () {
-              this.page.url = 'https:\/\/zhiweiyin318.github.io\/post\/2018-09-18-kolla-code';
-            };
+(function() {
+    
+    
+    
+     
 
-          </script>
-          </div>
-          
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'zhiweiyinblog';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
         
+
         
       
 
@@ -633,17 +662,6 @@
                   </span>
                 </a>
               </li>
-          
-          <li>
-            
-            <a href="https://zhiweiyin318.github.io/index.xml" title="RSS">
-            
-              <span class="fa-stack fa-lg">
-                <i class="fas fa-circle fa-stack-2x"></i>
-                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
-              </span>
-            </a>
-          </li>
           
         </ul>
         <p class="credits copyright text-muted">
@@ -685,28 +703,6 @@
 
 
 
-
-
-
-<script type="text/javascript">
-$(function(){
-  $('#show-comments').on('click', function(){
-    var disqus_shortname = 'zhiweiyinblog';
-      
-    (function() {
-      var disqus = document.createElement('script'); 
-      disqus.type = 'text/javascript'; 
-      disqus.async = true;
-      disqus.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(disqus);
-    })();
-      
-    $(this).hide(); 
-    });
-  });
-      
-</script>
-<script id="dsq-count-scr" src="//zhiweiyinblog.disqus.com/count.js" async></script>
 
 
 
